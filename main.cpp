@@ -11,7 +11,7 @@ int main() {
   unsigned int window_width{1280};
   unsigned int window_height{720};
   sf::Font font;
-  assert(font.loadFromFile("arial.ttf"));
+  assert(font.loadFromFile("utility/arial.ttf"));
 
   // parametri regole di volo
   float d{150.f};   // distanza minima perché due boid si considerino vicini
