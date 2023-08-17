@@ -1,0 +1,1 @@
+// passare -DBUILD_TESTING=ON a cmake in fase di configurazione per abilitare i test
