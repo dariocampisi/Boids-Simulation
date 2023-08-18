@@ -1,4 +1,4 @@
-#include "boids.hpp"
+#include "boid.hpp"
 
 Boid::Boid(const sf::Color &color, const sf::Vector2f &position,
            const sf::Vector2f &velocity)

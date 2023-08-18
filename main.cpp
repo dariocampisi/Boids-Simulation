@@ -4,7 +4,7 @@
 #include <random>
 #include <vector>
 
-#include "boids.hpp"
+#include "boid.hpp"
 #include "slider.hpp"
 
 int main() {
