@@ -21,16 +21,16 @@ Ogni regola viene applicata solo ai boid considerati **vicini**.
 Da esse, un numero elevato di *boid* fa emergere dei **comportamenti macroscopici caotici**, che approssimano il comportamento degli stormi reali.
 
 ### Comportamento ai bordi
-Quando un *boid* comincia ad avvicinarsi ad uno dei bordi della finestra questo vira in modo da evitarla. Per ottenere questo effetto è stato definito un **margine** nei pressi dei bordi della finestra, quando il *boid* lo supera, la sua velocità varia gradualmente secondo un opportuno **fattore di virata**.
+Quando un *boid* comincia ad avvicinarsi ad uno dei bordi della finestra questo vira in modo da evitarla. Per ottenere questo effetto è stato definito un **margine** nei pressi dei bordi della finestra, quando il *boid* lo supera, la sua velocità viene gradualmente invertita secondo un opportuno **fattore di virata**.
 
 ## Implementazioni aggiuntive
-### Più stormi
+#### Più stormi
 All'inizio di ogni simulazione, è equiprobabile la generazione di uno, due o tre stormi, differenziati dal colore. Il movimento di un *boid* è quindi unicamente influenzato dai "compagni di stormo" vicini.
 
-### Predatore
+#### Predatore
 È stata aggiunta la presenza costante di un predatore, si differenzia dagli altri boid per colore e dimensioni. Esso rispetta la regola della **coesione**, i boid a lui vicini invece avvertono una cosiddetta **repulsione**, regola analoga alla **separazione** ma di maggiore intensità.
 
-### Left-click per far comparire un *boid*
+#### Left-click per far comparire un *boid*
 Oltre ai *boid* presenti all'inizio della simulazione, generati con posizioni, orientazioni e velocità casuali, è possibile aggiungerne degli altri tramite un mouse left-click, che genererà un *boid* appartenente ad uno stormo casuale.
 
 ### Top bar
