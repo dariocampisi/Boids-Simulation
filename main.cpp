@@ -20,14 +20,17 @@ int main() {
 
   float d_s{20.f};  // distanza separazione
   assert(d_s < d);
-  Slider s_sepa{"separation", font, sf::Vector2f(80.f, 2.5f), 7.f, 300.f, 35.f};
+  Slider s_sepa{"separation", font, sf::Vector2f(80.f, 2.5f), 7.f,
+                sf::Vector2f(300.f, 35.f)};
 
   float a{0.01f};  // allineamento
   assert(a < 1);
-  Slider s_alig{"alignment", font, sf::Vector2f(80.f, 2.5f), 7.f, 500.f, 35.f};
+  Slider s_alig{"alignment", font, sf::Vector2f(80.f, 2.5f), 7.f,
+                sf::Vector2f(500.f, 35.f)};
 
   float c{0.0005f};  // coesione
-  Slider s_cohe{"cohesion", font, sf::Vector2f(80.f, 2.5f), 7.f, 700.f, 35.f};
+  Slider s_cohe{"cohesion", font, sf::Vector2f(80.f, 2.5f), 7.f,
+                sf::Vector2f(700.f, 35.f)};
 
   float max_velocity{2.f};  // velocità massima
 
@@ -173,7 +176,11 @@ int main() {
 
       // slider
       s_sepa.work(window, mouse_pressed);
+      // s_sepa.linkTo(d_s);
+
       s_alig.work(window, mouse_pressed);
+      s_alig.linkTo(a);
+      
       s_cohe.work(window, mouse_pressed);
 
       // ciclo boids

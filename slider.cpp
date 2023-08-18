@@ -2,7 +2,7 @@
 
 Slider::Slider(const std::string &title, const sf::Font &font,
                const sf::Vector2f &line_size, const float dot_radius,
-               const float x, const float y)
+               const sf::Vector2f &position)
     : line_{line_size}, dot_{dot_radius} {
   line_.setOrigin(line_size.x / 2, line_size.y / 2);
   dot_.setOrigin(dot_radius, dot_radius);
@@ -12,9 +12,9 @@ Slider::Slider(const std::string &title, const sf::Font &font,
   title_.setCharacterSize(12);
   title_.setFillColor(sf::Color::White);
 
-  line_.setPosition(x, y);
-  dot_.setPosition(x, y);
-  title_.setPosition(x - line_.getSize().x / 2, y - 25.f);
+  line_.setPosition(position.x, position.y);
+  dot_.setPosition(position.x, position.y);
+  title_.setPosition(position.x - line_.getSize().x / 2, position.y - 25.f);
 }
 
 const sf::RectangleShape &Slider::getLine() const { return this->line_; }
@@ -63,6 +63,17 @@ void Slider::work(const sf::RenderWindow &window, const bool mouse_pressed) {
       this->dot_.setPosition(
           this->line_.getPosition().x + this->line_.getSize().x / 2,
           this->dot_.getPosition().y);
+    }
+  }
+}
+
+void Slider::linkTo(float &f) {
+  if (this->dot_.getPosition().x != this->line_.getPosition().x) {
+    if (static_cast<int>(this->dot_.getPosition().x -
+                         this->line_.getPosition().x) %
+            20 ==
+        0) {
+      f += 0.001f;
     }
   }
 }
