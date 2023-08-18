@@ -1,6 +1,4 @@
-CMakeFiles/boids.dir/boids.cpp.o: \
-  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/share/asan_ignorelist.txt \
-  /Users/dariocampisi/boids/boids.cpp \
+CMakeFiles/boids.dir/boids.cpp.o: /Users/dariocampisi/boids/boids.cpp \
   /Users/dariocampisi/boids/boids.hpp \
   /usr/local/include/SFML/Graphics.hpp \
   /usr/local/include/SFML/Window.hpp /usr/local/include/SFML/System.hpp \
