@@ -25,7 +25,7 @@ CMAKE_AR:FILEPATH=/Library/Developer/CommandLineTools/usr/bin/ar
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel ...
-CMAKE_BUILD_TYPE:STRING=Debag
+CMAKE_BUILD_TYPE:STRING=Debug
 
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
@@ -35,9 +35,6 @@ CMAKE_CXX_COMPILER:FILEPATH=/Library/Developer/CommandLineTools/usr/bin/c++
 
 //Flags used by the CXX compiler during all build types.
 CMAKE_CXX_FLAGS:STRING=
-
-//Flags used by the CXX compiler during DEBAG builds.
-CMAKE_CXX_FLAGS_DEBAG:STRING=
 
 //Flags used by the CXX compiler during DEBUG builds.
 CMAKE_CXX_FLAGS_DEBUG:STRING=-g
@@ -57,9 +54,6 @@ CMAKE_C_COMPILER:FILEPATH=/Library/Developer/CommandLineTools/usr/bin/cc
 //Flags used by the C compiler during all build types.
 CMAKE_C_FLAGS:STRING=
 
-//Flags used by the C compiler during DEBAG builds.
-CMAKE_C_FLAGS_DEBAG:STRING=
-
 //Flags used by the C compiler during DEBUG builds.
 CMAKE_C_FLAGS_DEBUG:STRING=-g
 
@@ -77,9 +71,6 @@ CMAKE_DLLTOOL:FILEPATH=CMAKE_DLLTOOL-NOTFOUND
 
 //Flags used by the linker during all build types.
 CMAKE_EXE_LINKER_FLAGS:STRING=
-
-//Flags used by the linker during DEBAG builds.
-CMAKE_EXE_LINKER_FLAGS_DEBAG:STRING=
 
 //Flags used by the linker during DEBUG builds.
 CMAKE_EXE_LINKER_FLAGS_DEBUG:STRING=
@@ -114,10 +105,6 @@ CMAKE_MAKE_PROGRAM:FILEPATH=/usr/bin/make
 //Flags used by the linker during the creation of modules during
 // all build types.
 CMAKE_MODULE_LINKER_FLAGS:STRING=
-
-//Flags used by the linker during the creation of modules during
-// DEBAG builds.
-CMAKE_MODULE_LINKER_FLAGS_DEBAG:STRING=
 
 //Flags used by the linker during the creation of modules during
 // DEBUG builds.
@@ -190,10 +177,6 @@ CMAKE_READELF:FILEPATH=CMAKE_READELF-NOTFOUND
 CMAKE_SHARED_LINKER_FLAGS:STRING=
 
 //Flags used by the linker during the creation of shared libraries
-// during DEBAG builds.
-CMAKE_SHARED_LINKER_FLAGS_DEBAG:STRING=
-
-//Flags used by the linker during the creation of shared libraries
 // during DEBUG builds.
 CMAKE_SHARED_LINKER_FLAGS_DEBUG:STRING=
 
@@ -219,10 +202,6 @@ CMAKE_SKIP_RPATH:BOOL=NO
 //Flags used by the linker during the creation of static libraries
 // during all build types.
 CMAKE_STATIC_LINKER_FLAGS:STRING=
-
-//Flags used by the linker during the creation of static libraries
-// during DEBAG builds.
-CMAKE_STATIC_LINKER_FLAGS_DEBAG:STRING=
 
 //Flags used by the linker during the creation of static libraries
 // during DEBUG builds.
@@ -293,8 +272,6 @@ CMAKE_CTEST_COMMAND:INTERNAL=/usr/local/Cellar/cmake/3.26.4/bin/ctest
 CMAKE_CXX_COMPILER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_FLAGS
 CMAKE_CXX_FLAGS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_CXX_FLAGS_DEBAG
-CMAKE_CXX_FLAGS_DEBAG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_FLAGS_DEBUG
 CMAKE_CXX_FLAGS_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_FLAGS_MINSIZEREL
@@ -307,8 +284,6 @@ CMAKE_CXX_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 CMAKE_C_COMPILER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_FLAGS
 CMAKE_C_FLAGS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_C_FLAGS_DEBAG
-CMAKE_C_FLAGS_DEBAG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_FLAGS_DEBUG
 CMAKE_C_FLAGS_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_FLAGS_MINSIZEREL
@@ -325,8 +300,6 @@ CMAKE_EDIT_COMMAND:INTERNAL=/usr/local/Cellar/cmake/3.26.4/bin/ccmake
 CMAKE_EXECUTABLE_FORMAT:INTERNAL=MACHO
 //ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS
 CMAKE_EXE_LINKER_FLAGS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS_DEBAG
-CMAKE_EXE_LINKER_FLAGS_DEBAG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS_DEBUG
 CMAKE_EXE_LINKER_FLAGS_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS_MINSIZEREL
@@ -358,8 +331,6 @@ CMAKE_LINKER-ADVANCED:INTERNAL=1
 CMAKE_MAKE_PROGRAM-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS
 CMAKE_MODULE_LINKER_FLAGS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS_DEBAG
-CMAKE_MODULE_LINKER_FLAGS_DEBAG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS_DEBUG
 CMAKE_MODULE_LINKER_FLAGS_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS_MINSIZEREL
@@ -386,8 +357,6 @@ CMAKE_READELF-ADVANCED:INTERNAL=1
 CMAKE_ROOT:INTERNAL=/usr/local/Cellar/cmake/3.26.4/share/cmake
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS
 CMAKE_SHARED_LINKER_FLAGS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_DEBAG
-CMAKE_SHARED_LINKER_FLAGS_DEBAG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_DEBUG
 CMAKE_SHARED_LINKER_FLAGS_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL
@@ -402,8 +371,6 @@ CMAKE_SKIP_INSTALL_RPATH-ADVANCED:INTERNAL=1
 CMAKE_SKIP_RPATH-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS
 CMAKE_STATIC_LINKER_FLAGS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS_DEBAG
-CMAKE_STATIC_LINKER_FLAGS_DEBAG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS_DEBUG
 CMAKE_STATIC_LINKER_FLAGS_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS_MINSIZEREL

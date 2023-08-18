@@ -23,6 +23,7 @@ find_package(SFML 2.5 COMPONENTS graphics audio window system REQUIRED)
 
 # eseguibile
 add_executable(boids main.cpp boids.cpp)
+# target_compile_options(boids PRIVATE -O0)
 
 # per sfml
 target_link_libraries(boids PRIVATE sfml-graphics sfml-audio sfml-window sfml-system)

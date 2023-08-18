@@ -5,12 +5,13 @@
 #include <vector>
 
 #include "boids.hpp"
+#include "slider.hpp"
 
 int main() {
   // dimensioni finestra e font (arial)
   unsigned int window_width{1280};
   unsigned int window_height{720};
-  sf::Font font;
+  sf::Font font{};
   assert(font.loadFromFile("utility/arial.ttf"));
 
   // parametri regole di volo
