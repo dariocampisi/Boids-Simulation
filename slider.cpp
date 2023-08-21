@@ -2,8 +2,9 @@
 
 Slider::Slider(const std::string &title, const sf::Font &font,
                const sf::Vector2f &line_size, const float dot_radius,
-               const sf::Vector2f &position)
-    : line_{line_size}, dot_{dot_radius} {
+               const sf::Vector2f &position, float &f,
+               const float initial_value)
+    : line_{line_size}, dot_{dot_radius}, f_{f}, initial_value_{initial_value} {
   line_.setOrigin(line_size.x / 2, line_size.y / 2);
   dot_.setOrigin(dot_radius, dot_radius);
 
@@ -16,10 +17,6 @@ Slider::Slider(const std::string &title, const sf::Font &font,
   dot_.setPosition(position.x, position.y);
   title_.setPosition(position.x - line_.getSize().x / 2, position.y - 25.f);
 }
-
-const sf::RectangleShape &Slider::getLine() const { return this->line_; }
-sf::CircleShape &Slider::getDot() { return this->dot_; }
-sf::Text &Slider::getTitle() { return this->title_; }
 
 bool Slider::dotInRange() const {
   return (this->dot_.getPosition().x >=
@@ -37,42 +34,40 @@ bool Slider::mouseIsOver(const sf::RenderWindow &window) const {
                           sf::Mouse::getPosition(window).y));
 }
 
-bool Slider::dotLeft() const {
+bool Slider::dotTooLeft() const {
   return this->dot_.getPosition().x <
          (this->line_.getPosition().x - this->line_.getSize().x / 2);
 }
-bool Slider::dotRight() const {
+bool Slider::dotTooRight() const {
   return this->dot_.getPosition().x >
          (this->line_.getPosition().x + this->line_.getSize().x / 2);
 }
 void Slider::normalize() {
-  if (this->dotLeft()) {
+  if (this->dotTooLeft()) {
     this->dot_.setPosition(
         this->line_.getPosition().x - this->line_.getSize().x / 2,
         this->dot_.getPosition().y);
   }
-  if (this->dotRight()) {
+  if (this->dotTooRight()) {
     this->dot_.setPosition(
         this->line_.getPosition().x + this->line_.getSize().x / 2,
         this->dot_.getPosition().y);
   }
 }
 
-void Slider::work(const sf::RenderWindow &window, const bool mouse_pressed,
-                  float &f) {
+// il valore massimo assunto dal parametro è il doppio del valore iniziale
+void Slider::work(const sf::RenderWindow &window, const bool mouse_pressed) {
   float initial_position = this->line_.getPosition().x;
   float step = this->line_.getSize().x / 21.f;
 
   if (this->mouseIsOver(window)) {
-    if (mouse_pressed) {
-      if (this->dotInRange()) {
-        this->dot_.setPosition(sf::Mouse::getPosition(window).x,
-                               this->dot_.getPosition().y);
+    if (mouse_pressed && this->dotInRange()) {
+      this->dot_.setPosition(sf::Mouse::getPosition(window).x,
+                             this->dot_.getPosition().y);
 
-        float movement = this->dot_.getPosition().x - initial_position;
-        int factor = static_cast<int>(movement / step);
-        f = 20.f + factor * 1.f;
-      }
+      float movement = this->dot_.getPosition().x - initial_position;
+      int factor = static_cast<int>(movement / step);
+      this->f_ = this->initial_value_ + factor * this->initial_value_ / 10.f;
     }
     this->normalize();
   }
@@ -82,4 +77,10 @@ void Slider::draw(sf::RenderWindow &window) {
   window.draw(this->line_);
   window.draw(this->dot_);
   window.draw(this->title_);
+}
+
+void Slider::reset() {
+  this->f_ = initial_value_;
+  this->dot_.setPosition(this->line_.getPosition().x,
+                         this->dot_.getPosition().y);
 }

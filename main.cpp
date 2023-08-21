@@ -1,18 +1,17 @@
 #include <cassert>
-#include <cmath>
-#include <iostream>
 #include <random>
 #include <vector>
 
 #include "boid.hpp"
+#include "button.hpp"
 #include "slider.hpp"
 
 int main() {
-  // dimensioni finestra e font (arial)
+  // dimensioni finestra e font (San Francisco)
   unsigned int window_width{1280};
   unsigned int window_height{720};
   sf::Font font{};
-  assert(font.loadFromFile("utility/arial.ttf"));
+  assert(font.loadFromFile("utility/sf.otf"));
 
   // parametri regole di volo
   float d{150.f};    // distanza minima perché due boid si considerino vicini
@@ -20,17 +19,32 @@ int main() {
 
   float d_s{20.f};  // distanza separazione
   assert(d_s < d);
-  Slider s_sepa{"separation", font, sf::Vector2f(80.f, 2.5f), 7.f,
-                sf::Vector2f(300.f, 35.f)};
+  Slider s_sepa{"separation",
+                font,
+                sf::Vector2f(80.f, 2.5f),
+                7.f,
+                sf::Vector2f(300.f, 35.f),
+                d_s,
+                20.f};
 
   float a{0.01f};  // allineamento
   assert(a < 1);
-  Slider s_alig{"alignment", font, sf::Vector2f(80.f, 2.5f), 7.f,
-                sf::Vector2f(500.f, 35.f)};
+  Slider s_alig{"alignment",
+                font,
+                sf::Vector2f(80.f, 2.5f),
+                7.f,
+                sf::Vector2f(500.f, 35.f),
+                a,
+                0.01f};
 
   float c{0.0005f};  // coesione
-  Slider s_cohe{"cohesion", font, sf::Vector2f(80.f, 2.5f), 7.f,
-                sf::Vector2f(700.f, 35.f)};
+  Slider s_cohe{"cohesion",
+                font,
+                sf::Vector2f(80.f, 2.5f),
+                7.f,
+                sf::Vector2f(700.f, 35.f),
+                c,
+                0.0005f};
 
   float max_velocity{2.f};  // velocità massima
 
@@ -44,8 +58,8 @@ int main() {
   float p_max_velocity{2.5f};  // velocità massima predatore
 
   // parametri per evitare i bordi
-  float margin{200.f};
-  float turn_factor{0.03f};
+  float margin{100.f};
+  float turn_factor{0.1f};
 
   // angolo di vista
   float angle_view{250.f};
@@ -116,6 +130,9 @@ int main() {
   // per tasto sinistro premuto
   bool mouse_pressed{0};
 
+  // bottone reset
+  Button reset{font, sf::Vector2f(100.f, 30.f), sf::Vector2f(1000.f, 20.f)};
+
   while (window.isOpen()) {
     // gestione eventi
     sf::Event event{};
@@ -159,6 +176,15 @@ int main() {
           mouse_pressed = 0;
         }
       }
+
+      // bottone reset
+      if (reset.mouseIsOver(window) &&
+          event.type == sf::Event::MouseButtonPressed &&
+          event.mouseButton.button == sf::Mouse::Left) {
+        reset.clicked(s_sepa);
+        reset.clicked(s_alig);
+        reset.clicked(s_cohe);
+      }
     }
 
     if (window_in_focus) {
@@ -175,11 +201,9 @@ int main() {
       }
 
       // slider
-      s_sepa.work(window, mouse_pressed, d_s);
-
-      s_alig.work(window, mouse_pressed, a);
-
-      s_cohe.work(window, mouse_pressed, c);
+      s_sepa.work(window, mouse_pressed);
+      s_alig.work(window, mouse_pressed);
+      s_cohe.work(window, mouse_pressed);
 
       // ciclo boids
       for (int i = 0; i < static_cast<int>(boids.size()); ++i) {
@@ -271,6 +295,7 @@ int main() {
     s_sepa.draw(window);
     s_alig.draw(window);
     s_cohe.draw(window);
+    reset.draw(window);
 
     if (!window_in_focus) window.draw(darkness);
 
