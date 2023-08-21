@@ -175,13 +175,11 @@ int main() {
       }
 
       // slider
-      s_sepa.work(window, mouse_pressed , d_s);
+      s_sepa.work(window, mouse_pressed, d_s);
 
-      // s_alig.linkTo(a, 0.01f);
-      // s_alig.work(window, mouse_pressed);
+      s_alig.work(window, mouse_pressed, a);
 
-      // s_cohe.linkTo(c, 0.0005f);
-      // s_cohe.work(window, mouse_pressed);
+      s_cohe.work(window, mouse_pressed, c);
 
       // ciclo boids
       for (int i = 0; i < static_cast<int>(boids.size()); ++i) {
