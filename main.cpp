@@ -15,8 +15,8 @@ int main() {
   assert(font.loadFromFile("utility/arial.ttf"));
 
   // parametri regole di volo
-  float d{150.f};   // distanza minima perché due boid si considerino vicini
-  float s{0.001f};  // forza separazione
+  float d{150.f};    // distanza minima perché due boid si considerino vicini
+  float s{0.0005f};  // forza separazione
 
   float d_s{20.f};  // distanza separazione
   assert(d_s < d);
@@ -44,24 +44,24 @@ int main() {
   float p_max_velocity{2.5f};  // velocità massima predatore
 
   // parametri per evitare i bordi
-  float margin{120.f};
+  float margin{200.f};
   float turn_factor{0.03f};
 
   // angolo di vista
   float angle_view{250.f};
 
   // per mostrare gli fps
-  sf::Text fps_text;
+  sf::Text fps_text{};
   fps_text.setFont(font);
   fps_text.setCharacterSize(21);
   fps_text.setFillColor(sf::Color::White);
   fps_text.setPosition(10.f, 10.f);
-  sf::Clock clock;
+  sf::Clock clock{};
   int frames = 0;
   sf::Time elapsed_time = sf::Time::Zero;
 
   // generazione numeri random
-  std::random_device rd;
+  std::random_device rd{};
   std::mt19937 engine(rd());
   std::uniform_real_distribution<float> rand_x_position(0.f + margin,
                                                         window_width - margin);
@@ -71,12 +71,12 @@ int main() {
   std::uniform_real_distribution<float> rand_y_velocity(-2.5f, 2.5f);
 
   // costruzione boids
-  std::vector<Boid> boids;
+  std::vector<Boid> boids{};
 
   sf::Color light_blue(0, 102, 204);
   sf::Color orange(255, 128, 0);
   sf::Color green(0, 153, 0);
-  std::vector<sf::Color> colors_vector;
+  std::vector<sf::Color> colors_vector{};
   colors_vector.push_back(light_blue);
   colors_vector.push_back(orange);
   colors_vector.push_back(green);
@@ -105,7 +105,7 @@ int main() {
   window.setFramerateLimit(120);
 
   // per fuori focus
-  bool window_in_focus = 1;
+  bool window_in_focus{1};
   sf::RectangleShape darkness{sf::Vector2f(window_width, window_height)};
   darkness.setFillColor(sf::Color(0, 0, 0, 50));
 
@@ -114,11 +114,11 @@ int main() {
   top_bar.setFillColor(sf::Color(255, 0, 0, 100));
 
   // per tasto sinistro premuto
-  bool mouse_pressed = 0;
+  bool mouse_pressed{0};
 
   while (window.isOpen()) {
     // gestione eventi
-    sf::Event event;
+    sf::Event event{};
     while (window.pollEvent(event)) {
       // per poter chiudere la finestra
       if (event.type == sf::Event::Closed) window.close();
@@ -175,13 +175,13 @@ int main() {
       }
 
       // slider
-      s_sepa.work(window, mouse_pressed);
-      // s_sepa.linkTo(d_s);
+      s_sepa.work(window, mouse_pressed , d_s);
 
-      s_alig.work(window, mouse_pressed);
-      s_alig.linkTo(a);
-      
-      s_cohe.work(window, mouse_pressed);
+      // s_alig.linkTo(a, 0.01f);
+      // s_alig.work(window, mouse_pressed);
+
+      // s_cohe.linkTo(c, 0.0005f);
+      // s_cohe.work(window, mouse_pressed);
 
       // ciclo boids
       for (int i = 0; i < static_cast<int>(boids.size()); ++i) {

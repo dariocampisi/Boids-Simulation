@@ -45,36 +45,36 @@ bool Slider::dotRight() const {
   return this->dot_.getPosition().x >
          (this->line_.getPosition().x + this->line_.getSize().x / 2);
 }
+void Slider::normalize() {
+  if (this->dotLeft()) {
+    this->dot_.setPosition(
+        this->line_.getPosition().x - this->line_.getSize().x / 2,
+        this->dot_.getPosition().y);
+  }
+  if (this->dotRight()) {
+    this->dot_.setPosition(
+        this->line_.getPosition().x + this->line_.getSize().x / 2,
+        this->dot_.getPosition().y);
+  }
+}
 
-void Slider::work(const sf::RenderWindow &window, const bool mouse_pressed) {
+void Slider::work(const sf::RenderWindow &window, const bool mouse_pressed,
+                  float &f) {
+  static float initial_position = this->dot_.getPosition().x;
+  float step = this->line_.getSize().x / 21.f;
+
   if (this->mouseIsOver(window)) {
     if (mouse_pressed) {
       if (this->dotInRange()) {
         this->dot_.setPosition(sf::Mouse::getPosition(window).x,
                                this->dot_.getPosition().y);
+
+        float movement = this->dot_.getPosition().x - initial_position;
+        int factor = static_cast<int>(movement / step);
+        f = 20.f + factor * 1.f;
       }
     }
-    if (this->dotLeft()) {
-      this->dot_.setPosition(
-          this->line_.getPosition().x - this->line_.getSize().x / 2,
-          this->dot_.getPosition().y);
-    }
-    if (this->dotRight()) {
-      this->dot_.setPosition(
-          this->line_.getPosition().x + this->line_.getSize().x / 2,
-          this->dot_.getPosition().y);
-    }
-  }
-}
-
-void Slider::linkTo(float &f) {
-  if (this->dot_.getPosition().x != this->line_.getPosition().x) {
-    if (static_cast<int>(this->dot_.getPosition().x -
-                         this->line_.getPosition().x) %
-            20 ==
-        0) {
-      f += 0.001f;
-    }
+    this->normalize();
   }
 }
 

@@ -6,7 +6,8 @@
 class Slider {
  public:
   Slider(const std::string &title, const sf::Font &font,
-         const sf::Vector2f &line_size, const float dot_radius, const sf::Vector2f &position);
+         const sf::Vector2f &line_size, const float dot_radius,
+         const sf::Vector2f &position);
 
   const sf::RectangleShape &getLine() const;
   sf::CircleShape &getDot();
@@ -18,12 +19,9 @@ class Slider {
 
   bool dotLeft() const;
   bool dotRight() const;
+  void normalize () ;
 
-  void linkTo() const;
-
-  void work(const sf::RenderWindow &window, const bool mouse_pressed);
-
-  void linkTo(float &f);
+  void work(const sf::RenderWindow &window, const bool mouse_pressed, float &f);
 
   void draw(sf::RenderWindow &window);
 
