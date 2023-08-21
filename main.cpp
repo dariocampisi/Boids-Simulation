@@ -117,6 +117,7 @@ int main() {
   // finestra e game loop
   sf::RenderWindow window(sf::VideoMode(window_width, window_height), "Boids");
   window.setFramerateLimit(120);
+  sf::Color background_color(17, 17, 17);  // dark gray
 
   // per fuori focus
   bool window_in_focus{1};
@@ -125,7 +126,11 @@ int main() {
 
   // top bar
   sf::RectangleShape top_bar{sf::Vector2f(window_width, 50.f)};
-  top_bar.setFillColor(sf::Color(255, 0, 0, 100));
+  top_bar.setFillColor(background_color);
+  top_bar.setOutlineColor(colors_vector[0]);
+  top_bar.setOutlineThickness(2.f);
+
+  
 
   // per tasto sinistro premuto
   bool mouse_pressed{0};
@@ -282,7 +287,6 @@ int main() {
     }
 
     // rendering
-    sf::Color background_color(17, 17, 17);  // dark gray
     window.clear(background_color);
 
     for (int i = 0; i < static_cast<int>(boids.size()); ++i) {

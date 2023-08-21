@@ -6,9 +6,11 @@ Button::Button(const sf::Font &font, const sf::Vector2f &rect_size,
   text_.setString("RESET");
   text_.setFont(font);
   text_.setCharacterSize(14);
-  text_.setFillColor(sf::Color::White);
+  text_.setFillColor(sf::Color(204,0,0));
 
-  rect_.setFillColor(sf::Color::Black);
+  rect_.setFillColor(sf::Color(17,17,17));
+  rect_.setOutlineColor(sf::Color(204,0,0));
+  rect_.setOutlineThickness(1.f);
 
   rect_.setPosition(position.x, position.y);
   text_.setPosition(position.x, position.y);

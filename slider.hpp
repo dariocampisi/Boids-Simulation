@@ -9,7 +9,7 @@ class Slider {
          const sf::Vector2f &line_size, const float dot_radius,
          const sf::Vector2f &position, float &f, const float initial_value);
 
-  bool dotInRange() const;
+  // bool dotInRange() const;
 
   bool mouseIsOver(const sf::RenderWindow &window) const;
 
@@ -23,12 +23,14 @@ class Slider {
 
   void reset();
 
+  void setColor(const sf::Color &color);
+
  private:
   sf::RectangleShape line_;
   sf::CircleShape dot_;
   sf::Text title_;
-  float &f_;
-  float initial_value_;
+  float &parameter_;
+  const float initial_value_;
 };
 
 #endif
