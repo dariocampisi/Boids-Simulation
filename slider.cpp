@@ -60,7 +60,7 @@ void Slider::normalize() {
 
 void Slider::work(const sf::RenderWindow &window, const bool mouse_pressed,
                   float &f) {
-  static float initial_position = this->dot_.getPosition().x;
+  float initial_position = this->line_.getPosition().x;
   float step = this->line_.getSize().x / 21.f;
 
   if (this->mouseIsOver(window)) {
