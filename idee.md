@@ -7,7 +7,7 @@ Le idee realizzate sono ~~barrate~~
 - ~~Fornire ai boids un "angolo di vista"~~
 - ~~Più stormi~~
 - ~~I boids si fermano quando la finestra va fuori focus~~
-- **Implementare slider**
+- ~~Implementare slider~~
 
 ## Note
 1. Attenzionare la generazione di numeri random
