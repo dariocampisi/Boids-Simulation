@@ -15,8 +15,6 @@ class Button {
 
   bool mouseIsOver(const sf::RenderWindow &window) const;
 
-  void clicked(Slider &slider);
-
   void draw(sf::RenderWindow &window);
 
  private:

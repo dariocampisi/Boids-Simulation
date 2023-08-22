@@ -141,7 +141,6 @@ boids: CMakeFiles/boids.dir/slider.cpp.o
 boids: CMakeFiles/boids.dir/button.cpp.o
 boids: CMakeFiles/boids.dir/build.make
 boids: /usr/local/lib/libsfml-graphics.2.6.0.dylib
-boids: /usr/local/lib/libsfml-audio.2.6.0.dylib
 boids: /usr/local/lib/libsfml-window.2.6.0.dylib
 boids: /usr/local/lib/libsfml-system.2.6.0.dylib
 boids: CMakeFiles/boids.dir/link.txt

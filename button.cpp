@@ -24,8 +24,6 @@ bool Button::mouseIsOver(const sf::RenderWindow &window) const {
       sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
 }
 
-void Button::clicked(Slider &slider) { slider.reset(); }
-
 void Button::draw(sf::RenderWindow &window) {
   window.draw(this->rect_);
   window.draw(this->text_);

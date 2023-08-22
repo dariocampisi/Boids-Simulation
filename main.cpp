@@ -1,4 +1,5 @@
 #include <cassert>
+#include <iostream>
 #include <random>
 #include <vector>
 
@@ -7,12 +8,13 @@
 #include "slider.hpp"
 
 int main() {
-  // dimensioni finestra e font (San Francisco)
+  // DIMENSIONI FINESTRA E FONT (SAN FRANCISCO)
   unsigned int window_width{1280};
   unsigned int window_height{720};
   sf::Font font{};
   assert(font.loadFromFile("utility/sf.otf"));
 
+  // PARAMETRI
   // parametri regole di volo
   float d{150.f};  // distanza minima perché due boid si considerino vicini
   Slider s_dist{"visual range",
@@ -23,9 +25,8 @@ int main() {
                 d,
                 150.f};
 
-  float s{0.0005f};  // forza separazione
-
-  float d_s{20.f};  // distanza separazione
+  float s{0.0005f};  // separazione
+  float d_s{20.f};   // distanza separazione
   assert(d_s < d);
   Slider s_sepa{"separation",
                 font,
@@ -56,33 +57,26 @@ int main() {
 
   float max_velocity{2.f};  // velocità massima
 
-  // parametri predatore (p_)
-  float p_d{60.f};  // distanza minima perché il predatore si consideri vicino
-  float p_r{0.009f};  // repulsione predatore
+  // parametri predatore
+  float p_r{0.009f};  // repulsione
+  float p_d{60.f};    // distanza repulsione
   assert(p_r > s);
-  float p_c{0.001f};  // coesione predatore
+  float p_c{0.001f};  // coesione
   assert(p_c > c);
 
   float p_max_velocity{2.5f};  // velocità massima predatore
 
-  // parametri per evitare i bordi
+  // parametri per virare vicino ai bordi
   float margin{100.f};
   float turn_factor{0.25f};
 
-  // angolo di vista
+  // angolo di visione
   float angle_view{250.f};
 
-  // per mostrare gli fps
-  sf::Text fps_text{};
-  fps_text.setFont(font);
-  fps_text.setCharacterSize(21);
-  fps_text.setFillColor(sf::Color::White);
-  fps_text.setPosition(15.f, 15.f);
-  sf::Clock clock{};
-  int frames = 0;
-  sf::Time elapsed_time = sf::Time::Zero;
+  // tasto sinistro del mouse premuto e non rilasciato
+  bool mouse_pressed{0};
 
-  // generazione numeri random
+  // GENERAZIONE NUMERI RANDOM (POSIZIONI E VELOCITÀ INIZIALI)
   std::random_device rd{};
   std::mt19937 engine(rd());
   std::uniform_real_distribution<float> rand_x_position(0.f + margin,
@@ -92,9 +86,26 @@ int main() {
   std::uniform_real_distribution<float> rand_x_velocity(-2.5f, 2.5f);
   std::uniform_real_distribution<float> rand_y_velocity(-2.5f, 2.5f);
 
-  // costruzione boids
+  // PER MOSTRARE GLI FPS
+  sf::Text fps_text{};
+  fps_text.setFont(font);
+  fps_text.setCharacterSize(21);
+  fps_text.setFillColor(sf::Color::White);
+  fps_text.setPosition(15.f, 15.f);
+  sf::Clock clock{};
+  int frames = 0;
+  sf::Time elapsed_time = sf::Time::Zero;
+
+  // COSTRUZIONE BOIDS
+  // input numero boids
+  // int n_boids{};
+  // std::cout << "Numero boids: ";
+  // std::cin >> n_boids;
+
+
   std::vector<Boid> boids{};
 
+  // gestione di stormi e colori casuali
   sf::Color light_blue(0, 102, 204);
   sf::Color orange(255, 128, 0);
   sf::Color green(0, 153, 0);
@@ -118,16 +129,16 @@ int main() {
     boids.push_back(boid);
   }
 
-  // costruzione predatore
+  // COSTRUZIONE PREDATORE
   Boid predator{sf::Vector2f(rand_x_position(engine), rand_y_position(engine)),
                 sf::Vector2f(rand_x_velocity(engine), rand_y_velocity(engine))};
 
-  // finestra e game loop
+  // GESTIONE DELLA FINESTRA
   sf::RenderWindow window(sf::VideoMode(window_width, window_height), "Boids");
   window.setFramerateLimit(120);
-  sf::Color background_color(17, 17, 17);  // dark gray
+  sf::Color background_color(17, 17, 17);  // grigio scuro
 
-  // per fuori focus
+  // per gestire il fuori focus
   bool window_in_focus{1};
   sf::RectangleShape darkness{sf::Vector2f(window_width, window_height)};
   darkness.setFillColor(sf::Color(0, 0, 0, 50));
@@ -138,9 +149,6 @@ int main() {
   top_bar.setOutlineColor(colors_vector[0]);
   top_bar.setOutlineThickness(1.5f);
 
-  // per tasto sinistro premuto
-  bool mouse_pressed{0};
-
   // bottone reset
   Button reset{font, sf::Vector2f(80.f, 35.f), sf::Vector2f(1150.f, 13.f)};
   reset.getText().setFillColor(colors_vector[0]);
@@ -148,14 +156,15 @@ int main() {
   reset.getRect().setOutlineColor(colors_vector[0]);
   reset.getRect().setOutlineThickness(1.f);
 
+  // GAME LOOP
   while (window.isOpen()) {
-    // gestione eventi
+    // GESTIONE EVENTI
     sf::Event event{};
     while (window.pollEvent(event)) {
-      // per poter chiudere la finestra
+      // chiusura finestra
       if (event.type == sf::Event::Closed) window.close();
 
-      // mouse left-click fa spawnare un boid (ma non sulla top bar)
+      // mouse left-click genera un boid (non sulla top bar)
       if (!(sf::Mouse::getPosition(window).y <= 50.f)) {
         if (event.type == sf::Event::MouseButtonReleased) {
           if (event.mouseButton.button == sf::Mouse::Left) {
@@ -172,7 +181,7 @@ int main() {
         }
       }
 
-      // fuori focus
+      // gestione fuori focus
       if (event.type == sf::Event::GainedFocus) {
         window_in_focus = 1;
       }
@@ -180,7 +189,7 @@ int main() {
         window_in_focus = 0;
       }
 
-      // tasto sinistro premuto rilasciato
+      // tasto sinistro mouse premuto e non rilasciato
       if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
           mouse_pressed = 1;
@@ -202,18 +211,19 @@ int main() {
       if (reset.mouseIsOver(window) &&
           event.type == sf::Event::MouseButtonReleased &&
           event.mouseButton.button == sf::Mouse::Left) {
-        reset.clicked(s_sepa);
-        reset.clicked(s_alig);
-        reset.clicked(s_cohe);
-        reset.clicked(s_dist);
+        s_sepa.reset();
+        s_alig.reset();
+        s_cohe.reset();
+        s_dist.reset();
 
         reset.getText().setFillColor(colors_vector[0]);
         reset.getRect().setFillColor(background_color);
       }
     }
 
+    // GAME LOOP CORE
     if (window_in_focus) {
-      // fps
+      // calcolo fps
       elapsed_time += clock.restart();
       ++frames;
       int fps{};
@@ -225,13 +235,13 @@ int main() {
         elapsed_time = sf::Time::Zero;
       }
 
-      // slider
+      // funzionamento slider
       s_sepa.work(window, mouse_pressed);
       s_alig.work(window, mouse_pressed);
       s_cohe.work(window, mouse_pressed);
       s_dist.work(window, mouse_pressed);
 
-      // ciclo boids
+      // BOIDS
       for (int i = 0; i < static_cast<int>(boids.size()); ++i) {
         // movimento
         boids[i].getShape().move(boids[i].getVelocity());
@@ -281,7 +291,8 @@ int main() {
         boids[i].setVelocity(boid_new_velocity);
       }
 
-      // predator
+      // PREDATORE
+      // movimento, controllo ai bordi e velocità
       predator.getShape().move(predator.getVelocity());
       predator.setRotation(
           std::atan2(predator.getVelocity().y, predator.getVelocity().x) *
@@ -307,7 +318,7 @@ int main() {
       }
     }
 
-    // rendering
+    // RENDERING
     window.clear(background_color);
 
     for (int i = 0; i < static_cast<int>(boids.size()); ++i) {

@@ -19,21 +19,21 @@ string(APPEND CMAKE_CXX_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-fra
 string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 
 # per sfml
-find_package(SFML 2.5 COMPONENTS graphics audio window system REQUIRED)
+find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 
-# eseguibile
+# eseguibili
 add_executable(boids main.cpp boid.cpp slider.cpp button.cpp)
 # target_compile_options(boids PRIVATE -O0)
 
 # per sfml
-target_link_libraries(boids PRIVATE sfml-graphics sfml-audio sfml-window sfml-system)
+target_link_libraries(boids PRIVATE sfml-graphics)
 
 # se il testing e' abilitato...
 # per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
 if (BUILD_TESTING)
 
   # aggiungi l'eseguibile statistics.t
-  add_executable(boids.t boids.test.cpp boids.cpp)
+  add_executable(boid.t boid.test.cpp boid.cpp)
   # aggiungi l'eseguibile statistics.t alla lista dei test
   add_test(NAME boids.t COMMAND boids.t)
 
