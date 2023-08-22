@@ -23,7 +23,7 @@ class Slider {
 
   void reset();
 
-  void setColor(const sf::Color &color);
+  // void setColor(const sf::Color &color);
 
  private:
   sf::RectangleShape line_;

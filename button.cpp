@@ -6,15 +6,18 @@ Button::Button(const sf::Font &font, const sf::Vector2f &rect_size,
   text_.setString("RESET");
   text_.setFont(font);
   text_.setCharacterSize(14);
-  text_.setFillColor(sf::Color(204,0,0));
+  text_.setStyle(sf::Text::Bold);
+  sf::Vector2f center = text_.getGlobalBounds().getSize() / 2.f;
+  sf::Vector2f local_bounds = center + text_.getLocalBounds().getPosition();
+  text_.setOrigin(local_bounds);
 
-  rect_.setFillColor(sf::Color(17,17,17));
-  rect_.setOutlineColor(sf::Color(204,0,0));
-  rect_.setOutlineThickness(1.f);
-
+  text_.setPosition(position.x + rect_.getSize().x / 2,
+                    position.y + rect_.getSize().y / 2);
   rect_.setPosition(position.x, position.y);
-  text_.setPosition(position.x, position.y);
 }
+
+sf::RectangleShape &Button::getRect() { return this->rect_; }
+sf::Text &Button::getText() { return this->text_; }
 
 bool Button::mouseIsOver(const sf::RenderWindow &window) const {
   return this->rect_.getGlobalBounds().contains(

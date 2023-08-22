@@ -13,12 +13,11 @@ Slider::Slider(const std::string &title, const sf::Font &font,
 
   title_.setString(title);
   title_.setFont(font);
-  title_.setCharacterSize(12);
-  title_.setFillColor(sf::Color::White);
+  title_.setCharacterSize(15);
 
   line_.setPosition(position.x, position.y);
   dot_.setPosition(position.x, position.y);
-  title_.setPosition(position.x - line_.getSize().x / 2, position.y - 25.f);
+  title_.setPosition(position.x - line_.getSize().x / 2, position.y - 28.f);
 }
 
 /*
@@ -60,7 +59,7 @@ void Slider::normalize() {
   }
 }
 
-// il valore massimo assunto dal parametro è il doppio del valore iniziale
+// il valore massimo assunto dal parametro è 1.5 volte il valore iniziale
 void Slider::work(const sf::RenderWindow &window, const bool mouse_pressed) {
   float initial_position = this->line_.getPosition().x;
   float step = this->line_.getSize().x / 11.f;
@@ -89,8 +88,8 @@ void Slider::reset() {
                          this->dot_.getPosition().y);
 }
 
-void Slider::setColor(const sf::Color &color) {
-  this->line_.setFillColor(color);
-  this->dot_.setFillColor(sf::Color(color.r - 15, color.g - 15, color.b - 15));
-  this->title_.setFillColor(color);
-}
+// void Slider::setColor(const sf::Color &color) {
+//   this->line_.setFillColor(color);
+//   this->dot_.setFillColor(color);
+//   this->title_.setFillColor(color);
+// }

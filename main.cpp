@@ -14,16 +14,24 @@ int main() {
   assert(font.loadFromFile("utility/sf.otf"));
 
   // parametri regole di volo
-  float d{150.f};    // distanza minima perché due boid si considerino vicini
+  float d{150.f};  // distanza minima perché due boid si considerino vicini
+  Slider s_dist{"visual range",
+                font,
+                sf::Vector2f(160.f, 2.5f),
+                7.f,
+                sf::Vector2f(1000.f, 38.f),
+                d,
+                150.f};
+
   float s{0.0005f};  // forza separazione
 
   float d_s{20.f};  // distanza separazione
   assert(d_s < d);
   Slider s_sepa{"separation",
                 font,
-                sf::Vector2f(80.f, 2.5f),
+                sf::Vector2f(160.f, 2.5f),
                 7.f,
-                sf::Vector2f(300.f, 35.f),
+                sf::Vector2f(250.f, 38.f),
                 d_s,
                 20.f};
 
@@ -31,18 +39,18 @@ int main() {
   assert(a < 1);
   Slider s_alig{"alignment",
                 font,
-                sf::Vector2f(80.f, 2.5f),
+                sf::Vector2f(160.f, 2.5f),
                 7.f,
-                sf::Vector2f(500.f, 35.f),
+                sf::Vector2f(500.f, 38.f),
                 a,
                 0.01f};
 
   float c{0.0005f};  // coesione
   Slider s_cohe{"cohesion",
                 font,
-                sf::Vector2f(80.f, 2.5f),
+                sf::Vector2f(160.f, 2.5f),
                 7.f,
-                sf::Vector2f(700.f, 35.f),
+                sf::Vector2f(750.f, 38.f),
                 c,
                 0.0005f};
 
@@ -59,7 +67,7 @@ int main() {
 
   // parametri per evitare i bordi
   float margin{100.f};
-  float turn_factor{0.1f};
+  float turn_factor{0.25f};
 
   // angolo di vista
   float angle_view{250.f};
@@ -69,7 +77,7 @@ int main() {
   fps_text.setFont(font);
   fps_text.setCharacterSize(21);
   fps_text.setFillColor(sf::Color::White);
-  fps_text.setPosition(10.f, 10.f);
+  fps_text.setPosition(15.f, 15.f);
   sf::Clock clock{};
   int frames = 0;
   sf::Time elapsed_time = sf::Time::Zero;
@@ -125,18 +133,20 @@ int main() {
   darkness.setFillColor(sf::Color(0, 0, 0, 50));
 
   // top bar
-  sf::RectangleShape top_bar{sf::Vector2f(window_width, 50.f)};
+  sf::RectangleShape top_bar{sf::Vector2f(window_width, 60.f)};
   top_bar.setFillColor(background_color);
   top_bar.setOutlineColor(colors_vector[0]);
-  top_bar.setOutlineThickness(2.f);
-
-  
+  top_bar.setOutlineThickness(1.5f);
 
   // per tasto sinistro premuto
   bool mouse_pressed{0};
 
   // bottone reset
-  Button reset{font, sf::Vector2f(100.f, 30.f), sf::Vector2f(1000.f, 20.f)};
+  Button reset{font, sf::Vector2f(80.f, 35.f), sf::Vector2f(1150.f, 13.f)};
+  reset.getText().setFillColor(colors_vector[0]);
+  reset.getRect().setFillColor(background_color);
+  reset.getRect().setOutlineColor(colors_vector[0]);
+  reset.getRect().setOutlineThickness(1.f);
 
   while (window.isOpen()) {
     // gestione eventi
@@ -186,9 +196,19 @@ int main() {
       if (reset.mouseIsOver(window) &&
           event.type == sf::Event::MouseButtonPressed &&
           event.mouseButton.button == sf::Mouse::Left) {
+        reset.getText().setFillColor(background_color);
+        reset.getRect().setFillColor(colors_vector[0]);
+      }
+      if (reset.mouseIsOver(window) &&
+          event.type == sf::Event::MouseButtonReleased &&
+          event.mouseButton.button == sf::Mouse::Left) {
         reset.clicked(s_sepa);
         reset.clicked(s_alig);
         reset.clicked(s_cohe);
+        reset.clicked(s_dist);
+
+        reset.getText().setFillColor(colors_vector[0]);
+        reset.getRect().setFillColor(background_color);
       }
     }
 
@@ -209,6 +229,7 @@ int main() {
       s_sepa.work(window, mouse_pressed);
       s_alig.work(window, mouse_pressed);
       s_cohe.work(window, mouse_pressed);
+      s_dist.work(window, mouse_pressed);
 
       // ciclo boids
       for (int i = 0; i < static_cast<int>(boids.size()); ++i) {
@@ -299,6 +320,7 @@ int main() {
     s_sepa.draw(window);
     s_alig.draw(window);
     s_cohe.draw(window);
+    s_dist.draw(window);
     reset.draw(window);
 
     if (!window_in_focus) window.draw(darkness);

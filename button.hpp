@@ -10,6 +10,9 @@ class Button {
   Button(const sf::Font &font, const sf::Vector2f &rect_size,
          const sf::Vector2f &position);
 
+  sf::RectangleShape &getRect();
+  sf::Text &getText();
+
   bool mouseIsOver(const sf::RenderWindow &window) const;
 
   void clicked(Slider &slider);
