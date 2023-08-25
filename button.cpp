@@ -13,8 +13,7 @@ Button::Button(const std::string &title, const sf::Font &font,
   text_.setStyle(sf::Text::Bold);
   text_.setOrigin(text_.getGlobalBounds().getSize() / 2.f +
                   text_.getLocalBounds().getPosition());
-  text_.setPosition(position.x ,
-                    position.y );
+  text_.setPosition(position.x, position.y);
 }
 
 sf::RectangleShape &Button::getRect() { return this->rect_; }

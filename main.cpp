@@ -123,9 +123,9 @@ int main() {
   Button start{"START", font, sf::Vector2f(170.f, 70.f), 20,
                sf::Vector2f(window_width / 2, window_height / 2 + 70.f)};
   start.getText().setFillColor(sf::Color(204, 0, 0));
+  start.getRect().setFillColor(background_color);
   start.getRect().setOutlineColor(sf::Color(204, 0, 0));
   start.getRect().setOutlineThickness(2.f);
-  start.getRect().setFillColor(background_color);
 
   std::string user_input{};
 
@@ -161,7 +161,8 @@ int main() {
                 sf::Vector2f(rand_x_velocity(engine), rand_y_velocity(engine))};
 
   // GESTIONE DELLA FINESTRA
-  sf::RenderWindow window(sf::VideoMode(window_width, window_height), "Boids");
+  sf::RenderWindow window(sf::VideoMode(window_width, window_height),
+                          "Boids Simulation");
   window.setFramerateLimit(120);
 
   // per gestire il fuori focus
@@ -190,23 +191,6 @@ int main() {
     while (window.pollEvent(event)) {
       // chiusura finestra
       if (event.type == sf::Event::Closed) window.close();
-
-      // mouse left-click genera un boid (non sulla top bar)
-      if (!(sf::Mouse::getPosition(window).y <= 50.f)) {
-        if (event.type == sf::Event::MouseButtonReleased) {
-          if (event.mouseButton.button == sf::Mouse::Left) {
-            int c = colors(engine);
-
-            Boid boid{
-                colors_vector[c],
-                sf::Vector2f(sf::Mouse::getPosition(window).x,
-                             sf::Mouse::getPosition(window).y),
-                sf::Vector2f(rand_x_velocity(engine), rand_y_velocity(engine))};
-
-            boids.push_back(boid);
-          }
-        }
-      }
 
       // gestione fuori focus
       if (event.type == sf::Event::GainedFocus) {
@@ -260,6 +244,23 @@ int main() {
           num_boids.setString(user_input);
           num_boids.setOrigin(num_boids.getGlobalBounds().getSize() / 2.f +
                               num_boids.getLocalBounds().getPosition());
+        }
+      }
+
+      // mouse left-click genera un boid (non sulla top bar)
+      if (!(sf::Mouse::getPosition(window).y <= top_bar.getSize().y)) {
+        if (event.type == sf::Event::MouseButtonReleased) {
+          if (event.mouseButton.button == sf::Mouse::Left) {
+            int c = colors(engine);
+
+            Boid boid{
+                colors_vector[c],
+                sf::Vector2f(sf::Mouse::getPosition(window).x,
+                             sf::Mouse::getPosition(window).y),
+                sf::Vector2f(rand_x_velocity(engine), rand_y_velocity(engine))};
+
+            boids.push_back(boid);
+          }
         }
       }
 
