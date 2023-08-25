@@ -15,7 +15,7 @@ int main() {
   sf::Font font{};
   assert(font.loadFromFile("utility/roboto.ttf"));
 
-  // PARAMETRI
+  // PARAMETRI E VARIABILI
   // parametri regole di volo
   float d{150.f};  // distanza minima perché due boid si considerino vicini
   Slider s_dist{"visual range",
@@ -80,38 +80,52 @@ int main() {
   // boids già costruiti
   bool boids_built{0};
 
-  // GENERAZIONE NUMERI RANDOM (POSIZIONI E VELOCITÀ INIZIALI)
+  // troppi boids in input
+  bool too_many_boids{0};
+
+  // GENERAZIONE NUMERI RANDOM (PER POSIZIONI E VELOCITÀ INIZIALI)
   std::random_device rd{};
   std::mt19937 engine(rd());
   std::uniform_real_distribution<float> rand_x_position(0.f + margin,
                                                         window_width - margin);
   std::uniform_real_distribution<float> rand_y_position(0.f + margin,
                                                         window_height - margin);
-  std::uniform_real_distribution<float> rand_x_velocity(-2.5f, 2.5f);
-  std::uniform_real_distribution<float> rand_y_velocity(-2.5f, 2.5f);
+  std::uniform_real_distribution<float> rand_x_velocity(-2.f, 2.f);
+  std::uniform_real_distribution<float> rand_y_velocity(-2.f, 2.f);
 
   // SCHERMATA INIZIALE
   bool start_clicked{0};
 
   sf::Text initial_text{};
   initial_text.setFont(font);
-  initial_text.setCharacterSize(20);
-  initial_text.setPosition(window_width / 2, window_height / 2);
+  initial_text.setString("Insert boids number ");
+  initial_text.setCharacterSize(24);
   initial_text.setStyle(sf::Text::Bold);
-  initial_text.setString("Boids number: ");
+  initial_text.setOrigin(initial_text.getGlobalBounds().getSize() / 2.f +
+                         initial_text.getLocalBounds().getPosition());
+  initial_text.setPosition(window_width / 2, window_height / 2 - 50.f);
 
-  Button start{"START", font, sf::Vector2f(200.f, 100.f),
-               sf::Vector2f(window_width / 2, window_height / 2 + 200.f)};
+  sf::Text num_boids{};
+  num_boids.setFont(font);
+  num_boids.setCharacterSize(30);
+  num_boids.setStyle(sf::Text::Bold);
+  num_boids.setPosition(window_width / 2, window_height / 2);
+
+  sf::Text too_many{};
+  too_many.setFont(font);
+  too_many.setString("Too many! (300 max)");
+  too_many.setCharacterSize(24);
+  too_many.setStyle(sf::Text::Bold);
+  too_many.setOrigin(too_many.getGlobalBounds().getSize() / 2.f +
+                     too_many.getLocalBounds().getPosition());
+  too_many.setPosition(window_width / 2, window_height / 2);
+
+  Button start{"START", font, sf::Vector2f(170.f, 70.f), 20,
+               sf::Vector2f(window_width / 2, window_height / 2 + 70.f)};
   start.getText().setFillColor(sf::Color(204, 0, 0));
   start.getRect().setOutlineColor(sf::Color(204, 0, 0));
   start.getRect().setOutlineThickness(2.f);
   start.getRect().setFillColor(background_color);
-
-  sf::Text num_boids{};
-  num_boids.setFont(font);
-  num_boids.setCharacterSize(20);
-  num_boids.setStyle(sf::Text::Bold);
-  num_boids.setPosition(window_width / 2 + 100.f, window_height / 2 - 100.f);
 
   std::string user_input{};
 
@@ -162,8 +176,8 @@ int main() {
   top_bar.setOutlineThickness(2.f);
 
   // bottone reset
-  Button reset{"RESET", font, sf::Vector2f(80.f, 35.f),
-               sf::Vector2f(1150.f, 13.f)};
+  Button reset{"RESET", font, sf::Vector2f(80.f, 35.f), 14,
+               sf::Vector2f(1200.f, 30.f)};
   reset.getText().setFillColor(colors_vector[0]);
   reset.getRect().setFillColor(background_color);
   reset.getRect().setOutlineColor(colors_vector[0]);
@@ -202,6 +216,53 @@ int main() {
         window_in_focus = 0;
       }
 
+      // SCHERMATA INIZIALE
+      // testo iniziale
+      if (event.type == sf::Event::TextEntered && event.text.unicode >= '0' &&
+          event.text.unicode <= '9') {
+        too_many_boids = 0;
+        user_input += static_cast<char>(event.text.unicode);
+        num_boids.setString(user_input);
+        num_boids.setOrigin(num_boids.getGlobalBounds().getSize() / 2.f +
+                            num_boids.getLocalBounds().getPosition());
+      }
+      if (event.type == sf::Event::KeyPressed &&
+          event.key.code == sf::Keyboard::BackSpace && !user_input.empty()) {
+        user_input.pop_back();
+        num_boids.setString(user_input);
+        num_boids.setOrigin(num_boids.getGlobalBounds().getSize() / 2.f +
+                            num_boids.getLocalBounds().getPosition());
+      }
+
+      // bottone start
+      if ((start.mouseIsOver(window) &&
+           event.type == sf::Event::MouseButtonPressed &&
+           event.mouseButton.button == sf::Mouse::Left) ||
+          (event.type == sf::Event::KeyPressed &&
+           event.key.code == sf::Keyboard::Enter)) {
+        start.getText().setFillColor(background_color);
+        start.getRect().setFillColor(sf::Color(204, 0, 0));
+      }
+      if (((start.mouseIsOver(window) &&
+            event.type == sf::Event::MouseButtonReleased &&
+            event.mouseButton.button == sf::Mouse::Left) ||
+           (event.type == sf::Event::KeyReleased &&
+            event.key.code == sf::Keyboard::Enter)) &&
+          !user_input.empty()) {
+        start.getText().setFillColor(sf::Color(204, 0, 0));
+        start.getRect().setFillColor(background_color);
+
+        if (std::stoi(user_input) <= 300) {
+          start_clicked = 1;
+        } else {
+          too_many_boids = 1;
+          user_input.clear();
+          num_boids.setString(user_input);
+          num_boids.setOrigin(num_boids.getGlobalBounds().getSize() / 2.f +
+                              num_boids.getLocalBounds().getPosition());
+        }
+      }
+
       // tasto sinistro mouse premuto e non rilasciato
       if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
@@ -232,37 +293,14 @@ int main() {
         reset.getText().setFillColor(colors_vector[0]);
         reset.getRect().setFillColor(background_color);
       }
-
-      // SCHERMATA INIZIALE
-      // testo iniziale
-      if (event.type == sf::Event::TextEntered && event.text.unicode >= '0' &&
-          event.text.unicode <= '9') {
-        user_input += static_cast<char>(event.text.unicode);
-        num_boids.setString(user_input);
-      }
-
-      // bottone start
-      if (start.mouseIsOver(window) &&
-          event.type == sf::Event::MouseButtonPressed &&
-          event.mouseButton.button == sf::Mouse::Left) {
-        start.getText().setFillColor(background_color);
-        start.getRect().setFillColor(sf::Color(204, 0, 0));
-      }
-      if (start.mouseIsOver(window) &&
-          event.type == sf::Event::MouseButtonReleased &&
-          event.mouseButton.button == sf::Mouse::Left) {
-        start_clicked = 1;
-
-        start.getText().setFillColor(sf::Color(204, 0, 0));
-        start.getRect().setFillColor(background_color);
-      }
     }
 
     // GAME LOOP CORE
     if (start_clicked) {
-      if (!boids_built) {
+      if (!boids_built && !user_input.empty()) {
         // costruzione boids (avviene solo una volta)
-        for (int i = 0; i < std::stoi(user_input); ++i) {
+        for (unsigned int i = 0u;
+             i < static_cast<unsigned int>(std::stoi(user_input)); ++i) {
           int c = colors(engine);
 
           Boid boid{
@@ -294,7 +332,8 @@ int main() {
         s_dist.work(window, mouse_pressed);
 
         // BOIDS
-        for (int i = 0; i < static_cast<int>(boids.size()); ++i) {
+        for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
+             ++i) {
           // movimento
           boids[i].getShape().move(boids[i].getVelocity());
           boids[i].setRotation(
@@ -312,7 +351,8 @@ int main() {
           sf::Vector2f cohesion_sum{};
           float n{0.f};  // numero di boid vicini
 
-          for (int j = 0; j < static_cast<int>(boids.size()); ++j) {
+          for (unsigned int j = 0u; j < static_cast<unsigned int>(boids.size());
+               ++j) {
             if (i == j) continue;
             if (boids[i].isCloseAndVisible(boids[j], d, angle_view)) {
               if (boids[i].isClose(boids[j], d_s)) {
@@ -359,7 +399,8 @@ int main() {
 
         sf::Vector2f p_cohesion_sum{};
         float p_n{0.f};
-        for (int i = 0; i < static_cast<int>(boids.size()); ++i) {
+        for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
+             ++i) {
           if (predator.isCloseAndVisible(boids[i], d, angle_view)) {
             ++p_n;
             p_cohesion_sum += boids[i].getPosition();
@@ -377,7 +418,8 @@ int main() {
       // RENDERING
       window.clear(background_color);
 
-      for (int i = 0; i < static_cast<int>(boids.size()); ++i) {
+      for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
+           ++i) {
         window.draw(boids[i].getShape());
       }
       window.draw(predator.getShape());
@@ -398,7 +440,9 @@ int main() {
 
       window.draw(initial_text);
       window.draw(num_boids);
-      start.draw(window);
+      if (!user_input.empty()) start.draw(window);
+
+      if (user_input.empty() && too_many_boids) window.draw(too_many);
 
       if (!window_in_focus) window.draw(darkness);
 

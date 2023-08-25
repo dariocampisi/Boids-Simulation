@@ -8,6 +8,7 @@ Le idee realizzate sono ~~barrate~~
 - ~~Più stormi~~
 - ~~I boids si fermano quando la finestra va fuori focus~~
 - ~~Implementare slider~~
+- ~~Schermata iniziale~~
 
 ## Note
 1. Attenzionare la generazione di numeri random

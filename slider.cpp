@@ -11,8 +11,8 @@ Slider::Slider(const std::string &title, const sf::Font &font,
   line_.setOrigin(line_size.x / 2, line_size.y / 2);
   dot_.setOrigin(dot_radius, dot_radius);
 
-  title_.setString(title);
   title_.setFont(font);
+  title_.setString(title);
   title_.setCharacterSize(15);
 
   line_.setPosition(position.x, position.y);

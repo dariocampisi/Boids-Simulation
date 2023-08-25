@@ -1,20 +1,20 @@
 #include "button.hpp"
 
-Button::Button(const std::string& title, const sf::Font &font, const sf::Vector2f &rect_size,
+Button::Button(const std::string &title, const sf::Font &font,
+               const sf::Vector2f &rect_size, unsigned int text_size,
                const sf::Vector2f &position)
     : rect_{rect_size} {
-  text_.setString(title);
-  text_.setFont(font);
-  text_.setCharacterSize(14);
-  text_.setStyle(sf::Text::Bold);
-
-  sf::Vector2f center = text_.getGlobalBounds().getSize() / 2.f;
-  sf::Vector2f local_bounds = center + text_.getLocalBounds().getPosition();
-  text_.setOrigin(local_bounds);
-
-  text_.setPosition(position.x + rect_.getSize().x / 2,
-                    position.y + rect_.getSize().y / 2);
+  rect_.setOrigin(rect_.getSize().x / 2, rect_.getSize().y / 2);
   rect_.setPosition(position.x, position.y);
+
+  text_.setFont(font);
+  text_.setString(title);
+  text_.setCharacterSize(text_size);
+  text_.setStyle(sf::Text::Bold);
+  text_.setOrigin(text_.getGlobalBounds().getSize() / 2.f +
+                  text_.getLocalBounds().getPosition());
+  text_.setPosition(position.x ,
+                    position.y );
 }
 
 sf::RectangleShape &Button::getRect() { return this->rect_; }
