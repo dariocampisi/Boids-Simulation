@@ -7,7 +7,7 @@
 
 class Button {
  public:
-  Button(const sf::Font &font, const sf::Vector2f &rect_size,
+  Button(const std::string& title, const sf::Font &font, const sf::Vector2f &rect_size,
          const sf::Vector2f &position);
 
   sf::RectangleShape &getRect();

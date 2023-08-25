@@ -8,11 +8,12 @@
 #include "slider.hpp"
 
 int main() {
-  // DIMENSIONI FINESTRA E FONT (SAN FRANCISCO)
-  unsigned int window_width{1280};
-  unsigned int window_height{720};
+  // DIMENSIONI FINESTRA E FONT (ROBOTO)
+  unsigned int window_width{1280u};
+  unsigned int window_height{720u};
+  sf::Color background_color(17, 17, 17);  // grigio scuro
   sf::Font font{};
-  assert(font.loadFromFile("utility/sf.otf"));
+  assert(font.loadFromFile("utility/roboto.ttf"));
 
   // PARAMETRI
   // parametri regole di volo
@@ -76,6 +77,9 @@ int main() {
   // tasto sinistro del mouse premuto e non rilasciato
   bool mouse_pressed{0};
 
+  // boids già costruiti
+  bool boids_built{0};
+
   // GENERAZIONE NUMERI RANDOM (POSIZIONI E VELOCITÀ INIZIALI)
   std::random_device rd{};
   std::mt19937 engine(rd());
@@ -85,6 +89,31 @@ int main() {
                                                         window_height - margin);
   std::uniform_real_distribution<float> rand_x_velocity(-2.5f, 2.5f);
   std::uniform_real_distribution<float> rand_y_velocity(-2.5f, 2.5f);
+
+  // SCHERMATA INIZIALE
+  bool start_clicked{0};
+
+  sf::Text initial_text{};
+  initial_text.setFont(font);
+  initial_text.setCharacterSize(20);
+  initial_text.setPosition(window_width / 2, window_height / 2);
+  initial_text.setStyle(sf::Text::Bold);
+  initial_text.setString("Boids number: ");
+
+  Button start{"START", font, sf::Vector2f(200.f, 100.f),
+               sf::Vector2f(window_width / 2, window_height / 2 + 200.f)};
+  start.getText().setFillColor(sf::Color(204, 0, 0));
+  start.getRect().setOutlineColor(sf::Color(204, 0, 0));
+  start.getRect().setOutlineThickness(2.f);
+  start.getRect().setFillColor(background_color);
+
+  sf::Text num_boids{};
+  num_boids.setFont(font);
+  num_boids.setCharacterSize(20);
+  num_boids.setStyle(sf::Text::Bold);
+  num_boids.setPosition(window_width / 2 + 100.f, window_height / 2 - 100.f);
+
+  std::string user_input{};
 
   // PER MOSTRARE GLI FPS
   sf::Text fps_text{};
@@ -97,12 +126,6 @@ int main() {
   sf::Time elapsed_time = sf::Time::Zero;
 
   // COSTRUZIONE BOIDS
-  // input numero boids
-  // int n_boids{};
-  // std::cout << "Numero boids: ";
-  // std::cin >> n_boids;
-
-
   std::vector<Boid> boids{};
 
   // gestione di stormi e colori casuali
@@ -119,16 +142,6 @@ int main() {
   int flocks_number = flocks(engine);
   std::uniform_int_distribution colors(0, flocks_number);
 
-  for (int i = 0; i < 100; ++i) {
-    int c = colors(engine);
-
-    Boid boid{colors_vector[c],
-              sf::Vector2f(rand_x_position(engine), rand_y_position(engine)),
-              sf::Vector2f(rand_x_velocity(engine), rand_y_velocity(engine))};
-
-    boids.push_back(boid);
-  }
-
   // COSTRUZIONE PREDATORE
   Boid predator{sf::Vector2f(rand_x_position(engine), rand_y_position(engine)),
                 sf::Vector2f(rand_x_velocity(engine), rand_y_velocity(engine))};
@@ -136,7 +149,6 @@ int main() {
   // GESTIONE DELLA FINESTRA
   sf::RenderWindow window(sf::VideoMode(window_width, window_height), "Boids");
   window.setFramerateLimit(120);
-  sf::Color background_color(17, 17, 17);  // grigio scuro
 
   // per gestire il fuori focus
   bool window_in_focus{1};
@@ -147,10 +159,11 @@ int main() {
   sf::RectangleShape top_bar{sf::Vector2f(window_width, 60.f)};
   top_bar.setFillColor(background_color);
   top_bar.setOutlineColor(colors_vector[0]);
-  top_bar.setOutlineThickness(1.5f);
+  top_bar.setOutlineThickness(2.f);
 
   // bottone reset
-  Button reset{font, sf::Vector2f(80.f, 35.f), sf::Vector2f(1150.f, 13.f)};
+  Button reset{"RESET", font, sf::Vector2f(80.f, 35.f),
+               sf::Vector2f(1150.f, 13.f)};
   reset.getText().setFillColor(colors_vector[0]);
   reset.getRect().setFillColor(background_color);
   reset.getRect().setOutlineColor(colors_vector[0]);
@@ -219,123 +232,177 @@ int main() {
         reset.getText().setFillColor(colors_vector[0]);
         reset.getRect().setFillColor(background_color);
       }
+
+      // SCHERMATA INIZIALE
+      // testo iniziale
+      if (event.type == sf::Event::TextEntered && event.text.unicode >= '0' &&
+          event.text.unicode <= '9') {
+        user_input += static_cast<char>(event.text.unicode);
+        num_boids.setString(user_input);
+      }
+
+      // bottone start
+      if (start.mouseIsOver(window) &&
+          event.type == sf::Event::MouseButtonPressed &&
+          event.mouseButton.button == sf::Mouse::Left) {
+        start.getText().setFillColor(background_color);
+        start.getRect().setFillColor(sf::Color(204, 0, 0));
+      }
+      if (start.mouseIsOver(window) &&
+          event.type == sf::Event::MouseButtonReleased &&
+          event.mouseButton.button == sf::Mouse::Left) {
+        start_clicked = 1;
+
+        start.getText().setFillColor(sf::Color(204, 0, 0));
+        start.getRect().setFillColor(background_color);
+      }
     }
 
     // GAME LOOP CORE
-    if (window_in_focus) {
-      // calcolo fps
-      elapsed_time += clock.restart();
-      ++frames;
-      int fps{};
-      if (elapsed_time >= sf::seconds(1.f)) {
-        fps = frames / elapsed_time.asSeconds();
-        fps_text.setString(std::to_string(fps) + " fps");
+    if (start_clicked) {
+      if (!boids_built) {
+        // costruzione boids (avviene solo una volta)
+        for (int i = 0; i < std::stoi(user_input); ++i) {
+          int c = colors(engine);
 
-        frames = 0;
-        elapsed_time = sf::Time::Zero;
+          Boid boid{
+              colors_vector[c],
+              sf::Vector2f(rand_x_position(engine), rand_y_position(engine)),
+              sf::Vector2f(rand_x_velocity(engine), rand_y_velocity(engine))};
+
+          boids.push_back(boid);
+        }
+        boids_built = 1;
       }
+      if (window_in_focus) {
+        // calcolo fps
+        elapsed_time += clock.restart();
+        ++frames;
+        int fps{};
+        if (elapsed_time >= sf::seconds(1.f)) {
+          fps = frames / elapsed_time.asSeconds();
+          fps_text.setString(std::to_string(fps) + " fps");
 
-      // funzionamento slider
-      s_sepa.work(window, mouse_pressed);
-      s_alig.work(window, mouse_pressed);
-      s_cohe.work(window, mouse_pressed);
-      s_dist.work(window, mouse_pressed);
+          frames = 0;
+          elapsed_time = sf::Time::Zero;
+        }
 
-      // BOIDS
-      for (int i = 0; i < static_cast<int>(boids.size()); ++i) {
-        // movimento
-        boids[i].getShape().move(boids[i].getVelocity());
-        boids[i].setRotation(
-            std::atan2(boids[i].getVelocity().y, boids[i].getVelocity().x) *
-            (180.f / M_PI));
+        // funzionamento slider
+        s_sepa.work(window, mouse_pressed);
+        s_alig.work(window, mouse_pressed);
+        s_cohe.work(window, mouse_pressed);
+        s_dist.work(window, mouse_pressed);
 
-        // controllo bordi e velocità
-        boids[i].avoidBoundary(window_width, window_height, turn_factor,
-                               margin);
-        boids[i].maxVelocity(max_velocity);
+        // BOIDS
+        for (int i = 0; i < static_cast<int>(boids.size()); ++i) {
+          // movimento
+          boids[i].getShape().move(boids[i].getVelocity());
+          boids[i].setRotation(
+              std::atan2(boids[i].getVelocity().y, boids[i].getVelocity().x) *
+              (180.f / M_PI));
 
-        // regole di volo
-        sf::Vector2f separation_sum{};
-        sf::Vector2f alignment_sum{};
-        sf::Vector2f cohesion_sum{};
-        float n{0.f};  // numero di boid vicini
+          // controllo bordi e velocità
+          boids[i].avoidBoundary(window_width, window_height, turn_factor,
+                                 margin);
+          boids[i].maxVelocity(max_velocity);
 
-        for (int j = 0; j < static_cast<int>(boids.size()); ++j) {
-          if (i == j) continue;
-          if (boids[i].isCloseAndVisible(boids[j], d, angle_view)) {
-            if (boids[i].isClose(boids[j], d_s)) {
-              separation_sum += boids[j].getPosition() - boids[i].getPosition();
-            }
-            if (boids[i].isFlockMate(boids[j])) {
-              ++n;
-              alignment_sum += boids[j].getVelocity();
-              cohesion_sum += boids[j].getPosition();
+          // regole di volo
+          sf::Vector2f separation_sum{};
+          sf::Vector2f alignment_sum{};
+          sf::Vector2f cohesion_sum{};
+          float n{0.f};  // numero di boid vicini
+
+          for (int j = 0; j < static_cast<int>(boids.size()); ++j) {
+            if (i == j) continue;
+            if (boids[i].isCloseAndVisible(boids[j], d, angle_view)) {
+              if (boids[i].isClose(boids[j], d_s)) {
+                separation_sum +=
+                    boids[j].getPosition() - boids[i].getPosition();
+              }
+              if (boids[i].isFlockMate(boids[j])) {
+                ++n;
+                alignment_sum += boids[j].getVelocity();
+                cohesion_sum += boids[j].getPosition();
+              }
             }
           }
+
+          if (n == 0) continue;
+
+          sf::Vector2f separation = -s * separation_sum;
+          sf::Vector2f alignment = a * (alignment_sum / n);
+          sf::Vector2f cohesion =
+              c * (cohesion_sum / n - boids[i].getPosition());
+
+          sf::Vector2f repulsion{};
+
+          if (boids[i].isCloseAndVisible(predator, p_d, angle_view)) {
+            repulsion =
+                -p_r * (predator.getPosition() - boids[i].getPosition());
+          }
+
+          sf::Vector2f boid_new_velocity = boids[i].getVelocity() + separation +
+                                           alignment + cohesion + repulsion;
+          boids[i].setVelocity(boid_new_velocity);
         }
 
-        if (n == 0) continue;
+        // PREDATORE
+        // movimento, controllo ai bordi e velocità
+        predator.getShape().move(predator.getVelocity());
+        predator.setRotation(
+            std::atan2(predator.getVelocity().y, predator.getVelocity().x) *
+            (180.f / M_PI));
 
-        sf::Vector2f separation = -s * separation_sum;
-        sf::Vector2f alignment = a * (alignment_sum / n);
-        sf::Vector2f cohesion = c * (cohesion_sum / n - boids[i].getPosition());
+        predator.avoidBoundary(window_width, window_height, turn_factor,
+                               margin);
+        predator.maxVelocity(p_max_velocity);
 
-        sf::Vector2f repulsion{};
-
-        if (boids[i].isCloseAndVisible(predator, p_d, angle_view)) {
-          repulsion = -p_r * (predator.getPosition() - boids[i].getPosition());
+        sf::Vector2f p_cohesion_sum{};
+        float p_n{0.f};
+        for (int i = 0; i < static_cast<int>(boids.size()); ++i) {
+          if (predator.isCloseAndVisible(boids[i], d, angle_view)) {
+            ++p_n;
+            p_cohesion_sum += boids[i].getPosition();
+          }
         }
+        if (p_n != 0) {
+          sf::Vector2f p_cohesion =
+              p_c * (p_cohesion_sum / p_n - predator.getPosition());
+          sf::Vector2f p_new_velocity = predator.getVelocity() + p_cohesion;
 
-        sf::Vector2f boid_new_velocity = boids[i].getVelocity() + separation +
-                                         alignment + cohesion + repulsion;
-        boids[i].setVelocity(boid_new_velocity);
+          predator.setVelocity(p_new_velocity);
+        }
       }
 
-      // PREDATORE
-      // movimento, controllo ai bordi e velocità
-      predator.getShape().move(predator.getVelocity());
-      predator.setRotation(
-          std::atan2(predator.getVelocity().y, predator.getVelocity().x) *
-          (180.f / M_PI));
+      // RENDERING
+      window.clear(background_color);
 
-      predator.avoidBoundary(window_width, window_height, turn_factor, margin);
-      predator.maxVelocity(p_max_velocity);
-
-      sf::Vector2f p_cohesion_sum{};
-      float p_n{0.f};
       for (int i = 0; i < static_cast<int>(boids.size()); ++i) {
-        if (predator.isCloseAndVisible(boids[i], d, angle_view)) {
-          ++p_n;
-          p_cohesion_sum += boids[i].getPosition();
-        }
+        window.draw(boids[i].getShape());
       }
-      if (p_n != 0) {
-        sf::Vector2f p_cohesion =
-            p_c * (p_cohesion_sum / p_n - predator.getPosition());
-        sf::Vector2f p_new_velocity = predator.getVelocity() + p_cohesion;
+      window.draw(predator.getShape());
+      window.draw(top_bar);
+      window.draw(fps_text);
 
-        predator.setVelocity(p_new_velocity);
-      }
+      s_sepa.draw(window);
+      s_alig.draw(window);
+      s_cohe.draw(window);
+      s_dist.draw(window);
+      reset.draw(window);
+
+      if (!window_in_focus) window.draw(darkness);
+
+      window.display();
+    } else {
+      window.clear(background_color);
+
+      window.draw(initial_text);
+      window.draw(num_boids);
+      start.draw(window);
+
+      if (!window_in_focus) window.draw(darkness);
+
+      window.display();
     }
-
-    // RENDERING
-    window.clear(background_color);
-
-    for (int i = 0; i < static_cast<int>(boids.size()); ++i) {
-      window.draw(boids[i].getShape());
-    }
-    window.draw(predator.getShape());
-    window.draw(top_bar);
-    window.draw(fps_text);
-
-    s_sepa.draw(window);
-    s_alig.draw(window);
-    s_cohe.draw(window);
-    s_dist.draw(window);
-    reset.draw(window);
-
-    if (!window_in_focus) window.draw(darkness);
-
-    window.display();
   }
 }
