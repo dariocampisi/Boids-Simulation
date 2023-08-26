@@ -2,7 +2,8 @@
 **Autore:** Dario Eugenio Campisi
 
 - [Descrizione generale](#descrizione-generale)
-- [Implementazioni aggiuntive](#implementazioni-aggiuntive)
+- [Logica di implementazione](#logica-di-implementazione)
+- [Altre implementazioni aggiuntive](#implementazioni-aggiuntive)
 - [Istruzioni per la compilazione](#istruzioni-per-la-compilazione)
 
 ## Descrizione generale
