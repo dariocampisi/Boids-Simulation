@@ -8,14 +8,14 @@
 #include "slider.hpp"
 
 int main() {
-  // DIMENSIONI FINESTRA E FONT (ROBOTO)
+  // DIMENSIONI FINESTRA E FONT
   unsigned int window_width{1280u};
   unsigned int window_height{720u};
   sf::Color background_color(17, 17, 17);  // grigio scuro
-  sf::Font font{};
+  sf::Font font{};                         // roboto
   assert(font.loadFromFile("utility/roboto.ttf"));
 
-  // PARAMETRI E VARIABILI
+  // PARAMETRI E VARIABILI "GLOBALI"
   // parametri regole di volo
   float d{150.f};  // distanza minima perché due boid si considerino vicini
   Slider s_dist{"visual range",
@@ -83,7 +83,7 @@ int main() {
   // troppi boids in input
   bool too_many_boids{0};
 
-  // frame counter
+  // frame counter (per la gesitone dell'output delle statistiche)
   unsigned int frame_counter{0u};
 
   // GENERAZIONE NUMERI RANDOM (PER POSIZIONI E VELOCITÀ INIZIALI)
@@ -430,7 +430,6 @@ int main() {
       window.draw(predator.getShape());
       window.draw(top_bar);
       window.draw(fps_text);
-
       s_sepa.draw(window);
       s_alig.draw(window);
       s_cohe.draw(window);
@@ -441,23 +440,23 @@ int main() {
 
       window.display();
 
-      // GESTIONE OUTPUT
+      // GESTIONE OUTPUT STATISTICHE
       ++frame_counter;
 
-      if (frame_counter == 1'000u) {
+      if (frame_counter == 3'000u) {
         frame_counter = 0;
 
+        // distanza media
         std::vector<float> relative_distances{};
         float mean_relative_distance{};
         std::vector<float> mean_relative_distances{};
         float mean_distance{};
-
         float std_dev_distance{};
 
         for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
              ++i) {
           relative_distances.clear();
-          
+
           for (unsigned int j = 0u; j < static_cast<unsigned int>(boids.size());
                ++j) {
             if (i == j) continue;
@@ -472,12 +471,12 @@ int main() {
 
         std_dev_distance = stdDev(mean_relative_distances, mean_distance);
 
-        std::cout << "Mean distance: " << mean_distance << " +/- "
-                  << std_dev_distance << '\n';
+        std::cout << "Mean distance: (" << mean_distance << " +/- "
+                  << std_dev_distance << ") px \n";
 
+        // velocità media
         std::vector<float> speeds{};
         float mean_speed{};
-
         float std_dev_speed{};
 
         for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
@@ -486,10 +485,10 @@ int main() {
         }
         mean_speed = mean(speeds);
 
-        std_dev_speed = stdDev( speeds, mean_speed );
+        std_dev_speed = stdDev(speeds, mean_speed);
 
-        std::cout << "Mean speed: " << mean_speed << " +/- "
-                  << std_dev_speed << '\n';
+        std::cout << "Mean speed: (" << mean_speed << " +/- " << std_dev_speed
+                  << ") px/frame";
       }
 
     } else {
