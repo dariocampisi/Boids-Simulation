@@ -440,6 +440,7 @@ int main() {
 
       window.display();
 
+/*
       // GESTIONE OUTPUT STATISTICHE
       ++frame_counter;
 
@@ -490,6 +491,7 @@ int main() {
         std::cout << "Mean speed: (" << mean_speed << " +/- " << std_dev_speed
                   << ") px/frame";
       }
+*/
 
     } else {
       window.clear(background_color);
