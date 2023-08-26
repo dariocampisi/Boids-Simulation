@@ -47,7 +47,7 @@ Durante la simulazione è possibile regolare il valore dei parametri delle regol
 </div>
 
 
-Come è possibile notare nella **Figura 3**, alle simulazioni è stata aggiunta la presenza costante di un **predatore**, differenziato dai boid per colore e dimensioni. Il suo ruolo è quello di inseguire gli stormi inducendo ai boid vicini una spinta di **repulsione**.
+Come è possibile notare dalla **Figura 3**, alle simulazioni è stata aggiunta la presenza costante di un **predatore**, differenziato dai boid per colore e dimensioni. Il suo ruolo è quello di inseguire gli stormi inducendo ai boid vicini una spinta di **repulsione**.
 
 ### Componente stocastica
 All'inizio di ogni simulazione è equiprobabile la generazione di uno, duo o tre **stormi diversi**, differenziati per colore. I possibili colori degli stormi e dei dettagli grafici della *top bar* sono blu, arancione e verde.
@@ -62,19 +62,8 @@ All'inizio di ogni simulazione è equiprobabile la generazione di uno, duo o tre
 ## Logica di implementazione
 
 ## Altre implementazioni aggiuntive
-### Più stormi
-All'avvio di ogni simulazione è equiprobabile la generazione di uno, due o tre stormi distinti, differenziati per colore. L'applicazione delle regole di volo è dunque limitata allo stormo di cui il boid fa parte.
-
-### Predatore
-Per aumentare il dinamismo della simulazione, è stata aggiunta la presenza costante di un **predatore**, differenziato dagli altri boid per colore e dimensioni. Il suo ruolo è quello di "inseguire" gli stormi di boid, pertanto 
-
-È stata aggiunta la presenza costante di un predatore, si differenzia dagli altri boid per colore e dimensioni. Esso rispetta la regola della **coesione**, i boid a lui vicini invece avvertono una cosiddetta **repulsione**, regola analoga alla **separazione** ma di maggiore intensità.
-
 ### Left-click per far comparire un boid
 Oltre ai boid presenti all'inizio della simulazione, generati con posizioni, orientazioni e velocità casuali, è possibile aggiungerne degli altri tramite un mouse left-click, che genererà un boid appartenente ad uno stormo casuale.
-
-### Top bar
-Nella top bar viene mostrato il calcolo degli fps in tempo reale. Sono inoltre presenti degli *slider*, grazie ai quali è possibile regolare alcuni parametri delle regole di volo, in modo da osservare i cambiamenti degli stormi e comprenderne appieno il significato.
 
 ### Angolo di vista
 Per rendere la simulazione più realistica, i boid non tengono conto dei compagni che "non vedono", che sono cioè al di fuori del loro **angolo di vista**.
