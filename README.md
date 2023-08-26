@@ -10,7 +10,7 @@
 Il progetto è un tentativo di implementazione del programma **Boids**, sviluppato da Craig Reynolds nel 1986, facente uso della libreria grafica **SFML**. L'obiettivo del programma è quello di simulare il comportamento di un generico **stormo** (e.g. di uccelli), ovvero un sistema complesso costituito da singole entità, i *boid*, che rispettano delle precise regole di movimento, qui chiamate **regole di volo**.
 
 <div align="center">
-<img src="utility/boid_shape.png" width="250">
+<img src="utility/boid_shape1.png" width="300">
 
 <b>Figura 1:</b> Forma geometrica usata per la rappresentazione grafica dei boid
 </div>
@@ -30,21 +30,20 @@ Quando un boid comincia ad avvicinarsi ad uno dei quattro bordi della finestra, 
 ### Dinamica della simulazione
 All'avvio del programma viene mostrata una **schermata iniziale** che invita l'utente a scegliere il numero di boid che saranno generati (limitato ad un massimo di 300 per garantire delle buone prestazioni):
 
-<p align="center">
+<div align="center">
 <img src="utility/initial_screen.png">
-</p>
-<p align="center">
+
 <b>Figura 2:</b> Schermata iniziale
-</p>
+</div>
 
 Per dare inizio alla simulazione l'utente può utilizzare il pulsante *start* o alternativamente premere *enter*.
 
 Durante la simulazione è possibile regolare il valore dei parametri delle regole di volo e del raggio di visione dei boid tramite degli **slider**, osservando in tempo reale come tali modifiche influenzano il movimento dei boid. Per tornare rapidamente ai valori impostati di default, è sufficiente premere il pulsante *reset*.
 
-<div style="text-align: center;">
+<div align="center">
 <img src="utility/one_flock.png">
 
-**Figura 3:** Frame di una simulazione con un solo stormo arancione costituito da 173 boid
+<b>Figura 3:</b> Frame di una simulazione con un solo stormo arancione costituito da 173 boid
 </div>
 
 
@@ -53,11 +52,10 @@ Come è possibile notare nella **Figura 3**, alle simulazioni è stata aggiunta 
 ### Componente stocastica
 All'inizio di ogni simulazione è equiprobabile la generazione di uno, duo o tre **stormi diversi**, differenziati per colore. I possibili colori degli stormi e dei dettagli grafici della *top bar* sono blu, arancione e verde.
 
-<div style="text-align: center;">
+<div align="center">
 <img src="utility/three_flocks.png">
 
-**Figura 4:** Frame di una simulazione con 230 boid divisi in tre stormi diversi
-
+<b>Figura 4:</b> Frame di una simulazione con 230 boid divisi in tre stormi diversi
 </div>
 
 
