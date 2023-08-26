@@ -20,15 +20,6 @@ Slider::Slider(const std::string &title, const sf::Font &font,
   title_.setPosition(position.x - line_.getSize().x / 2, position.y - 28.f);
 }
 
-/*
-bool Slider::dotInRange() const {
-  return (this->dot_.getPosition().x >=
-          (this->line_.getPosition().x - this->line_.getSize().x / 2)) &&
-         (this->dot_.getPosition().x <=
-          (this->line_.getPosition().x + this->line_.getSize().x / 2));
-}
-*/
-
 bool Slider::mouseIsOver(const sf::RenderWindow &window) const {
   return this->dot_.getGlobalBounds().contains(
              sf::Vector2f(sf::Mouse::getPosition(window).x,
@@ -87,9 +78,3 @@ void Slider::reset() {
   this->dot_.setPosition(this->line_.getPosition().x,
                          this->dot_.getPosition().y);
 }
-
-// void Slider::setColor(const sf::Color &color) {
-//   this->line_.setFillColor(color);
-//   this->dot_.setFillColor(color);
-//   this->title_.setFillColor(color);
-// }

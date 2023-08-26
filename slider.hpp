@@ -9,8 +9,6 @@ class Slider {
          const sf::Vector2f &line_size, const float dot_radius,
          const sf::Vector2f &position, float &parameter, const float initial_value);
 
-  // bool dotInRange() const;
-
   bool mouseIsOver(const sf::RenderWindow &window) const;
 
   bool dotTooLeft() const;
@@ -22,8 +20,6 @@ class Slider {
   void draw(sf::RenderWindow &window);
 
   void reset();
-
-  // void setColor(const sf::Color &color);
 
  private:
   sf::RectangleShape line_;
