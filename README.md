@@ -9,11 +9,11 @@
 ## Descrizione generale
 Il progetto è un tentativo di implementazione del programma **Boids**, sviluppato da Craig Reynolds nel 1986, facente uso della libreria grafica **SFML**. L'obiettivo del programma è quello di simulare il comportamento di un generico **stormo** (e.g. di uccelli), ovvero un sistema complesso costituito da singole entità, i *boid*, che rispettano delle precise regole di movimento, qui chiamate **regole di volo**.
 
-<div style="text-align: center;">
+<p align="center">
 <img src="utility/boid_shape.png" alt="Boid Shape" width="250">
 
 **Figura 1:** Forma geometrica usata per la rappresentazione grafica dei boid
-</div>
+</p>
 
 ### Regole di volo
 Il movimento nel piano di ogni boid è il risultato delle seguenti regole. In modo da favorire la formazione di più stormi indipendenti, esse vengono applicate unicamente ai boid considerati **vicini**, quelli cioè la cui distanza non supera un certo valore.
