@@ -7,7 +7,7 @@ class Slider {
  public:
   Slider(const std::string &title, const sf::Font &font,
          const sf::Vector2f &line_size, const float dot_radius,
-         const sf::Vector2f &position, float &f, const float initial_value);
+         const sf::Vector2f &position, float &parameter, const float initial_value);
 
   // bool dotInRange() const;
 

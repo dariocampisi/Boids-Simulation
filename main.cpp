@@ -176,7 +176,7 @@ int main() {
   top_bar.setOutlineColor(colors_vector[0]);
   top_bar.setOutlineThickness(2.f);
 
-  // bottone reset
+  // pulsante reset
   Button reset{"RESET", font, sf::Vector2f(80.f, 35.f), 14,
                sf::Vector2f(1200.f, 30.f)};
   reset.getText().setFillColor(colors_vector[0]);
@@ -218,7 +218,7 @@ int main() {
                             num_boids.getLocalBounds().getPosition());
       }
 
-      // bottone start
+      // pulsante start
       if ((start.mouseIsOver(window) &&
            event.type == sf::Event::MouseButtonPressed &&
            event.mouseButton.button == sf::Mouse::Left) ||
@@ -240,6 +240,7 @@ int main() {
           start_clicked = 1;
         } else {
           too_many_boids = 1;
+
           user_input.clear();
           num_boids.setString(user_input);
           num_boids.setOrigin(num_boids.getGlobalBounds().getSize() / 2.f +
@@ -276,7 +277,7 @@ int main() {
         }
       }
 
-      // bottone reset
+      // pulsantes reset
       if (reset.mouseIsOver(window) &&
           event.type == sf::Event::MouseButtonPressed &&
           event.mouseButton.button == sf::Mouse::Left) {

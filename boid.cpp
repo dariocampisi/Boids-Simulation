@@ -58,8 +58,7 @@ bool Boid::isClose(const Boid &other, const float d) const {
 }
 bool Boid::isCloseAndVisible(const Boid &other, const float d,
                              const float angle_view) const {
-  auto distance = this->distance(other);
-  if (distance < d) {
+  if (this->isClose(other,d)) {
     sf::Vector2f relative_position = other.getPosition() - this->getPosition();
     float relative_angle =
         std::atan2(relative_position.y, relative_position.x) * (180.f / M_PI);
