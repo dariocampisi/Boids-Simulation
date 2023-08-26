@@ -83,6 +83,9 @@ int main() {
   // troppi boids in input
   bool too_many_boids{0};
 
+  // frame counter
+  unsigned int frame_counter{0u};
+
   // GENERAZIONE NUMERI RANDOM (PER POSIZIONI E VELOCITÀ INIZIALI)
   std::random_device rd{};
   std::mt19937 engine(rd());
@@ -437,6 +440,58 @@ int main() {
       if (!window_in_focus) window.draw(darkness);
 
       window.display();
+
+      // GESTIONE OUTPUT
+      ++frame_counter;
+
+      if (frame_counter == 1'000u) {
+        frame_counter = 0;
+
+        std::vector<float> relative_distances{};
+        float mean_relative_distance{};
+        std::vector<float> mean_relative_distances{};
+        float mean_distance{};
+
+        float std_dev_distance{};
+
+        for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
+             ++i) {
+          relative_distances.clear();
+          
+          for (unsigned int j = 0u; j < static_cast<unsigned int>(boids.size());
+               ++j) {
+            if (i == j) continue;
+            if (!boids[i].isFlockMate(boids[j])) continue;
+            relative_distances.push_back(
+                length(boids[i].getPosition() - boids[j].getPosition()));
+          }
+          mean_relative_distance = mean(relative_distances);
+          mean_relative_distances.push_back(mean_relative_distance);
+        }
+        mean_distance = mean(mean_relative_distances);
+
+        std_dev_distance = stdDev(mean_relative_distances, mean_distance);
+
+        std::cout << "Mean distance: " << mean_distance << " +/- "
+                  << std_dev_distance << '\n';
+
+        std::vector<float> speeds{};
+        float mean_speed{};
+
+        float std_dev_speed{};
+
+        for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
+             ++i) {
+          speeds.push_back(length(boids[i].getVelocity()));
+        }
+        mean_speed = mean(speeds);
+
+        std_dev_speed = stdDev( speeds, mean_speed );
+
+        std::cout << "Mean speed: " << mean_speed << " +/- "
+                  << std_dev_speed << '\n';
+      }
+
     } else {
       window.clear(background_color);
 

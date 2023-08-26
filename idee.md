@@ -16,4 +16,5 @@ Le idee realizzate sono ~~barrate~~
 3. Capire bene come funziona "inline" (usata in boids.hpp)
 4. Implementare i test
 5. Fare un po' di pulizia
-6. **La relazione**
+6. Gestione output (velocità medie e dev standard)
+7. **La relazione**

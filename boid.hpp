@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <numeric>
 
 class Boid : public sf::Transformable {
  public:
@@ -50,6 +51,19 @@ inline void normalize(sf::Vector2f &v) {
   if (length(v) != 0) {
     v /= length(v);
   }
+}
+
+inline float mean(const std::vector<float> &v) {
+  return std::accumulate(v.begin(), v.end(), 0.f) / v.size();
+}
+inline float stdDev(const std::vector<float> &v, const float f) {
+  std::vector<float> quad_deviations{};
+
+  for (auto it = v.begin(); it != v.end(); ++it) {
+    quad_deviations.push_back((*it - f) * (*it - f));
+  }
+  
+  return std::sqrt(mean(quad_deviations));
 }
 
 #endif
