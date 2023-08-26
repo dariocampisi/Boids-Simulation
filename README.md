@@ -8,11 +8,11 @@
 ## Descrizione generale
 Il progetto è un tentativo di implementazione del programma **Boids**, sviluppato da Craig Reynolds nel 1986, facente uso della libreria grafica **SFML**. L'obiettivo del programma è quello di simulare il comportamento di un generico **stormo** (e.g. di uccelli), ovvero un sistema complesso costituito da singole entità, i *boid*, che rispettano delle precise regole di movimento, qui chiamate **regole di volo**.
 
-<center>
+<div style="text-align: center;">
 <img src="utility/boid_shape.png" alt="Boid Shape" width="250">
 
 **Figura 1:** Forma geometrica usata per la rappresentazione grafica dei boid
-</center>
+</div>
 
 ### Regole di volo
 Il movimento nel piano di ogni boid è il risultato delle seguenti regole. In modo da favorire la formazione di più stormi indipendenti, esse vengono applicate unicamente ai boid considerati **vicini**, quelli cioè la cui distanza non supera un certo valore.
@@ -29,33 +29,33 @@ Quando un boid comincia ad avvicinarsi ad uno dei quattro bordi della finestra, 
 ### Dinamica della simulazione
 All'avvio del programma viene mostrata una **schermata iniziale** che invita l'utente a scegliere il numero di boid che saranno generati (limitato ad un massimo di 300 per garantire delle buone prestazioni):
 
-<center>
+<div style="text-align: center;">
 <img src="utility/initial_screen.png">
 
 **Figura 2:** Schermata iniziale
-</center>
+</div>
 
 Per dare inizio alla simulazione l'utente può utilizzare il pulsante *start* o alternativamente premere *enter*.
 
 Durante la simulazione è possibile regolare il valore dei parametri delle regole di volo e del raggio di visione dei boid tramite degli **slider**, osservando in tempo reale come tali modifiche influenzano il movimento dei boid. Per tornare rapidamente ai valori impostati di default, è sufficiente premere il pulsante *reset*.
 
-<center>
+<div style="text-align: center;">
 <img src="utility/one_flock.png">
 
 **Figura 3:** Frame di una simulazione con un solo stormo arancione costituito da 173 boid
-</center>
+</div>
 
 Come è possibile notare nella **Figura 3**, alle simulazioni è stata aggiunta la presenza costante di un **predatore**, differenziato dai boid per colore e dimensioni. Il suo ruolo è quello di inseguire gli stormi inducendo ai boid vicini una spinta di **repulsione**.
 
 ### Componente stocastica
 All'inizio di ogni simulazione è equiprobabile la generazione di uno, duo o tre **stormi diversi**, differenziati per colore. I possibili colori degli stormi e dei dettagli grafici della *top bar* sono blu, arancione e verde.
 
-<center>
+<div style="text-align: center;">
 <img src="utility/three_flocks.png">
 
 **Figura 4:** Frame di una simulazione con 230 boid divisi in tre stormi diversi
-</center>
 
+</div>
 
 
 ## Logica di implementazione
