@@ -125,6 +125,21 @@ La classe possiede inoltre vari **metodi**, di seguito si riportano quelli princ
     
     Metodo analogo a ```Slider::mouseIsOver```;
 
+### Rapida overview di main.cpp
+```main.cpp``` è il file principale del programma, costituito da circa 500 righe di codice, si cerca di qui di riassumerne la struttura generale.
+
+- Dichiarazione delle **variabili "globali"** del programma, incluse le dimensioni della finestra, i parametri delle regole di volo e gli slider ad essi collegati;
+- Gestione della generazione dei **numeri casuali**, utilizzati per le posizioni e le velocità iniziali dei boid;
+- Definizione di tutti gli elementi che compongono la **schermata iniziale**;
+- Gestione dei **[colori casuali](#componente-stocastica)** dei boid e costruzione del **predatore**;
+- Gestione **finestra** e **top bar**;
+- **Game loop**;
+    - Gestione degli **```sf::Event```**;
+    - **Core** del game loop: costruzione dei boid (avviene solo una volta), calcolo degli fps, funzionamento degli slider, gestione del movimento dei boid e del predatore;
+    - **Rendering**;
+    - Gestione dell'**output delle statistiche**;
+    - Gestione della **schermata iniziale**: viene mostrata fino a quando non viene premuto il pulsante *start*;
+
 ## Altre implementazioni aggiuntive
 ### Left-click per far comparire un boid
 Oltre ai boid presenti all'inizio della simulazione, generati con posizioni, orientazioni e velocità casuali, è possibile aggiungerne degli altri tramite un mouse left-click, che genererà un boid appartenente ad uno stormo casuale.

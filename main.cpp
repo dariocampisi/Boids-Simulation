@@ -77,10 +77,10 @@ int main() {
   // tasto sinistro del mouse premuto e non rilasciato
   bool mouse_pressed{0};
 
-  // boids già costruiti
+  // boid già costruiti
   bool boids_built{0};
 
-  // troppi boids in input
+  // troppi boid in input
   bool too_many_boids{0};
 
   // frame counter (per la gesitone dell'output delle statistiche)
@@ -132,17 +132,7 @@ int main() {
 
   std::string user_input{};
 
-  // PER MOSTRARE GLI FPS
-  sf::Text fps_text{};
-  fps_text.setFont(font);
-  fps_text.setCharacterSize(21);
-  fps_text.setFillColor(sf::Color::White);
-  fps_text.setPosition(15.f, 15.f);
-  sf::Clock clock{};
-  int frames = 0;
-  sf::Time elapsed_time = sf::Time::Zero;
-
-  // COSTRUZIONE BOIDS
+  // COSTRUZIONE BOID
   std::vector<Boid> boids{};
 
   // gestione di stormi e colori casuali
@@ -178,6 +168,16 @@ int main() {
   top_bar.setFillColor(background_color);
   top_bar.setOutlineColor(colors_vector[0]);
   top_bar.setOutlineThickness(2.f);
+
+  // fps
+  sf::Text fps_text{};
+  fps_text.setFont(font);
+  fps_text.setCharacterSize(21);
+  fps_text.setFillColor(sf::Color::White);
+  fps_text.setPosition(15.f, 15.f);
+  sf::Clock clock{};
+  int frames = 0;
+  sf::Time elapsed_time = sf::Time::Zero;
 
   // pulsante reset
   Button reset{"RESET", font, sf::Vector2f(80.f, 35.f), 14,
@@ -303,7 +303,7 @@ int main() {
     // GAME LOOP CORE
     if (start_clicked) {
       if (!boids_built && !user_input.empty()) {
-        // costruzione boids (avviene solo una volta)
+        // costruzione boid (avviene solo una volta)
         for (unsigned int i = 0u;
              i < static_cast<unsigned int>(std::stoi(user_input)); ++i) {
           int c = colors(engine);
@@ -336,7 +336,7 @@ int main() {
         s_cohe.work(window, mouse_pressed);
         s_dist.work(window, mouse_pressed);
 
-        // BOIDS
+        // BOID
         for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
              ++i) {
           // movimento
@@ -440,58 +440,62 @@ int main() {
 
       window.display();
 
-/*
-      // GESTIONE OUTPUT STATISTICHE
-      ++frame_counter;
+      /*
+            // GESTIONE OUTPUT STATISTICHE
+            ++frame_counter;
 
-      if (frame_counter == 3'000u) {
-        frame_counter = 0;
+            if (frame_counter == 3'000u) {
+              frame_counter = 0;
 
-        // distanza media
-        std::vector<float> relative_distances{};
-        float mean_relative_distance{};
-        std::vector<float> mean_relative_distances{};
-        float mean_distance{};
-        float std_dev_distance{};
+              // distanza media
+              std::vector<float> relative_distances{};
+              float mean_relative_distance{};
+              std::vector<float> mean_relative_distances{};
+              float mean_distance{};
+              float std_dev_distance{};
 
-        for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
-             ++i) {
-          relative_distances.clear();
+              for (unsigned int i = 0u; i < static_cast<unsigned
+         int>(boids.size());
+                   ++i) {
+                relative_distances.clear();
 
-          for (unsigned int j = 0u; j < static_cast<unsigned int>(boids.size());
-               ++j) {
-            if (i == j) continue;
-            if (!boids[i].isFlockMate(boids[j])) continue;
-            relative_distances.push_back(
-                length(boids[i].getPosition() - boids[j].getPosition()));
-          }
-          mean_relative_distance = mean(relative_distances);
-          mean_relative_distances.push_back(mean_relative_distance);
-        }
-        mean_distance = mean(mean_relative_distances);
+                for (unsigned int j = 0u; j < static_cast<unsigned
+         int>(boids.size());
+                     ++j) {
+                  if (i == j) continue;
+                  if (!boids[i].isFlockMate(boids[j])) continue;
+                  relative_distances.push_back(
+                      length(boids[i].getPosition() - boids[j].getPosition()));
+                }
+                mean_relative_distance = mean(relative_distances);
+                mean_relative_distances.push_back(mean_relative_distance);
+              }
+              mean_distance = mean(mean_relative_distances);
 
-        std_dev_distance = stdDev(mean_relative_distances, mean_distance);
+              std_dev_distance = stdDev(mean_relative_distances, mean_distance);
 
-        std::cout << "Mean distance: (" << mean_distance << " +/- "
-                  << std_dev_distance << ") px \n";
+              std::cout << "Mean distance: (" << mean_distance << " +/- "
+                        << std_dev_distance << ") px \n";
 
-        // velocità media
-        std::vector<float> speeds{};
-        float mean_speed{};
-        float std_dev_speed{};
+              // velocità media
+              std::vector<float> speeds{};
+              float mean_speed{};
+              float std_dev_speed{};
 
-        for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
-             ++i) {
-          speeds.push_back(length(boids[i].getVelocity()));
-        }
-        mean_speed = mean(speeds);
+              for (unsigned int i = 0u; i < static_cast<unsigned
+         int>(boids.size());
+                   ++i) {
+                speeds.push_back(length(boids[i].getVelocity()));
+              }
+              mean_speed = mean(speeds);
 
-        std_dev_speed = stdDev(speeds, mean_speed);
+              std_dev_speed = stdDev(speeds, mean_speed);
 
-        std::cout << "Mean speed: (" << mean_speed << " +/- " << std_dev_speed
-                  << ") px/frame";
-      }
-*/
+              std::cout << "Mean speed: (" << mean_speed << " +/- " <<
+         std_dev_speed
+                        << ") px/frame";
+            }
+      */
 
     } else {
       window.clear(background_color);
