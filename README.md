@@ -1,5 +1,6 @@
 # Simulazione del comportamento di stormi
-**Autore:** Dario Eugenio Campisi
+**Autore:** Dario Eugenio Campisi  
+**Data:** Settembre 2023
 
 - [Descrizione generale](#descrizione-generale)
 - [Logica di implementazione](#logica-di-implementazione)
@@ -112,7 +113,7 @@ La classe possiede inoltre vari **metodi**, di seguito si riportano quelli princ
 
 - ```void reset()```
 
-    Riporta il cursore al centro della barra ed il parametro al suo valore di default, viene eseguito in seguito alla pressione del pulsante *reset* mostrato in **Figura 3**;
+    Riporta il cursore al centro della barra ed il parametro al suo valore di default, viene eseguito in seguito alla pressione del pulsante *reset* mostrato e.g. in **[Figura 4](#componente-stocastica)**;
 
 ### Button
 È una classe piuttosto semplice utilizzata per l'implementazione dei pulsanti *start* e *reset* visti in [dinamica della simulazione](#dinamica-della-simulazione), il cui funzionamento richiede però un forte utilizzo di ```sf::Event```. Internamente è costituita da una ```sf::RectangleShape``` che dà la forma al pulsante e da un ```sf::Text``` che ne rappresenta l'etichetta.
