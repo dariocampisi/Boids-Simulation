@@ -96,3 +96,11 @@ void Boid::avoidBoundary(const float window_width, const float window_height,
 bool Boid::isFlockMate(const Boid &other) const {
   return this->shape_.getFillColor() == other.shape_.getFillColor();
 }
+
+inline float length(const sf::Vector2f &v) { return std::hypot(v.x, v.y); }
+
+inline void normalize(sf::Vector2f &v) {
+  if (length(v) != 0) {
+    v /= length(v);
+  }
+}

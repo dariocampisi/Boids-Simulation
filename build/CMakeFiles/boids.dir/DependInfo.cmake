@@ -12,6 +12,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/dariocampisi/boids/button.cpp" "CMakeFiles/boids.dir/button.cpp.o" "gcc" "CMakeFiles/boids.dir/button.cpp.o.d"
   "/Users/dariocampisi/boids/main.cpp" "CMakeFiles/boids.dir/main.cpp.o" "gcc" "CMakeFiles/boids.dir/main.cpp.o.d"
   "/Users/dariocampisi/boids/slider.cpp" "CMakeFiles/boids.dir/slider.cpp.o" "gcc" "CMakeFiles/boids.dir/slider.cpp.o.d"
+  "/Users/dariocampisi/boids/statistics.cpp" "CMakeFiles/boids.dir/statistics.cpp.o" "gcc" "CMakeFiles/boids.dir/statistics.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

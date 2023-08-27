@@ -43,24 +43,8 @@ class Boid : public sf::Transformable {
 };
 
 // funzioni utili per Boid::maxVelocity()
-inline float length(const sf::Vector2f &v) { return std::hypot(v.x, v.y); }
-inline void normalize(sf::Vector2f &v) {
-  if (length(v) != 0) {
-    v /= length(v);
-  }
-}
+inline float length(const sf::Vector2f &v);
 
-inline float mean(const std::vector<float> &v) {
-  return std::accumulate(v.begin(), v.end(), 0.f) / v.size();
-}
-inline float stdDev(const std::vector<float> &v, const float f) {
-  std::vector<float> quad_deviations{};
-
-  for (auto it = v.begin(); it != v.end(); ++it) {
-    quad_deviations.push_back((*it - f) * (*it - f));
-  }
-  
-  return std::sqrt(mean(quad_deviations));
-}
+inline void normalize(sf::Vector2f &v);
 
 #endif

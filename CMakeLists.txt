@@ -22,7 +22,7 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-o
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 
 # eseguibili
-add_executable(boids main.cpp boid.cpp slider.cpp button.cpp)
+add_executable(boids main.cpp boid.cpp slider.cpp button.cpp statistics.cpp)
 # target_compile_options(boids PRIVATE -O0)
 
 # per sfml
