@@ -50,7 +50,7 @@ Durante la simulazione è possibile regolare il valore dei parametri delle regol
 Come è possibile notare dalla **Figura 3**, alle simulazioni è stata aggiunta la presenza costante di un **predatore**, differenziato dai boid per colore e dimensioni. Il suo ruolo è quello di inseguire gli stormi inducendo ai boid vicini una spinta di **repulsione**.
 
 ### Componente stocastica
-All'inizio di ogni simulazione è equiprobabile la generazione di uno, duo o tre **stormi diversi**, differenziati per colore. I possibili colori degli stormi e dei dettagli grafici della *top bar* sono blu, arancione e verde.
+In ogni simulazione è equiprobabile la generazione di uno, duo o tre **stormi diversi**, differenziati per colore. I possibili colori degli stormi e dei dettagli grafici della *top bar* sono blu, arancione e verde.
 
 <div align="center">
 <img src="utility/three_flocks.png">
