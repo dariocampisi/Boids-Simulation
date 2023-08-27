@@ -115,6 +115,8 @@ La classe possiede inoltre vari **metodi**, di seguito si riportano quelli princ
 
     Riporta il cursore al centro della barra ed il parametro al suo valore di default, viene eseguito in seguito alla pressione del pulsante *reset* mostrato e.g. in [Figura 4](#componente-stocastica);
 
+**Nota:** Il numero degli slider è stato limitato a quattro per esigenze di natura estetica, i parametri potenzialmente modificabili presenti nel programma sono molteplici e la classe Slider è sufficientemente versatile. La scelta fatta è assolutamente arbitraria.
+
 ### Button
 È una classe piuttosto semplice utilizzata per l'implementazione dei pulsanti *start* e *reset* visti in [dinamica della simulazione](#dinamica-della-simulazione), il cui funzionamento richiede però un forte utilizzo di ```sf::Event```. Internamente è costituita da una ```sf::RectangleShape``` che dà la forma al pulsante e da un ```sf::Text``` che ne rappresenta l'etichetta.
 
@@ -125,7 +127,7 @@ La classe possiede inoltre vari **metodi**, di seguito si riportano quelli princ
     Metodo analogo a ```Slider::mouseIsOver()```;
 
 ### Rapida overview di main.cpp
-```main.cpp``` è il file principale del programma, costituito da circa 500 righe di codice, si cerca di qui di riassumerne la struttura generale.
+```main.cpp``` è il file principale del programma, costituito da circa 500 righe di codice, si cerca qui di riassumerne la struttura generale.
 
 - Dichiarazione delle **variabili "globali"** del programma, incluse le dimensioni della finestra, i parametri delle regole di volo e gli slider ad essi collegati;
 - Gestione della generazione dei **numeri casuali**, utilizzati per le posizioni e le velocità iniziali dei boid;
@@ -144,13 +146,17 @@ La classe possiede inoltre vari **metodi**, di seguito si riportano quelli princ
     - Gestione della **schermata iniziale**: viene mostrata fino a quando non viene premuto il pulsante *start*;
 
 ## Altre implementazioni aggiuntive
-### Left-click per far comparire un boid
-Oltre ai boid presenti all'inizio della simulazione, generati con posizioni, orientazioni e velocità casuali, è possibile aggiungerne degli altri tramite un mouse left-click, che genererà un boid appartenente ad uno stormo casuale.
-
 ### Angolo di vista
-Per rendere la simulazione più realistica, i boid non tengono conto dei compagni che "non vedono", che sono cioè al di fuori del loro **angolo di vista**.
+Con l'intento di rendere la simulazione più realistica, è stato definito un **angolo di vista** che impedisce ai boid di essere consapevoli di ciò che accade "alle loro spalle". L'implementazione si trova all'interno di [```Boid::isCloseAndVisible()```](#boid). Il valore impostato di default è di 250°.
+
+### Mouse left-click per generare un boid
+È possibile aggiungere dei nuovi boid a quelli generati all'inizio della simulazione **cliccando** in un qualsiasi punto della finestra, eccettuando la top bar. La posizione iniziale dei nuovi boid sarà quella del cursore del mouse, mentre la velocità iniziale ed il colore (compatibilmente al numero di stormi della simulazione) saranno casuali.
+
+Tale funzionalità è stata implementata grazie a ```sf::Event::MouseButtonReleased``` e ```sf::Mouse::Left```.
 
 ### Gestione del fuori focus
-Quando la finestra va fuori focus la simulazione va in pausa e lo schermo viene leggermente scurito, quando la finestra torna in focus la simulazione riparte.
+Quando la finestra *Boids Simulation* non è attiva la simulazione va **in pausa**. In particolare il moto dei boid si arresta e la finestra viene leggermente oscurata. 
+
+Per ottenere questo risultato è stato definito un dato ```bool window_in_focus{1}```, il cui valore dipende dalla coppia di eventi ```sf::Event::GainedFocus``` e ```sf::Event::LostFocus```. L'intero [game loop core](#rapida-overview-di-maincpp) viene eseguito solo se ```window_in_focus == 1```. Inoltre, se ```window_in_focus == 0```, viene disegnata al di sopra di tutti gli altri elementi della finestra una ```sf::RectangleShape``` delle dimensioni della finestra, di colore nero e opacità ridotta.
 
 ## Istruzioni per la compilazione

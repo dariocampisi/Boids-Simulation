@@ -253,31 +253,27 @@ int main() {
 
       // mouse left-click genera un boid (non sulla top bar)
       if (!(sf::Mouse::getPosition(window).y <= top_bar.getSize().y)) {
-        if (event.type == sf::Event::MouseButtonReleased) {
-          if (event.mouseButton.button == sf::Mouse::Left) {
-            int c = colors(engine);
+        if (event.type == sf::Event::MouseButtonReleased &&
+            event.mouseButton.button == sf::Mouse::Left) {
+          int c = colors(engine);
+          Boid boid{
+              colors_vector[c],
+              sf::Vector2f(sf::Mouse::getPosition(window).x,
+                           sf::Mouse::getPosition(window).y),
+              sf::Vector2f(rand_x_velocity(engine), rand_y_velocity(engine))};
 
-            Boid boid{
-                colors_vector[c],
-                sf::Vector2f(sf::Mouse::getPosition(window).x,
-                             sf::Mouse::getPosition(window).y),
-                sf::Vector2f(rand_x_velocity(engine), rand_y_velocity(engine))};
-
-            boids.push_back(boid);
-          }
+          boids.push_back(boid);
         }
       }
 
       // tasto sinistro mouse premuto e non rilasciato
-      if (event.type == sf::Event::MouseButtonPressed) {
-        if (event.mouseButton.button == sf::Mouse::Left) {
-          mouse_pressed = 1;
-        }
+      if (event.type == sf::Event::MouseButtonPressed &&
+          event.mouseButton.button == sf::Mouse::Left) {
+        mouse_pressed = 1;
       }
-      if (event.type == sf::Event::MouseButtonReleased) {
-        if (event.mouseButton.button == sf::Mouse::Left) {
-          mouse_pressed = 0;
-        }
+      if (event.type == sf::Event::MouseButtonReleased &&
+          event.mouseButton.button == sf::Mouse::Left) {
+        mouse_pressed = 0;
       }
 
       // pulsantes reset
@@ -341,7 +337,8 @@ int main() {
              ++i) {
           // movimento
           boids[i].getShape().move(boids[i].getVelocity());
-          boids[i].getShape().setRotation(std::atan2(boids[i].getVelocity().y, boids[i].getVelocity().x) *
+          boids[i].getShape().setRotation(
+              std::atan2(boids[i].getVelocity().y, boids[i].getVelocity().x) *
               (180.f / M_PI));
 
           // controllo bordi e velocità
