@@ -147,8 +147,8 @@ int main() {
 
   // gestione di stormi e colori casuali
   sf::Color light_blue(0, 102, 204);
-  sf::Color orange(255, 128, 0);
   sf::Color green(0, 153, 0);
+  sf::Color orange(255, 128, 0);
   std::vector<sf::Color> colors_vector{};
   colors_vector.push_back(light_blue);
   colors_vector.push_back(orange);
