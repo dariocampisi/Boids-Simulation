@@ -28,7 +28,7 @@ Da queste tre semplici regole emergono dei **comportamenti macroscopici caotici*
 ### Comportamento ai bordi
 Quando un boid comincia ad avvicinarsi ad uno dei quattro bordi della finestra, questo vira in modo da evitarlo. Per ottenere questo effetto è stato definito un **margine** nei pressi dei bordi, se superato la velocità del boid viene gradualmente invertita secondo un opportuno **fattore di virata**.
 
-### Dinamica della simulazione
+### Dinamica di una simulazione
 All'avvio del programma viene mostrata una **schermata iniziale** che invita l'utente a scegliere il numero di boid che saranno generati (limitato ad un massimo di 300 per garantire delle buone prestazioni):
 
 <div align="center">
@@ -48,7 +48,7 @@ Durante la simulazione è possibile regolare il valore dei parametri delle regol
 </div>
 
 
-Come è possibile notare dalla **Figura 3**, alle simulazioni è stata aggiunta la presenza costante di un **predatore**, differenziato dai boid per colore e dimensioni. Il suo ruolo è quello di inseguire gli stormi inducendo ai boid vicini una spinta di **repulsione**.
+Come è possibile notare dalla **Figura 3**, alle simulazioni è stata aggiunta la presenza costante di un **predatore**, differenziato dai boid per colore e dimensioni. Il suo ruolo è quello di inseguire gli stormi operando sui boid vicini una spinta di **repulsione**.
 
 ### Componente stocastica
 In ogni simulazione è equiprobabile la generazione di uno, due o tre **stormi diversi**, differenziati per colore. I possibili colori degli stormi e dei dettagli grafici della *top bar* sono <span style="color:rgb(0, 102, 204)">blu</span>, <span style="color:rgb(0, 153, 0)">verde</span> e <span style="color:rgb(255, 128, 0)">arancione</span>.
@@ -68,9 +68,9 @@ Ogni 3.000 iterazioni del game loop (poco meno di 30 secondi) vengono stampati a
 Lo scheletro del programma è costituito da tre classi: **Boid**, **Slider** e **Button**, tutte fortemente basate sulle classi fornite dalla libreria **SFML/Graphics**.
 
 ### Boid
-È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ```sf::ConvexShape```, definita in modo da ottenere la forma mostrata in [Figura 1](#descrizione-generale), e da un ```sf::Vector2f``` rappresentante la velocità del boid.
+È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ```sf::ConvexShape shape_```, definita in modo da ottenere la forma mostrata in [Figura 1](#descrizione-generale), e da un ```sf::Vector2f velocity``` rappresentante la velocità del boid.
 
-**Costruttori**
+**Costruttore**
 ```cpp
 // usato per i boid
 Boid::Boid(const sf::Color &color, const sf::Vector2f &position,
@@ -107,12 +107,6 @@ Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
 
 **Metodi principali**
 
-- ```Boid(const sf::Color &color, const sf::Vector2f &position, const sf::Vector2f &velocity)``` 
-    
-    ```Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)```
-
-    Sono i due costruttori della classe, il primo viene usato per istanziare i boid, mentre il secondo per istanziare il predatore;
-
 - ```bool isCloseAndVisible(const Boid &other, const float d, const float angle_view) const```
 
     Verifica che i boid siano all'interno del campo visivo del boid su cui è applicato, così da applicare correttamente le regole di volo;
@@ -130,7 +124,7 @@ Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
     Verifica che i boid siano compagni di stormo del boid su cui è applicato, la verifica consiste banalmente nel controllo dei colori dei boid;
 
 ### Slider
-È la classe utilizzata per la creazione e il funzionamento degli slider a cui si è accennato in [dinamica della simulazione](#dinamica-della-simulazione). Internamente è costituita da: una ```sf::RectangleShape``` che rappresenta la barra di scorrimento dello slider, una ```sf::CircleShape``` rappresentante invece il cursore, un ```sf::Text``` per mostrare il titolo, una ```float&``` per legare lo slider ad un certo parametro e un ```const float``` per il valore di default del parametro.
+È la classe utilizzata per la creazione e il funzionamento degli slider a cui si è accennato in [dinamica di una simulazione](#dinamica-di-una-simulazione). Internamente è costituita da: una ```sf::RectangleShape line_``` che rappresenta la barra di scorrimento dello slider, una ```sf::CircleShape dot_``` rappresentante invece il cursore, un ```sf::Text title_``` per mostrare il titolo, una ```float &parameter_``` per legare lo slider ad un certo parametro e un ```const float default_value_``` per il valore di default del parametro.
 
 **Costruttore**
 
@@ -177,7 +171,7 @@ Slider::Slider(const std::string &title, const sf::Font &font,
 **Nota:** Il numero degli slider è stato limitato a quattro per esigenze di natura estetica, i parametri potenzialmente modificabili presenti nel programma sono molteplici e la classe Slider è sufficientemente versatile. La scelta fatta è assolutamente arbitraria.
 
 ### Button
-È una classe piuttosto semplice utilizzata per l'implementazione dei pulsanti *start* e *reset* visti in [dinamica della simulazione](#dinamica-della-simulazione), il cui funzionamento richiede però un forte utilizzo di ```sf::Event```. Internamente è costituita da una ```sf::RectangleShape``` che dà la forma al pulsante e da un ```sf::Text``` che ne rappresenta l'etichetta.
+È una classe piuttosto semplice utilizzata per l'implementazione dei pulsanti *start* e *reset* visti in [dinamica di una simulazione](#dinamica-di-una-simulazione), il cui funzionamento richiede però un forte utilizzo di ```sf::Event```. Internamente è costituita da una ```sf::RectangleShape rect_``` che dà la forma al pulsante e da un ```sf::Text text_``` che ne rappresenta l'etichetta.
 
 **Costruttore**
 ```cpp
@@ -235,6 +229,6 @@ Tale funzionalità è stata implementata grazie a ```sf::Event::MouseButtonRelea
 ### Gestione del fuori focus
 Quando la finestra *Boids Simulation* non è attiva la simulazione va **in pausa**. In particolare il moto dei boid si arresta e la finestra viene leggermente oscurata. 
 
-Per ottenere questo risultato è stato definito un dato ```bool window_in_focus{1}```, il cui valore dipende dalla coppia di eventi ```sf::Event::GainedFocus``` e ```sf::Event::LostFocus```. L'intero [game loop core](#rapida-overview-di-maincpp) viene eseguito solo se ```window_in_focus == 1```. Inoltre, se ```window_in_focus == 0```, viene disegnata al di sopra di tutti gli altri elementi della finestra una ```sf::RectangleShape``` delle dimensioni della finestra, di colore nero e opacità ridotta.
+Per ottenere questo risultato è stato definito un dato ```bool window_in_focus{1}```, il cui valore dipende dalla coppia di eventi ```sf::Event::GainedFocus``` e ```sf::Event::LostFocus```. L'intero [game loop core](#rapida-overview-di-maincpp) viene eseguito solo se ```window_in_focus == 1```. Inoltre, se ```window_in_focus == 0```, viene disegnata al di sopra di tutti gli altri elementi della finestra una ```sf::RectangleShape darkness``` delle dimensioni della finestra, di colore nero e opacità ridotta.
 
 ## Istruzioni per la compilazione
