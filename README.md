@@ -70,7 +70,42 @@ Lo scheletro del programma è costituito da tre classi: **Boid**, **Slider** e *
 ### Boid
 È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ```sf::ConvexShape```, definita in modo da ottenere la forma mostrata in [Figura 1](#descrizione-generale), e da un ```sf::Vector2f``` rappresentante la velocità del boid.
 
-La classe possiede inoltre vari **metodi**, di seguito si riportano quelli principali:
+**Costruttori**
+```cpp
+// usato per i boid
+Boid::Boid(const sf::Color &color, const sf::Vector2f &position,
+           const sf::Vector2f &velocity)
+    : velocity_{velocity} {
+  shape_.setPointCount(4);
+  shape_.setPoint(0, sf::Vector2f(6.f, 0.f));
+  shape_.setPoint(1, sf::Vector2f(-5.f, 4.f));
+  shape_.setPoint(2, sf::Vector2f(-1.f, 0.f));
+  shape_.setPoint(3, sf::Vector2f(-5.f, -4.f));
+  shape_.setOrigin(0.f, 0.f);
+
+  shape_.setFillColor(color);
+
+  shape_.setPosition(position);
+}
+```
+
+```cpp
+// usato per il predatore
+Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
+    : velocity_{velocity} {
+  shape_.setPointCount(4);
+  shape_.setPoint(0, sf::Vector2f(8.f, 0.f));
+  shape_.setPoint(1, sf::Vector2f(-7.f, 6.f));
+  shape_.setPoint(2, sf::Vector2f(-3.f, 0.f));
+  shape_.setPoint(3, sf::Vector2f(-7.f, -6.f));
+  shape_.setOrigin(0.f, 0.f);
+  shape_.setFillColor(sf::Color(204, 0, 0));
+
+  shape_.setPosition(position);
+}
+```
+
+**Metodi principali**
 
 - ```Boid(const sf::Color &color, const sf::Vector2f &position, const sf::Vector2f &velocity)``` 
     
@@ -97,7 +132,31 @@ La classe possiede inoltre vari **metodi**, di seguito si riportano quelli princ
 ### Slider
 È la classe utilizzata per la creazione e il funzionamento degli slider a cui si è accennato in [dinamica della simulazione](#dinamica-della-simulazione). Internamente è costituita da: una ```sf::RectangleShape``` che rappresenta la barra di scorrimento dello slider, una ```sf::CircleShape``` rappresentante invece il cursore, un ```sf::Text``` per mostrare il titolo, una ```float&``` per legare lo slider ad un certo parametro e un ```const float``` per il valore di default del parametro.
 
-**Metodi principali**:
+**Costruttore**
+
+```cpp
+Slider::Slider(const std::string &title, const sf::Font &font,
+               const sf::Vector2f &line_size, const float dot_radius,
+               const sf::Vector2f &position, float &parameter,
+               const float default_value)
+    : line_{line_size},
+      dot_{dot_radius},
+      parameter_{parameter},
+      default_value_{default_value} {
+  line_.setOrigin(line_size.x / 2, line_size.y / 2);
+  dot_.setOrigin(dot_radius, dot_radius);
+
+  title_.setFont(font);
+  title_.setString(title);
+  title_.setCharacterSize(15);
+
+  line_.setPosition(position.x, position.y);
+  dot_.setPosition(position.x, position.y);
+  title_.setPosition(position.x - line_.getSize().x / 2, position.y - 28.f);
+}
+```
+
+**Metodi principali**
 
 - ```bool mouseIsOver(const sf::RenderWindow &window) const```
 
@@ -120,7 +179,26 @@ La classe possiede inoltre vari **metodi**, di seguito si riportano quelli princ
 ### Button
 È una classe piuttosto semplice utilizzata per l'implementazione dei pulsanti *start* e *reset* visti in [dinamica della simulazione](#dinamica-della-simulazione), il cui funzionamento richiede però un forte utilizzo di ```sf::Event```. Internamente è costituita da una ```sf::RectangleShape``` che dà la forma al pulsante e da un ```sf::Text``` che ne rappresenta l'etichetta.
 
-**Metodi principali**:
+**Costruttore**
+```cpp
+Button::Button(const std::string &title, const sf::Font &font,
+               const sf::Vector2f &rect_size, unsigned int text_size,
+               const sf::Vector2f &position)
+    : rect_{rect_size} {
+  rect_.setOrigin(rect_.getSize().x / 2, rect_.getSize().y / 2);
+  rect_.setPosition(position.x, position.y);
+
+  text_.setFont(font);
+  text_.setString(title);
+  text_.setCharacterSize(text_size);
+  text_.setStyle(sf::Text::Bold);
+  text_.setOrigin(text_.getGlobalBounds().getSize() / 2.f +
+                  text_.getLocalBounds().getPosition());
+  text_.setPosition(position.x, position.y);
+}
+```
+
+**Metodi principali**
 
 - ```bool mouseIsOver(const sf::RenderWindow &window) const```
     
