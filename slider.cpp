@@ -3,11 +3,11 @@
 Slider::Slider(const std::string &title, const sf::Font &font,
                const sf::Vector2f &line_size, const float dot_radius,
                const sf::Vector2f &position, float &parameter,
-               const float initial_value)
+               const float default_value)
     : line_{line_size},
       dot_{dot_radius},
       parameter_{parameter},
-      initial_value_{initial_value} {
+      default_value_{default_value} {
   line_.setOrigin(line_size.x / 2, line_size.y / 2);
   dot_.setOrigin(dot_radius, dot_radius);
 
@@ -37,7 +37,7 @@ bool Slider::dotTooRight() const {
   return this->dot_.getPosition().x >
          (this->line_.getPosition().x + this->line_.getSize().x / 2);
 }
-void Slider::normalize() {
+void Slider::stayInRange() {
   if (this->dotTooLeft()) {
     this->dot_.setPosition(
         this->line_.getPosition().x - this->line_.getSize().x / 2,
@@ -62,9 +62,9 @@ void Slider::work(const sf::RenderWindow &window, const bool mouse_pressed) {
     float movement = this->dot_.getPosition().x - initial_position;
     int factor = static_cast<int>(movement / step);
     this->parameter_ =
-        this->initial_value_ + factor * this->initial_value_ / 10.f;
+        this->default_value_ + factor * this->default_value_ / 10.f;
   }
-  this->normalize();
+  this->stayInRange();
 }
 
 void Slider::draw(sf::RenderWindow &window) {
@@ -74,7 +74,7 @@ void Slider::draw(sf::RenderWindow &window) {
 }
 
 void Slider::reset() {
-  this->parameter_ = initial_value_;
+  this->parameter_ = default_value_;
   this->dot_.setPosition(this->line_.getPosition().x,
                          this->dot_.getPosition().y);
 }

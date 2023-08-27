@@ -1,25 +1,25 @@
 [
 {
   "directory": "/Users/dariocampisi/boids/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.dir/main.cpp.o -c /Users/dariocampisi/boids/main.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -g -fsanitize=address,undefined -fno-omit-frame-pointer -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.dir/main.cpp.o -c /Users/dariocampisi/boids/main.cpp",
   "file": "/Users/dariocampisi/boids/main.cpp",
   "output": "CMakeFiles/boids.dir/main.cpp.o"
 },
 {
   "directory": "/Users/dariocampisi/boids/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.dir/boid.cpp.o -c /Users/dariocampisi/boids/boid.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -g -fsanitize=address,undefined -fno-omit-frame-pointer -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.dir/boid.cpp.o -c /Users/dariocampisi/boids/boid.cpp",
   "file": "/Users/dariocampisi/boids/boid.cpp",
   "output": "CMakeFiles/boids.dir/boid.cpp.o"
 },
 {
   "directory": "/Users/dariocampisi/boids/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.dir/slider.cpp.o -c /Users/dariocampisi/boids/slider.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -g -fsanitize=address,undefined -fno-omit-frame-pointer -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.dir/slider.cpp.o -c /Users/dariocampisi/boids/slider.cpp",
   "file": "/Users/dariocampisi/boids/slider.cpp",
   "output": "CMakeFiles/boids.dir/slider.cpp.o"
 },
 {
   "directory": "/Users/dariocampisi/boids/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.dir/button.cpp.o -c /Users/dariocampisi/boids/button.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -g -fsanitize=address,undefined -fno-omit-frame-pointer -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.dir/button.cpp.o -c /Users/dariocampisi/boids/button.cpp",
   "file": "/Users/dariocampisi/boids/button.cpp",
   "output": "CMakeFiles/boids.dir/button.cpp.o"
 }

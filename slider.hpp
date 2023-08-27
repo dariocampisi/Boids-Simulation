@@ -7,13 +7,13 @@ class Slider {
  public:
   Slider(const std::string &title, const sf::Font &font,
          const sf::Vector2f &line_size, const float dot_radius,
-         const sf::Vector2f &position, float &parameter, const float initial_value);
+         const sf::Vector2f &position, float &parameter, const float default_value);
 
   bool mouseIsOver(const sf::RenderWindow &window) const;
 
   bool dotTooLeft() const;
   bool dotTooRight() const;
-  void normalize();
+  void stayInRange();
 
   void work(const sf::RenderWindow &window, const bool mouse_pressed);
 
@@ -26,7 +26,7 @@ class Slider {
   sf::CircleShape dot_;
   sf::Text title_;
   float &parameter_;
-  const float initial_value_;
+  const float default_value_;
 };
 
 #endif
