@@ -36,7 +36,7 @@ All'avvio del programma viene mostrata una **schermata iniziale** che invita l'u
 <b>Figura 2:</b> Schermata iniziale
 </div>
 
-Per dare inizio alla simulazione l'utente può utilizzare il pulsante *start* o alternativamente premere *enter*.
+Per dare inizio alla simulazione l'utente può utilizzare il pulsante *start* o alternativamente premere *Enter*.
 
 Durante la simulazione è possibile regolare il valore dei parametri delle regole di volo e del raggio di visione dei boid tramite degli **slider**, osservando in tempo reale come tali modifiche si riflettono sui movimenti macroscopici degli stormi. Per tornare rapidamente ai valori impostati di default, è sufficiente premere il pulsante *reset*.
 
@@ -51,8 +51,6 @@ Come è possibile notare dalla **Figura 3**, alle simulazioni è stata aggiunta 
 
 ### Componente stocastica
 In ogni simulazione è equiprobabile la generazione di uno, due o tre **stormi diversi**, differenziati per colore. I possibili colori degli stormi e dei dettagli grafici della *top bar* sono <span style="color:rgb(0, 102, 204)">blu</span>, <span style="color:rgb(0, 153, 0)">verde</span> e <span style="color:rgb(255, 128, 0)">arancione</span>.
-
-
 
 <div align="center">
 <img src="utility/three_flocks.png" width="800">
@@ -69,7 +67,7 @@ Ogni 3.000 iterazioni del game loop (poco meno di 30 secondi) vengono stampati a
 Lo scheletro del programma è costituito da tre classi: **Boid**, **Slider** e **Button**, tutte fortemente basate sulle classi fornite dalla libreria **SFML/Graphics**.
 
 ### Boid
-È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ``` sf::ConvexShape```, definita in modo da ottenere la forma mostrata in **Figura 1**, e da un ```sf::Vector2f``` rappresentante la velocità del boid.
+È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ```sf::ConvexShape```, definita in modo da ottenere la forma mostrata in **[Figura 1](#descrizione-generale)**, e da un ```sf::Vector2f``` rappresentante la velocità del boid.
 
 La classe possiede inoltre vari **metodi**, di seguito si riportano quelli principali:
 
@@ -93,7 +91,7 @@ La classe possiede inoltre vari **metodi**, di seguito si riportano quelli princ
 
 - ```bool isFlockMate(const Boid &other) const```
 
-    Verifica che i boid siano compagni di stormo del boid su cui è applicato, la verifica consiste banalmente nel controllo dei colori dei due boid;
+    Verifica che i boid siano compagni di stormo del boid su cui è applicato, la verifica consiste banalmente nel controllo dei colori dei boid;
 
 ### Slider
 È la classe utilizzata per la creazione e il funzionamento degli slider a cui si è accennato in [dinamica della simulazione](#dinamica-della-simulazione). Internamente è costituita da: una ```sf::RectangleShape``` che rappresenta la barra di scorrimento dello slider, una ```sf::CircleShape``` rappresentante invece il cursore, un ```sf::Text``` per mostrare il titolo, una ```float&``` per legare lo slider ad un certo parametro e un ```const float``` per il valore di default del parametro.
@@ -117,13 +115,13 @@ La classe possiede inoltre vari **metodi**, di seguito si riportano quelli princ
     Riporta il cursore al centro della barra ed il parametro al suo valore di default, viene eseguito in seguito alla pressione del pulsante *reset* mostrato in **Figura 3**;
 
 ### Button
-È una classe piuttosto semplice utilizzata per l'implementazione dei pulsanti *start* e *reset* visti in [dinamica della simulazione](#dinamica-della-simulazione), il cui funzionamento richiede però un forte utilizzo di ```sf::Event```. Internamente è costituita da una ```sf::RectangleShape``` che dà la forma al pulsante e da un ```sf::Text``` che ne rappresenta il titolo.
+È una classe piuttosto semplice utilizzata per l'implementazione dei pulsanti *start* e *reset* visti in [dinamica della simulazione](#dinamica-della-simulazione), il cui funzionamento richiede però un forte utilizzo di ```sf::Event```. Internamente è costituita da una ```sf::RectangleShape``` che dà la forma al pulsante e da un ```sf::Text``` che ne rappresenta l'etichetta.
 
 **Metodi principali**:
 
 - ```bool mouseIsOver(const sf::RenderWindow &window) const```
     
-    Metodo analogo a ```Slider::mouseIsOver```;
+    Metodo analogo a ```Slider::mouseIsOver()```;
 
 ### Rapida overview di main.cpp
 ```main.cpp``` è il file principale del programma, costituito da circa 500 righe di codice, si cerca di qui di riassumerne la struttura generale.
@@ -132,10 +130,14 @@ La classe possiede inoltre vari **metodi**, di seguito si riportano quelli princ
 - Gestione della generazione dei **numeri casuali**, utilizzati per le posizioni e le velocità iniziali dei boid;
 - Definizione di tutti gli elementi che compongono la **schermata iniziale**;
 - Gestione dei **[colori casuali](#componente-stocastica)** dei boid e costruzione del **predatore**;
-- Gestione **finestra** e **top bar**;
-- **Game loop**;
+- Gestione della **finestra** e dichiarazione degli elementi della **top bar**;
+- **Game loop**
     - Gestione degli **```sf::Event```**;
-    - **Core** del game loop: costruzione dei boid (avviene solo una volta), calcolo degli fps, funzionamento degli slider, gestione del movimento dei boid e del predatore;
+    - **Game loop core**
+        - Costruzione dei boid (avviene solo una volta);
+        - Calcolo degli fps;
+        - Funzionamento degli slider;
+        - Gestione del movimento dei boid e del predatore;
     - **Rendering**;
     - Gestione dell'**output delle statistiche**;
     - Gestione della **schermata iniziale**: viene mostrata fino a quando non viene premuto il pulsante *start*;
