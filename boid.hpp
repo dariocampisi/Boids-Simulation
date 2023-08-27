@@ -17,14 +17,11 @@ class Boid : public sf::Transformable {
   void setShape(const sf::ConvexShape &s);
   sf::ConvexShape &getShape();
 
-  void setPosition(const float x, const float y);
-  const sf::Vector2f &getPosition() const;
-
   void setVelocity(const float x, const float y);
   void setVelocity(const sf::Vector2f &v);
   const sf::Vector2f &getVelocity() const;
 
-  void setRotation(const float r);
+  const sf::Vector2f &getPosition() const;
   float getRotation() const;
 
   float distance(const Boid &other) const;

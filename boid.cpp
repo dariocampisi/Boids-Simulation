@@ -31,20 +31,15 @@ Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
 void Boid::setShape(const sf::ConvexShape &s) { this->shape_ = s; }
 sf::ConvexShape &Boid::getShape() { return this->shape_; }
 
-void Boid::setPosition(const float x, const float y) {
-  this->shape_.setPosition(x, y);
-}
-const sf::Vector2f &Boid::getPosition() const {
-  return this->shape_.getPosition();
-}
-
 void Boid::setVelocity(const float x, const float y) {
   this->velocity_ = sf::Vector2f(x, y);
 }
 void Boid::setVelocity(const sf::Vector2f &v) { this->velocity_ = v; }
 const sf::Vector2f &Boid::getVelocity() const { return this->velocity_; }
 
-void Boid::setRotation(const float r) { this->shape_.setRotation(r); }
+const sf::Vector2f &Boid::getPosition() const {
+  return this->shape_.getPosition();
+}
 float Boid::getRotation() const { return this->shape_.getRotation(); }
 
 float Boid::distance(const Boid &other) const {
@@ -58,7 +53,7 @@ bool Boid::isClose(const Boid &other, const float d) const {
 }
 bool Boid::isCloseAndVisible(const Boid &other, const float d,
                              const float angle_view) const {
-  if (this->isClose(other,d)) {
+  if (this->isClose(other, d)) {
     sf::Vector2f relative_position = other.getPosition() - this->getPosition();
     float relative_angle =
         std::atan2(relative_position.y, relative_position.x) * (180.f / M_PI);

@@ -68,7 +68,7 @@ Ogni 3.000 iterazioni del game loop (poco meno di 30 secondi) vengono stampati a
 Lo scheletro del programma è costituito da tre classi: **Boid**, **Slider** e **Button**, tutte fortemente basate sulle classi fornite dalla libreria **SFML/Graphics**.
 
 ### Boid
-È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ```sf::ConvexShape```, definita in modo da ottenere la forma mostrata in **[Figura 1](#descrizione-generale)**, e da un ```sf::Vector2f``` rappresentante la velocità del boid.
+È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ```sf::ConvexShape```, definita in modo da ottenere la forma mostrata in [Figura 1](#descrizione-generale), e da un ```sf::Vector2f``` rappresentante la velocità del boid.
 
 La classe possiede inoltre vari **metodi**, di seguito si riportano quelli principali:
 
@@ -113,7 +113,7 @@ La classe possiede inoltre vari **metodi**, di seguito si riportano quelli princ
 
 - ```void reset()```
 
-    Riporta il cursore al centro della barra ed il parametro al suo valore di default, viene eseguito in seguito alla pressione del pulsante *reset* mostrato e.g. in **[Figura 4](#componente-stocastica)**;
+    Riporta il cursore al centro della barra ed il parametro al suo valore di default, viene eseguito in seguito alla pressione del pulsante *reset* mostrato e.g. in [Figura 4](#componente-stocastica);
 
 ### Button
 È una classe piuttosto semplice utilizzata per l'implementazione dei pulsanti *start* e *reset* visti in [dinamica della simulazione](#dinamica-della-simulazione), il cui funzionamento richiede però un forte utilizzo di ```sf::Event```. Internamente è costituita da una ```sf::RectangleShape``` che dà la forma al pulsante e da un ```sf::Text``` che ne rappresenta l'etichetta.

@@ -341,8 +341,7 @@ int main() {
              ++i) {
           // movimento
           boids[i].getShape().move(boids[i].getVelocity());
-          boids[i].setRotation(
-              std::atan2(boids[i].getVelocity().y, boids[i].getVelocity().x) *
+          boids[i].getShape().setRotation(std::atan2(boids[i].getVelocity().y, boids[i].getVelocity().x) *
               (180.f / M_PI));
 
           // controllo bordi e velocità
