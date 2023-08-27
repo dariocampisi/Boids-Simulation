@@ -38,7 +38,7 @@ All'avvio del programma viene mostrata una **schermata iniziale** che invita l'u
 
 Per dare inizio alla simulazione l'utente può utilizzare il pulsante *start* o alternativamente premere *enter*.
 
-Durante la simulazione è possibile regolare il valore dei parametri delle regole di volo e del raggio di visione dei boid tramite degli **slider**, osservando in tempo reale come tali modifiche influenzano il movimento dei boid. Per tornare rapidamente ai valori impostati di default, è sufficiente premere il pulsante *reset*.
+Durante la simulazione è possibile regolare il valore dei parametri delle regole di volo e del raggio di visione dei boid tramite degli **slider**, osservando in tempo reale come tali modifiche si riflettono sui movimenti macroscopici. Per tornare rapidamente ai valori impostati di default, è sufficiente premere il pulsante *reset*.
 
 <div align="center">
 <img src="utility/one_flock.png">
