@@ -242,8 +242,24 @@ Per ottenere questo risultato è stato definito un ```bool window_in_focus{1}```
 
 ## Testing
 ### Strategie di testing
+Grazie all'implementazione grafica, una parte considerevole del testing del programma è avvenuta tramite l'osservazione del comportamento di tutti gli elementi della finestra (boid, predatore, slider, pulsanti).  
+Si è comunque rivelato utile utilizzare la libreria di testing **doctest** per eseguire dei test più approfonditi su alcune delle funzioni più importanti del programma, in particolare:
 
-### Istruzioni per eseguire il testing
+- ```Boid::isCloseAndVisible()```
+- ```Boid::isFlockMate()```
+- ```Slider::reset()```
+- ```printStatistics()```
+
+### Comandi per eseguire il testing
+```shell
+% pwd
+/Users/dariocampisi/boids
+% cmake -S . -B build
+...
+% cmake --build build
+...
+% ./build/boids.t
+```
 
 ## Istruzioni per la compilazione
 ### Requisiti

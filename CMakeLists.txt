@@ -18,13 +18,13 @@ string(APPEND CMAKE_CXX_FLAGS " -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 
-# per sfml
+# sfml
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 
 # eseguibili
 add_executable(boids main.cpp boid.cpp slider.cpp button.cpp statistics.cpp)
 
-# per sfml
+# sfml
 target_link_libraries(boids PRIVATE sfml-graphics)
 
 # se il testing e' abilitato...

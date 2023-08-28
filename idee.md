@@ -15,10 +15,9 @@
 1. Attenzionare la generazione di numeri random
 2. Usare i namespace
 3. ~~Capire bene come funziona "inline" (usata in boids.hpp)~~
-4. Implementare i test per:
+4. ~~Implementare i test per:~~
     - Boid::isCloseAndVisible()
     - Boid::isFlockMate()
-    - Slider::mouseIsOver()
     - Slider::reset()
     - printStatistics()
 5. Fare un po' di pulizia

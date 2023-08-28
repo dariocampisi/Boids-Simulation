@@ -858,4 +858,5 @@ CMakeFiles/boids.dir/main.cpp.o: /Users/dariocampisi/boids/main.cpp \
   /usr/local/include/SFML/Graphics/VertexBuffer.hpp \
   /Users/dariocampisi/boids/button.hpp \
   /Users/dariocampisi/boids/slider.hpp \
-  /Users/dariocampisi/boids/statistics.hpp
+  /Users/dariocampisi/boids/statistics.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/iomanip

@@ -136,13 +136,10 @@ int main() {
   std::vector<Boid> boids{};
 
   // gestione di stormi e colori casuali
-  sf::Color light_blue(0, 102, 204);
+  sf::Color blue(0, 102, 204);
   sf::Color green(0, 153, 0);
   sf::Color orange(255, 128, 0);
-  std::vector<sf::Color> colors_vector{};
-  colors_vector.push_back(light_blue);
-  colors_vector.push_back(orange);
-  colors_vector.push_back(green);
+  std::vector<sf::Color> colors_vector{blue,green,orange};
   std::shuffle(colors_vector.begin(), colors_vector.end(), engine);
 
   std::uniform_int_distribution flocks(0, 2);

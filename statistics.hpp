@@ -4,6 +4,7 @@
 #include <iostream>
 #include <numeric>
 #include <vector>
+#include <iomanip>
 
 #include "boid.hpp"
 

@@ -1,10 +1,10 @@
 #include "statistics.hpp"
 
- float mean(const std::vector<float> &v) {
+float mean(const std::vector<float> &v) {
   return std::accumulate(v.begin(), v.end(), 0.f) / v.size();
 }
 
- float stdDev(const std::vector<float> &v, const float f) {
+float stdDev(const std::vector<float> &v, const float f) {
   std::vector<float> quad_deviations{};
 
   for (auto it = v.begin(); it != v.end(); ++it) {
@@ -29,6 +29,10 @@ void printStatistics(unsigned int &frame_counter,
     float mean_distance{};
     float std_dev_distance{};
 
+    // stampa i risultati con una precisione di 2 cifre decimali (necessario per
+    // implementare correttamente i test su printStatistics())
+    std::cout << std::fixed << std::setprecision(2);
+
     for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
          ++i) {
       relative_distances.clear();
@@ -47,7 +51,7 @@ void printStatistics(unsigned int &frame_counter,
     std_dev_distance = stdDev(mean_relative_distances, mean_distance);
 
     std::cout << "Mean distance: (" << mean_distance << " +/- "
-              << std_dev_distance << ") px \n";
+              << std_dev_distance << ") px\n";
 
     // velocità media
     std::vector<float> speeds{};
@@ -63,6 +67,6 @@ void printStatistics(unsigned int &frame_counter,
     std_dev_speed = stdDev(speeds, mean_speed);
 
     std::cout << "Mean speed: (" << mean_speed << " +/- " << std_dev_speed
-              << ") px/frameTime \n \n";
+              << ") px/frameTime\n\n";
   }
 }

@@ -62,9 +62,16 @@ bool Boid::isCloseAndVisible(const Boid &other, const float d,
     }
     float angle_difference = std::abs(this->getRotation() - relative_angle);
 
-    return angle_difference <= (angle_view / 2);
-  } else
+    if (angle_difference <= (angle_view / 2)) {
+      return 1;
+    } else if (angle_difference >= ((angle_view / 2) + (360.f - angle_view))) {
+      return 1;
+    } else {
+      return 0;
+    }
+  } else {
     return 0;
+  }
 }
 
 void Boid::maxVelocity(const float max_velocity) {
