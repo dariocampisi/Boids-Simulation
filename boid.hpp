@@ -43,8 +43,13 @@ class Boid : public sf::Transformable {
 };
 
 // funzioni utili per Boid::maxVelocity()
-inline float length(const sf::Vector2f &v);
+float length(const sf::Vector2f &v);
 
-inline void normalize(sf::Vector2f &v);
+void normalize(sf::Vector2f &v);
+
+// funzioni utili per la stampa delle statistiche
+float mean(const std::vector<float> &v);
+
+float stdDev(const std::vector<float> &v, const float f);
 
 #endif

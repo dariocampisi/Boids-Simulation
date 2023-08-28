@@ -232,3 +232,17 @@ Quando la finestra *Boids Simulation* non è attiva la simulazione va **in pausa
 Per ottenere questo risultato è stato definito un dato ```bool window_in_focus{1}```, il cui valore dipende dalla coppia di eventi ```sf::Event::GainedFocus``` e ```sf::Event::LostFocus```. L'intero [game loop core](#rapida-overview-di-maincpp) viene eseguito solo se ```window_in_focus == 1```. Inoltre, se ```window_in_focus == 0```, viene disegnata al di sopra di tutti gli altri elementi della finestra una ```sf::RectangleShape darkness``` delle dimensioni della finestra, di colore nero e opacità ridotta.
 
 ## Istruzioni per la compilazione
+### Requisiti
+Per eseguire il programma sono richiesti **CMake v3.16** e **SFML v2.5**.  
+Qualora si disponesse di versioni precedenti si consiglia di modificare rispettivamente le righe ```1``` e ```22``` del file ```CMakeLists.txt```.
+
+### Sequenza di comandi
+```shell
+% pwd
+/Users/dariocampisi/boids
+% cmake -S . -B build
+...
+% cmake --build build
+...
+% ./build/boids
+```

@@ -17,4 +17,5 @@ Le idee realizzate sono ~~barrate~~
 4. Implementare i test
 5. Fare un po' di pulizia
 6. Gestione output (velocità medie e dev standard)
-7. **La relazione**
+7. Aggiungere clangformat
+8. **La relazione**

@@ -1,11 +1,10 @@
 #include <cassert>
+#include <iostream>
 #include <random>
-#include <vector>
 
 #include "boid.hpp"
 #include "button.hpp"
 #include "slider.hpp"
-#include "statistics.hpp"
 
 int main() {
   // DIMENSIONI FINESTRA E FONT
@@ -126,7 +125,7 @@ int main() {
   Button start{"START", font, sf::Vector2f(170.f, 70.f), 20,
                sf::Vector2f(window_width / 2, window_height / 2 + 70.f)};
   start.getText().setFillColor(sf::Color(204, 0, 0));
-  start.getRect().setFillColor(background_color);
+  start.getRect().setFillColor(sf::Color::Transparent);
   start.getRect().setOutlineColor(sf::Color(204, 0, 0));
   start.getRect().setOutlineThickness(2.f);
 
@@ -165,7 +164,7 @@ int main() {
 
   // top bar
   sf::RectangleShape top_bar{sf::Vector2f(window_width, 60.f)};
-  top_bar.setFillColor(background_color);
+  top_bar.setFillColor(sf::Color::Transparent);
   top_bar.setOutlineColor(colors_vector[0]);
   top_bar.setOutlineThickness(2.f);
 
@@ -183,7 +182,7 @@ int main() {
   Button reset{"RESET", font, sf::Vector2f(80.f, 35.f), 14,
                sf::Vector2f(1200.f, 30.f)};
   reset.getText().setFillColor(colors_vector[0]);
-  reset.getRect().setFillColor(background_color);
+  reset.getRect().setFillColor(sf::Color::Transparent);
   reset.getRect().setOutlineColor(colors_vector[0]);
   reset.getRect().setOutlineThickness(1.f);
 
@@ -237,7 +236,7 @@ int main() {
             event.key.code == sf::Keyboard::Enter)) &&
           !user_input.empty()) {
         start.getText().setFillColor(sf::Color(204, 0, 0));
-        start.getRect().setFillColor(background_color);
+        start.getRect().setFillColor(sf::Color::Transparent);
 
         if (std::stoi(user_input) <= 300) {
           start_clicked = 1;
@@ -292,7 +291,7 @@ int main() {
         s_dist.reset();
 
         reset.getText().setFillColor(colors_vector[0]);
-        reset.getRect().setFillColor(background_color);
+        reset.getRect().setFillColor(sf::Color::Transparent);
       }
     }
 
@@ -390,7 +389,7 @@ int main() {
         // PREDATORE
         // movimento, controllo ai bordi e velocità
         predator.getShape().move(predator.getVelocity());
-        predator.setRotation(
+        predator.getShape().setRotation(
             std::atan2(predator.getVelocity().y, predator.getVelocity().x) *
             (180.f / M_PI));
 
@@ -437,8 +436,56 @@ int main() {
       window.display();
 
       // GESTIONE OUTPUT STATISTICHE
-      printStatistics(frame_counter, 500u , boids);
+      ++frame_counter;
 
+      if (frame_counter == 3'000u) {
+        frame_counter = 0u;
+
+        // distanza media
+        std::vector<float> relative_distances{};
+        float mean_relative_distance{};
+        std::vector<float> mean_relative_distances{};
+        float mean_distance{};
+        float std_dev_distance{};
+
+        for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
+             ++i) {
+          relative_distances.clear();
+          for (unsigned int j = 0u; j < static_cast<unsigned int>(boids.size());
+               ++j) {
+            if (i == j) continue;
+            if (!boids[i].isFlockMate(boids[j])) continue;
+            relative_distances.push_back(
+                length(boids[i].getPosition() - boids[j].getPosition()));
+          }
+          mean_relative_distance = mean(relative_distances);
+          mean_relative_distances.push_back(mean_relative_distance);
+        }
+        mean_distance = mean(mean_relative_distances);
+
+        std_dev_distance = stdDev(mean_relative_distances, mean_distance);
+
+        std::cout << "Mean distance: (" << mean_distance << " +/- "
+                  << std_dev_distance << ") px \n";
+
+        assert(mean_distance != 0);
+
+        // velocità media
+        std::vector<float> speeds{};
+        float mean_speed{};
+        float std_dev_speed{};
+
+        for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
+             ++i) {
+          speeds.push_back(length(boids[i].getVelocity()));
+        }
+        mean_speed = mean(speeds);
+
+        std_dev_speed = stdDev(speeds, mean_speed);
+
+        std::cout << "Mean speed: (" << mean_speed << " +/- " << std_dev_speed
+                  << ") px/frameTime \n";
+      }
     } else {
       window.clear(background_color);
 

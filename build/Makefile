@@ -225,30 +225,6 @@ slider.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/boids.dir/build.make CMakeFiles/boids.dir/slider.cpp.s
 .PHONY : slider.cpp.s
 
-statistics.o: statistics.cpp.o
-.PHONY : statistics.o
-
-# target to build an object file
-statistics.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/boids.dir/build.make CMakeFiles/boids.dir/statistics.cpp.o
-.PHONY : statistics.cpp.o
-
-statistics.i: statistics.cpp.i
-.PHONY : statistics.i
-
-# target to preprocess a source file
-statistics.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/boids.dir/build.make CMakeFiles/boids.dir/statistics.cpp.i
-.PHONY : statistics.cpp.i
-
-statistics.s: statistics.cpp.s
-.PHONY : statistics.s
-
-# target to generate assembly for a file
-statistics.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/boids.dir/build.make CMakeFiles/boids.dir/statistics.cpp.s
-.PHONY : statistics.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -270,9 +246,6 @@ help:
 	@echo "... slider.o"
 	@echo "... slider.i"
 	@echo "... slider.s"
-	@echo "... statistics.o"
-	@echo "... statistics.i"
-	@echo "... statistics.s"
 .PHONY : help
 
 

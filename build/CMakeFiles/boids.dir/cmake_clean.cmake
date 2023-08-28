@@ -7,8 +7,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/boids.dir/main.cpp.o.d"
   "CMakeFiles/boids.dir/slider.cpp.o"
   "CMakeFiles/boids.dir/slider.cpp.o.d"
-  "CMakeFiles/boids.dir/statistics.cpp.o"
-  "CMakeFiles/boids.dir/statistics.cpp.o.d"
   "boids"
   "boids.pdb"
 )
