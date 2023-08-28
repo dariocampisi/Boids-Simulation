@@ -210,7 +210,7 @@ Button::Button(const std::string &title, const sf::Font &font,
     Metodo analogo a ```Slider::mouseIsOver()```;
 
 ### Rapida overview di main.cpp
-```main.cpp``` è il file principale del programma, costituito da circa 500 righe di codice, si cerca qui di riassumerne la struttura generale.
+```main.cpp``` è il file principale del programma, costituito da circa 450 righe di codice, si cerca qui di riassumerne la struttura generale.
 
 - Dichiarazione delle **variabili "globali"** del programma, incluse le dimensioni della finestra, i parametri delle regole di volo e gli slider ad essi collegati;
 - Gestione della generazione dei **numeri casuali**, utilizzati per le posizioni e le velocità iniziali dei boid;
