@@ -22,7 +22,7 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-o
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 
 # eseguibili
-add_executable(boids main.cpp boid.cpp slider.cpp button.cpp)
+add_executable(boids main.cpp boid.cpp slider.cpp button.cpp statistics.cpp)
 
 # per sfml
 target_link_libraries(boids PRIVATE sfml-graphics)
@@ -32,7 +32,7 @@ target_link_libraries(boids PRIVATE sfml-graphics)
 if (BUILD_TESTING)
 
   # aggiungi l'eseguibile statistics.t
-  add_executable(boid.t boid.test.cpp boid.cpp)
+  add_executable(boid.t boids.test.cpp boid.cpp slider.cpp)
   # aggiungi l'eseguibile statistics.t alla lista dei test
   add_test(NAME boids.t COMMAND boids.t)
 

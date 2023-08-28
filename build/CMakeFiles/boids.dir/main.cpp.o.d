@@ -1,6 +1,4 @@
-CMakeFiles/boids.dir/main.cpp.o: \
-  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/share/asan_ignorelist.txt \
-  /Users/dariocampisi/boids/main.cpp \
+CMakeFiles/boids.dir/main.cpp.o: /Users/dariocampisi/boids/main.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/cassert \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/__assert \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/__config \
@@ -859,4 +857,5 @@ CMakeFiles/boids.dir/main.cpp.o: \
   /usr/local/include/SFML/Graphics/Text.hpp \
   /usr/local/include/SFML/Graphics/VertexBuffer.hpp \
   /Users/dariocampisi/boids/button.hpp \
-  /Users/dariocampisi/boids/slider.hpp
+  /Users/dariocampisi/boids/slider.hpp \
+  /Users/dariocampisi/boids/statistics.hpp

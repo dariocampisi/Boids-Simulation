@@ -15,8 +15,14 @@
 1. Attenzionare la generazione di numeri random
 2. Usare i namespace
 3. ~~Capire bene come funziona "inline" (usata in boids.hpp)~~
-4. Implementare i test
+4. Implementare i test per:
+    - Boid::isCloseAndVisible()
+    - Boid::isFlockMate()
+    - Slider::mouseIsOver()
+    - Slider::reset()
+    - printStatistics()
 5. Fare un po' di pulizia
 6. ~~Gestione output (velocità medie e dev standard)~~
 7. Aggiungere clangformat
 8. **RELAZIONE**
+

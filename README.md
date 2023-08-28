@@ -7,6 +7,7 @@
 - [Altre implementazioni aggiuntive](#implementazioni-aggiuntive)
 - [Testing](#testing)
 - [Istruzioni per la compilazione](#istruzioni-per-la-compilazione)
+- [Interpretazione dei risultati](#interpretazione-dei-risultati)
 
 ## Descrizione generale
 Il progetto è un tentativo di implementazione del programma **Boids**, sviluppato da Craig Reynolds nel 1986, facente uso della libreria grafica **SFML**. L'obiettivo del programma è quello di simulare il comportamento di un generico **stormo** (e.g. di uccelli), ovvero un sistema complesso costituito da singole entità, i *boid*, che rispettano delle precise regole di movimento, qui chiamate **regole di volo**.
@@ -61,7 +62,12 @@ In ogni simulazione è equiprobabile la generazione di uno, due o tre **stormi d
 </div>
 
 ### Output delle statistiche
-Periodicamente, il programma stampa a schermo la **distanza media** dei boid (tenendo conto, se presenti, dei diversi stormi) e la **velocità media** di tutti i boid della simulazione, con relative **deviazioni standard**.
+Periodicamente, il programma stampa a schermo la **distanza media** dei boid (tenendo conto, se presenti, dei diversi stormi) e la **velocità media** di tutti i boid della simulazione, con relative **deviazioni standard**. Esempio:
+
+```shell
+Mean distance: (252.012 +/- 116.827) px 
+Mean speed: (2.00593 +/- 0.184291) px/frameTime
+```
 
 **Nota:** La *frequenza* della stampa a schermo dei parametri dipende dalle prestazioni mantenute dalla simulazione, alcuni dati di riferimento:
 - Prestazioni standard (~115 fps fissi): frequenza ≈ 25 secondi
@@ -241,7 +247,7 @@ Per ottenere questo risultato è stato definito un ```bool window_in_focus{1}```
 
 ## Istruzioni per la compilazione
 ### Requisiti
-Per eseguire il programma sono richiesti **CMake v3.16** e **SFML v2.5**.  
+Per compilare ed eseguire il programma sono richiesti **CMake v3.16** e **SFML v2.5**.  
 Qualora si disponga di versioni precedenti si consiglia di modificare rispettivamente le righe ```1``` e ```22``` del file ```CMakeLists.txt```.
 
 ### Sequenza di comandi
@@ -254,3 +260,8 @@ Qualora si disponga di versioni precedenti si consiglia di modificare rispettiva
 ...
 % ./build/boids
 ```
+
+## Interpretazione dei risultati
+### Resa grafica e prestazioni
+
+### Output delle statistiche
