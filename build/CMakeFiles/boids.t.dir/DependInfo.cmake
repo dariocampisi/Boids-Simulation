@@ -10,7 +10,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/dariocampisi/boids/boid.cpp" "CMakeFiles/boids.t.dir/boid.cpp.o" "gcc" "CMakeFiles/boids.t.dir/boid.cpp.o.d"
   "/Users/dariocampisi/boids/boids.test.cpp" "CMakeFiles/boids.t.dir/boids.test.cpp.o" "gcc" "CMakeFiles/boids.t.dir/boids.test.cpp.o.d"
-  "/Users/dariocampisi/boids/button.cpp" "CMakeFiles/boids.t.dir/button.cpp.o" "gcc" "CMakeFiles/boids.t.dir/button.cpp.o.d"
   "/Users/dariocampisi/boids/slider.cpp" "CMakeFiles/boids.t.dir/slider.cpp.o" "gcc" "CMakeFiles/boids.t.dir/slider.cpp.o.d"
   "/Users/dariocampisi/boids/statistics.cpp" "CMakeFiles/boids.t.dir/statistics.cpp.o" "gcc" "CMakeFiles/boids.t.dir/statistics.cpp.o.d"
   )

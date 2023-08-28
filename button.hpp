@@ -5,6 +5,7 @@
 
 #include "slider.hpp"
 
+namespace bt {
 class Button {
  public:
   Button(const std::string &title, const sf::Font &font,
@@ -22,5 +23,6 @@ class Button {
   sf::RectangleShape rect_;
   sf::Text text_;
 };
+}  // namespace bt
 
 #endif

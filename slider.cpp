@@ -1,6 +1,6 @@
 #include "slider.hpp"
 
-Slider::Slider(const std::string &title, const sf::Font &font,
+sd::Slider::Slider(const std::string &title, const sf::Font &font,
                const sf::Vector2f &line_size, const float dot_radius,
                const sf::Vector2f &position, float &parameter,
                const float default_value)
@@ -20,7 +20,7 @@ Slider::Slider(const std::string &title, const sf::Font &font,
   title_.setPosition(position.x - line_.getSize().x / 2, position.y - 28.f);
 }
 
-bool Slider::mouseIsOver(const sf::RenderWindow &window) const {
+bool sd::Slider::mouseIsOver(const sf::RenderWindow &window) const {
   return this->dot_.getGlobalBounds().contains(
              sf::Vector2f(sf::Mouse::getPosition(window).x,
                           sf::Mouse::getPosition(window).y)) ||
@@ -29,15 +29,15 @@ bool Slider::mouseIsOver(const sf::RenderWindow &window) const {
                           sf::Mouse::getPosition(window).y));
 }
 
-bool Slider::dotTooLeft() const {
+bool sd::Slider::dotTooLeft() const {
   return this->dot_.getPosition().x <
          (this->line_.getPosition().x - this->line_.getSize().x / 2);
 }
-bool Slider::dotTooRight() const {
+bool sd::Slider::dotTooRight() const {
   return this->dot_.getPosition().x >
          (this->line_.getPosition().x + this->line_.getSize().x / 2);
 }
-void Slider::stayInRange() {
+void sd::Slider::stayInRange() {
   if (this->dotTooLeft()) {
     this->dot_.setPosition(
         this->line_.getPosition().x - this->line_.getSize().x / 2,
@@ -51,7 +51,7 @@ void Slider::stayInRange() {
 }
 
 // il valore massimo assunto dal parametro è 1.5 volte il valore iniziale
-void Slider::work(const sf::RenderWindow &window, const bool mouse_pressed) {
+void sd::Slider::work(const sf::RenderWindow &window, const bool mouse_pressed) {
   float initial_position = this->line_.getPosition().x;
   float step = this->line_.getSize().x / 11.f;
 
@@ -67,13 +67,13 @@ void Slider::work(const sf::RenderWindow &window, const bool mouse_pressed) {
   this->stayInRange();
 }
 
-void Slider::draw(sf::RenderWindow &window) {
+void sd::Slider::draw(sf::RenderWindow &window) {
   window.draw(this->line_);
   window.draw(this->dot_);
   window.draw(this->title_);
 }
 
-void Slider::reset() {
+void sd::Slider::reset() {
   this->parameter_ = default_value_;
   this->dot_.setPosition(this->line_.getPosition().x,
                          this->dot_.getPosition().y);

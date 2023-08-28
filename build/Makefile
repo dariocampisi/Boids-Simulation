@@ -573,7 +573,6 @@ button.o: button.cpp.o
 # target to build an object file
 button.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/boids.dir/build.make CMakeFiles/boids.dir/button.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/boids.t.dir/build.make CMakeFiles/boids.t.dir/button.cpp.o
 .PHONY : button.cpp.o
 
 button.i: button.cpp.i
@@ -582,7 +581,6 @@ button.i: button.cpp.i
 # target to preprocess a source file
 button.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/boids.dir/build.make CMakeFiles/boids.dir/button.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/boids.t.dir/build.make CMakeFiles/boids.t.dir/button.cpp.i
 .PHONY : button.cpp.i
 
 button.s: button.cpp.s
@@ -591,7 +589,6 @@ button.s: button.cpp.s
 # target to generate assembly for a file
 button.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/boids.dir/build.make CMakeFiles/boids.dir/button.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/boids.t.dir/build.make CMakeFiles/boids.t.dir/button.cpp.s
 .PHONY : button.cpp.s
 
 main.o: main.cpp.o

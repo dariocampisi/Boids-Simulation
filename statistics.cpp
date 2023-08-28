@@ -1,10 +1,10 @@
 #include "statistics.hpp"
 
-float mean(const std::vector<float> &v) {
+float st::mean(const std::vector<float> &v) {
   return std::accumulate(v.begin(), v.end(), 0.f) / v.size();
 }
 
-float stdDev(const std::vector<float> &v, const float f) {
+float st::stdDev(const std::vector<float> &v, const float f) {
   std::vector<float> quad_deviations{};
 
   for (auto it = v.begin(); it != v.end(); ++it) {
@@ -14,9 +14,9 @@ float stdDev(const std::vector<float> &v, const float f) {
   return std::sqrt(mean(quad_deviations));
 }
 
-void printStatistics(unsigned int &frame_counter,
+void st::printStatistics(unsigned int &frame_counter,
                      const unsigned int frame_limit,
-                     const std::vector<Boid> &boids) {
+                     const std::vector<bd::Boid> &boids) {
   ++frame_counter;
 
   if (frame_counter == frame_limit) {
@@ -30,7 +30,7 @@ void printStatistics(unsigned int &frame_counter,
     float std_dev_distance{};
 
     // stampa i risultati con una precisione di 2 cifre decimali (necessario per
-    // implementare correttamente i test su printStatistics())
+    // implementare correttamente i test di st::printStatistics())
     std::cout << std::fixed << std::setprecision(2);
 
     for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
@@ -41,7 +41,7 @@ void printStatistics(unsigned int &frame_counter,
         if (i == j) continue;
         if (!boids[i].isFlockMate(boids[j])) continue;
         relative_distances.push_back(
-            length(boids[i].getPosition() - boids[j].getPosition()));
+            bd::length(boids[i].getPosition() - boids[j].getPosition()));
       }
       mean_relative_distance = mean(relative_distances);
       mean_relative_distances.push_back(mean_relative_distance);
@@ -60,7 +60,7 @@ void printStatistics(unsigned int &frame_counter,
 
     for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
          ++i) {
-      speeds.push_back(length(boids[i].getVelocity()));
+      speeds.push_back(bd::length(boids[i].getVelocity()));
     }
     mean_speed = mean(speeds);
 

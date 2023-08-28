@@ -1,6 +1,6 @@
 #include "button.hpp"
 
-Button::Button(const std::string &title, const sf::Font &font,
+bt::Button::Button(const std::string &title, const sf::Font &font,
                const sf::Vector2f &rect_size, unsigned int text_size,
                const sf::Vector2f &position)
     : rect_{rect_size} {
@@ -16,15 +16,15 @@ Button::Button(const std::string &title, const sf::Font &font,
   text_.setPosition(position.x, position.y);
 }
 
-sf::RectangleShape &Button::getRect() { return this->rect_; }
-sf::Text &Button::getText() { return this->text_; }
+sf::RectangleShape &bt::Button::getRect() { return this->rect_; }
+sf::Text &bt::Button::getText() { return this->text_; }
 
-bool Button::mouseIsOver(const sf::RenderWindow &window) const {
+bool bt::Button::mouseIsOver(const sf::RenderWindow &window) const {
   return this->rect_.getGlobalBounds().contains(
       sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
 }
 
-void Button::draw(sf::RenderWindow &window) {
+void bt::Button::draw(sf::RenderWindow &window) {
   window.draw(this->rect_);
   window.draw(this->text_);
 }

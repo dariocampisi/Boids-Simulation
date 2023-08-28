@@ -69,22 +69,22 @@ Mean distance: (252.012 +/- 116.827) px
 Mean speed: (2.00593 +/- 0.184291) px/frameTime
 ```
 
-L'implementazione di ciò si trova all'intero della funzione ```printStatistics(unsigned int &frame_counter, const unsigned int frame_limit, const std::vector<Boid> &boids)```, contenuta nel file ```statistics.hpp``` insieme ad alcune funzioni ausiliarie.
+L'implementazione di ciò si trova all'intero della funzione ```st::printStatistics(unsigned int &frame_counter, const unsigned int frame_limit, const std::vector<bd::Boid> &boids)```, contenuta nel file ```statistics.hpp``` insieme ad alcune funzioni ausiliarie per il calcolo della media e della deviazione standard.
 
 **Nota:** La *frequenza* della stampa a schermo dei parametri dipende dalle prestazioni mantenute dalla simulazione, alcuni dati di riferimento:
 - Prestazioni standard (~115 fps fissi): frequenza ≈ 25 secondi
 - ~70 fps fissi: frequenza ≈ 40 secondi
 
 ## Logica di implementazione
-Lo scheletro del programma è costituito da tre classi: **Boid**, **Slider** e **Button**, tutte fortemente basate sulle classi fornite dalla libreria **SFML/Graphics** e contenute in ```boid.hpp```, ```slider.hpp``` e ```button.hpp``` rispettivamente.
+Lo scheletro del programma è costituito da tre classi: ```bd::Boid```, ```sd::Slider``` e ```bt::Button```, tutte fortemente basate sulle classi fornite dalla libreria **SFML/Graphics** e contenute in ```boid.hpp```, ```slider.hpp``` e ```button.hpp``` rispettivamente.
 
-### Boid
+### bd::Boid
 È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ```sf::ConvexShape shape_```, definita in modo da ottenere la forma mostrata in [Figura 1](#descrizione-generale), e da un ```sf::Vector2f velocity_``` rappresentante la velocità del boid.
 
 **Costruttore**
 ```cpp
 // usato per i boid
-Boid::Boid(const sf::Color &color, const sf::Vector2f &position,
+bd::Boid::Boid(const sf::Color &color, const sf::Vector2f &position,
            const sf::Vector2f &velocity)
     : velocity_{velocity} {
   shape_.setPointCount(4);
@@ -102,7 +102,7 @@ Boid::Boid(const sf::Color &color, const sf::Vector2f &position,
 
 ```cpp
 // usato per il predatore
-Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
+bd::Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
     : velocity_{velocity} {
   shape_.setPointCount(4);
   shape_.setPoint(0, sf::Vector2f(8.f, 0.f));
@@ -118,7 +118,7 @@ Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
 
 **Metodi principali**
 
-- ```bool isCloseAndVisible(const Boid &other, const float d, const float angle_view) const```
+- ```bool isCloseAndVisible(const bd::Boid &other, const float d, const float angle_view) const```
 
     Verifica che i boid siano all'interno del campo visivo del boid su cui è applicato, così da applicare correttamente le regole di volo;
 
@@ -130,17 +130,17 @@ Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
 
     Impone il [comportamento ai bordi](#comportamento-ai-bordi) di cui sopra;
 
-- ```bool isFlockMate(const Boid &other) const```
+- ```bool isFlockMate(const bd::Boid &other) const```
 
     Verifica che i boid siano compagni di stormo del boid su cui è applicato, la verifica consiste banalmente nel controllo dei colori dei boid;
 
-### Slider
+### sd::Slider
 È la classe utilizzata per la creazione e il funzionamento degli slider a cui si è accennato in [dinamica di una simulazione](#dinamica-di-una-simulazione). Internamente è costituita da: una ```sf::RectangleShape line_``` che rappresenta la barra di scorrimento dello slider, una ```sf::CircleShape dot_``` rappresentante invece il cursore, un ```sf::Text title_``` per mostrare il titolo, una ```float &parameter_``` per legare lo slider ad un certo parametro e un ```const float default_value_``` per il valore di default del parametro.
 
 **Costruttore**
 
 ```cpp
-Slider::Slider(const std::string &title, const sf::Font &font,
+sd::Slider::Slider(const std::string &title, const sf::Font &font,
                const sf::Vector2f &line_size, const float dot_radius,
                const sf::Vector2f &position, float &parameter,
                const float default_value)
@@ -179,14 +179,14 @@ Slider::Slider(const std::string &title, const sf::Font &font,
 
     Riporta il cursore al centro della barra ed il parametro al suo valore di default, viene eseguito in seguito alla pressione del pulsante *reset* mostrato e.g. in [Figura 4](#componente-stocastica);
 
-**Nota:** Il numero degli slider è stato limitato a quattro per esigenze di natura estetica, i parametri potenzialmente modificabili presenti nel programma sono molteplici e la classe Slider è sufficientemente versatile. La scelta fatta è assolutamente arbitraria.
+**Nota:** Il numero degli slider è stato limitato a quattro per esigenze di natura estetica, i parametri potenzialmente modificabili presenti nel programma sono molteplici e la classe ```sd::Slider``` è sufficientemente versatile. La scelta fatta è assolutamente arbitraria.
 
-### Button
+### bt::Button
 È una classe piuttosto semplice utilizzata per l'implementazione dei pulsanti *start* e *reset* visti in [dinamica di una simulazione](#dinamica-di-una-simulazione), il cui funzionamento richiede però un forte utilizzo di ```sf::Event```. Internamente è costituita da una ```sf::RectangleShape rect_``` che dà la forma al pulsante e da un ```sf::Text text_``` che ne rappresenta l'etichetta.
 
 **Costruttore**
 ```cpp
-Button::Button(const std::string &title, const sf::Font &font,
+bt::Button::Button(const std::string &title, const sf::Font &font,
                const sf::Vector2f &rect_size, unsigned int text_size,
                const sf::Vector2f &position)
     : rect_{rect_size} {
@@ -207,7 +207,7 @@ Button::Button(const std::string &title, const sf::Font &font,
 
 - ```bool mouseIsOver(const sf::RenderWindow &window) const```
     
-    Metodo analogo a ```Slider::mouseIsOver()```;
+    Metodo analogo a ```sd::Slider::mouseIsOver()```;
 
 ### Rapida overview di main.cpp
 ```main.cpp``` è il file principale del programma, costituito da circa 450 righe di codice, si cerca qui di riassumerne la struttura generale.
@@ -230,7 +230,7 @@ Button::Button(const std::string &title, const sf::Font &font,
 
 ## Altre implementazioni aggiuntive
 ### Angolo di vista
-Con l'intento di rendere la simulazione più realistica, è stato definito un **angolo di vista** che impedisce ai boid di essere consapevoli di ciò che accade "alle loro spalle". L'implementazione si trova all'interno di [```Boid::isCloseAndVisible()```](#boid). Il valore impostato di default è di 250°.
+Con l'intento di rendere la simulazione più realistica, è stato definito un **angolo di vista** che impedisce ai boid di essere consapevoli di ciò che accade "alle loro spalle". L'implementazione si trova all'interno di [```bd::Boid::isCloseAndVisible()```](#boid). Il valore impostato di default è di 250°.
 
 ### Mouse left-click per generare un boid
 È possibile aggiungere dei nuovi boid a quelli generati all'inizio della simulazione **cliccando** in un qualsiasi punto della finestra, eccettuando la top bar. La posizione iniziale dei nuovi boid sarà quella del cursore del mouse, mentre la velocità iniziale ed il colore (compatibilmente al numero di stormi della simulazione) saranno casuali.
@@ -249,10 +249,10 @@ Per ottenere questo risultato è stato definito un ```bool window_in_focus{1}```
 In virtù dell'implementazione grafica, è stato possibile svolgere una parte considerevole del testing del programma tramite l'osservazione del comportamento degli elementi della finestra: boid, predatore, slider e pulsanti. 
 Si è comunque rivelato utile utilizzare la libreria di testing **doctest** per eseguire dei test più approfonditi su alcune delle funzioni più importanti del codice, in particolare:
 
-- ```Boid::isCloseAndVisible()```
-- ```Boid::isFlockMate()```
-- ```Slider::reset()```
-- ```printStatistics()```
+- ```bd::Boid::isCloseAndVisible()```
+- ```bd::Boid::isFlockMate()```
+- ```sd::Slider::reset()```
+- ```st::printStatistics()```
 
 Tali test si trovano all'interno di ```boids.test.cpp```.
 

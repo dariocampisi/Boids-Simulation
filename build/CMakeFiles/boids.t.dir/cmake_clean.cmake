@@ -3,8 +3,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/boids.t.dir/boid.cpp.o.d"
   "CMakeFiles/boids.t.dir/boids.test.cpp.o"
   "CMakeFiles/boids.t.dir/boids.test.cpp.o.d"
-  "CMakeFiles/boids.t.dir/button.cpp.o"
-  "CMakeFiles/boids.t.dir/button.cpp.o.d"
   "CMakeFiles/boids.t.dir/slider.cpp.o"
   "CMakeFiles/boids.t.dir/slider.cpp.o.d"
   "CMakeFiles/boids.t.dir/statistics.cpp.o"

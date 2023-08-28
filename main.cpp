@@ -16,45 +16,45 @@ int main() {
   assert(font.loadFromFile("utility/roboto.ttf"));
 
   // PARAMETRI E VARIABILI "GLOBALI"
-  // parametri regole di volo
+  // parametri regole di volo boid
   float d{150.f};  // distanza minima perché due boid si considerino vicini
-  Slider s_dist{"visual range",
-                font,
-                sf::Vector2f(160.f, 2.5f),
-                7.f,
-                sf::Vector2f(1000.f, 38.f),
-                d,
-                150.f};
+  sd::Slider s_dist{"visual range",
+                    font,
+                    sf::Vector2f(160.f, 2.5f),
+                    7.f,
+                    sf::Vector2f(1000.f, 38.f),
+                    d,
+                    150.f};
 
   float s{0.0005f};  // separazione
   float d_s{20.f};   // distanza separazione
   assert(d_s < d);
-  Slider s_sepa{"separation",
-                font,
-                sf::Vector2f(160.f, 2.5f),
-                7.f,
-                sf::Vector2f(250.f, 38.f),
-                d_s,
-                20.f};
+  sd::Slider s_sepa{"separation",
+                    font,
+                    sf::Vector2f(160.f, 2.5f),
+                    7.f,
+                    sf::Vector2f(250.f, 38.f),
+                    d_s,
+                    20.f};
 
   float a{0.01f};  // allineamento
   assert(a < 1);
-  Slider s_alig{"alignment",
-                font,
-                sf::Vector2f(160.f, 2.5f),
-                7.f,
-                sf::Vector2f(500.f, 38.f),
-                a,
-                0.01f};
+  sd::Slider s_alig{"alignment",
+                    font,
+                    sf::Vector2f(160.f, 2.5f),
+                    7.f,
+                    sf::Vector2f(500.f, 38.f),
+                    a,
+                    0.01f};
 
   float c{0.0005f};  // coesione
-  Slider s_cohe{"cohesion",
-                font,
-                sf::Vector2f(160.f, 2.5f),
-                7.f,
-                sf::Vector2f(750.f, 38.f),
-                c,
-                0.0005f};
+  sd::Slider s_cohe{"cohesion",
+                    font,
+                    sf::Vector2f(160.f, 2.5f),
+                    7.f,
+                    sf::Vector2f(750.f, 38.f),
+                    c,
+                    0.0005f};
 
   float max_velocity{2.f};  // velocità massima
 
@@ -64,8 +64,7 @@ int main() {
   assert(p_r > s);
   float p_c{0.001f};  // coesione
   assert(p_c > c);
-
-  float p_max_velocity{2.5f};  // velocità massima predatore
+  float p_max_velocity{2.5f};  // velocità massima
 
   // parametri per virare vicino ai bordi
   float margin{100.f};
@@ -74,6 +73,10 @@ int main() {
   // angolo di visione
   float angle_view{250.f};
 
+  // frame counter (per la gesitone dell'output delle statistiche)
+  unsigned int frame_counter{0u};
+
+  // VARIABILI BOOLEANE DI CONTROLLO
   // tasto sinistro del mouse premuto e non rilasciato
   bool mouse_pressed{0};
 
@@ -83,12 +86,12 @@ int main() {
   // troppi boid in input
   bool too_many_boids{0};
 
-  // frame counter (per la gesitone dell'output delle statistiche)
-  unsigned int frame_counter{0u};
+  // pulsante start premuto
+  bool start_clicked{0};
 
   // GENERAZIONE NUMERI RANDOM (PER POSIZIONI E VELOCITÀ INIZIALI)
-  std::random_device rd{};
-  std::mt19937 engine(rd());
+  std::random_device rd{};    // seed
+  std::mt19937 engine(rd());  // generatore
   std::uniform_real_distribution<float> rand_x_position(0.f + margin,
                                                         window_width - margin);
   std::uniform_real_distribution<float> rand_y_position(0.f + margin,
@@ -97,8 +100,6 @@ int main() {
   std::uniform_real_distribution<float> rand_y_velocity(-2.f, 2.f);
 
   // SCHERMATA INIZIALE
-  bool start_clicked{0};
-
   sf::Text initial_text{};
   initial_text.setFont(font);
   initial_text.setString("Insert boids number ");
@@ -123,8 +124,8 @@ int main() {
                      too_many.getLocalBounds().getPosition());
   too_many.setPosition(window_width / 2, window_height / 2);
 
-  Button start{"START", font, sf::Vector2f(170.f, 70.f), 20,
-               sf::Vector2f(window_width / 2, window_height / 2 + 70.f)};
+  bt::Button start{"START", font, sf::Vector2f(170.f, 70.f), 20,
+                   sf::Vector2f(window_width / 2, window_height / 2 + 70.f)};
   start.getText().setFillColor(sf::Color(204, 0, 0));
   start.getRect().setFillColor(sf::Color::Transparent);
   start.getRect().setOutlineColor(sf::Color(204, 0, 0));
@@ -133,13 +134,13 @@ int main() {
   std::string user_input{};
 
   // COSTRUZIONE BOID
-  std::vector<Boid> boids{};
+  std::vector<bd::Boid> boids{};
 
   // gestione di stormi e colori casuali
   sf::Color blue(0, 102, 204);
   sf::Color green(0, 153, 0);
   sf::Color orange(255, 128, 0);
-  std::vector<sf::Color> colors_vector{blue,green,orange};
+  std::vector<sf::Color> colors_vector{blue, green, orange};
   std::shuffle(colors_vector.begin(), colors_vector.end(), engine);
 
   std::uniform_int_distribution flocks(0, 2);
@@ -147,8 +148,9 @@ int main() {
   std::uniform_int_distribution colors(0, flocks_number);
 
   // COSTRUZIONE PREDATORE
-  Boid predator{sf::Vector2f(rand_x_position(engine), rand_y_position(engine)),
-                sf::Vector2f(rand_x_velocity(engine), rand_y_velocity(engine))};
+  bd::Boid predator{
+      sf::Vector2f(rand_x_position(engine), rand_y_position(engine)),
+      sf::Vector2f(rand_x_velocity(engine), rand_y_velocity(engine))};
 
   // GESTIONE DELLA FINESTRA
   sf::RenderWindow window(sf::VideoMode(window_width, window_height),
@@ -177,8 +179,8 @@ int main() {
   sf::Time elapsed_time = sf::Time::Zero;
 
   // pulsante reset
-  Button reset{"RESET", font, sf::Vector2f(80.f, 35.f), 14,
-               sf::Vector2f(1200.f, 30.f)};
+  bt::Button reset{"RESET", font, sf::Vector2f(80.f, 35.f), 14,
+                   sf::Vector2f(1200.f, 30.f)};
   reset.getText().setFillColor(colors_vector[0]);
   reset.getRect().setFillColor(sf::Color::Transparent);
   reset.getRect().setOutlineColor(colors_vector[0]);
@@ -253,7 +255,7 @@ int main() {
         if (event.type == sf::Event::MouseButtonReleased &&
             event.mouseButton.button == sf::Mouse::Left) {
           int c = colors(engine);
-          Boid boid{
+          bd::Boid boid{
               colors_vector[c],
               sf::Vector2f(sf::Mouse::getPosition(window).x,
                            sf::Mouse::getPosition(window).y),
@@ -295,13 +297,13 @@ int main() {
 
     // GAME LOOP CORE
     if (start_clicked) {
+      // costruzione boid (avviene solo una volta)
       if (!boids_built && !user_input.empty()) {
-        // costruzione boid (avviene solo una volta)
         for (unsigned int i = 0u;
              i < static_cast<unsigned int>(std::stoi(user_input)); ++i) {
           int c = colors(engine);
 
-          Boid boid{
+          bd::Boid boid{
               colors_vector[c],
               sf::Vector2f(rand_x_position(engine), rand_y_position(engine)),
               sf::Vector2f(rand_x_velocity(engine), rand_y_velocity(engine))};
@@ -433,10 +435,11 @@ int main() {
 
       window.display();
 
-      // GESTIONE OUTPUT STATISTICHE
-      printStatistics(frame_counter, 3'000u, boids);
+      // OUTPUT DELLE STATISTICHE
+      st::printStatistics(frame_counter, 3'000u, boids);
 
     } else {
+      // SCHERMATA INIZIALE
       window.clear(background_color);
 
       window.draw(initial_text);

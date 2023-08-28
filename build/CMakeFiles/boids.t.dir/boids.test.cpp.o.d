@@ -1,4 +1,5 @@
 CMakeFiles/boids.t.dir/boids.test.cpp.o: \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/share/asan_ignorelist.txt \
   /Users/dariocampisi/boids/boids.test.cpp \
   /Users/dariocampisi/boids/boid.hpp \
   /usr/local/include/SFML/Graphics.hpp \

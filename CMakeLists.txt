@@ -32,7 +32,7 @@ target_link_libraries(boids PRIVATE sfml-graphics)
 if (BUILD_TESTING)
 
   # aggiungi l'eseguibile boids.t
-  add_executable(boids.t boids.test.cpp boid.cpp slider.cpp button.cpp statistics.cpp)
+  add_executable(boids.t boids.test.cpp boid.cpp slider.cpp statistics.cpp)
 
   # sfml
   target_link_libraries(boids.t PRIVATE sfml-graphics)

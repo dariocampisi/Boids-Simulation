@@ -5,13 +5,14 @@
 #include <cmath>
 #include <numeric>
 
+namespace bd {
 class Boid : public sf::Transformable {
  public:
-  // boids constructor
+  // usato per i boid
   Boid(const sf::Color &color, const sf::Vector2f &position,
        const sf::Vector2f &velocity);
 
-  // predator constructor
+  // usato per il costruttore
   Boid(const sf::Vector2f &position, const sf::Vector2f &velocity);
 
   void setShape(const sf::ConvexShape &s);
@@ -42,9 +43,10 @@ class Boid : public sf::Transformable {
   sf::Vector2f velocity_;
 };
 
-// funzioni utili per Boid::maxVelocity()
+// funzioni utili per bd::Boid::maxVelocity()
 float length(const sf::Vector2f &v);
 
 void normalize(sf::Vector2f &v);
+}  // namespace bd
 
 #endif

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
+namespace sd {
 class Slider {
  public:
   Slider(const std::string &title, const sf::Font &font,
@@ -29,5 +30,6 @@ class Slider {
   float &parameter_;
   const float default_value_;
 };
+}  // namespace sd
 
 #endif

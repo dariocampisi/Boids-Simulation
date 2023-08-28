@@ -1,6 +1,6 @@
 #include "boid.hpp"
 
-Boid::Boid(const sf::Color &color, const sf::Vector2f &position,
+bd::Boid::Boid(const sf::Color &color, const sf::Vector2f &position,
            const sf::Vector2f &velocity)
     : velocity_{velocity} {
   shape_.setPointCount(4);
@@ -15,7 +15,7 @@ Boid::Boid(const sf::Color &color, const sf::Vector2f &position,
   shape_.setPosition(position);
 }
 
-Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
+bd::Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
     : velocity_{velocity} {
   shape_.setPointCount(4);
   shape_.setPoint(0, sf::Vector2f(8.f, 0.f));
@@ -28,30 +28,30 @@ Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
   shape_.setPosition(position);
 }
 
-void Boid::setShape(const sf::ConvexShape &s) { this->shape_ = s; }
-sf::ConvexShape &Boid::getShape() { return this->shape_; }
+void bd::Boid::setShape(const sf::ConvexShape &s) { this->shape_ = s; }
+sf::ConvexShape &bd::Boid::getShape() { return this->shape_; }
 
-void Boid::setVelocity(const float x, const float y) {
+void bd::Boid::setVelocity(const float x, const float y) {
   this->velocity_ = sf::Vector2f(x, y);
 }
-void Boid::setVelocity(const sf::Vector2f &v) { this->velocity_ = v; }
-const sf::Vector2f &Boid::getVelocity() const { return this->velocity_; }
+void bd::Boid::setVelocity(const sf::Vector2f &v) { this->velocity_ = v; }
+const sf::Vector2f &bd::Boid::getVelocity() const { return this->velocity_; }
 
-const sf::Vector2f &Boid::getPosition() const {
+const sf::Vector2f &bd::Boid::getPosition() const {
   return this->shape_.getPosition();
 }
-float Boid::getRotation() const { return this->shape_.getRotation(); }
+float bd::Boid::getRotation() const { return this->shape_.getRotation(); }
 
-float Boid::distance(const Boid &other) const {
+float bd::Boid::distance(const Boid &other) const {
   sf::Vector2f difference = this->getPosition() - other.getPosition();
   return std::hypot(difference.x, difference.y);
 }
 
-bool Boid::isClose(const Boid &other, const float d) const {
+bool bd::Boid::isClose(const Boid &other, const float d) const {
   auto distance = this->distance(other);
   return distance < d;
 }
-bool Boid::isCloseAndVisible(const Boid &other, const float d,
+bool bd::Boid::isCloseAndVisible(const Boid &other, const float d,
                              const float angle_view) const {
   if (this->isClose(other, d)) {
     sf::Vector2f relative_position = other.getPosition() - this->getPosition();
@@ -74,14 +74,14 @@ bool Boid::isCloseAndVisible(const Boid &other, const float d,
   }
 }
 
-void Boid::maxVelocity(const float max_velocity) {
+void bd::Boid::maxVelocity(const float max_velocity) {
   if (length(this->velocity_) > max_velocity) {
     normalize(this->velocity_);
     this->velocity_ *= max_velocity;
   }
 }
 
-void Boid::avoidBoundary(const float window_width, const float window_height,
+void bd::Boid::avoidBoundary(const float window_width, const float window_height,
                          const float turn_factor, const float margin) {
   if (this->getPosition().x < margin) {
     this->velocity_.x += turn_factor;
@@ -100,13 +100,13 @@ void Boid::avoidBoundary(const float window_width, const float window_height,
   }
 }
 
-bool Boid::isFlockMate(const Boid &other) const {
+bool bd::Boid::isFlockMate(const Boid &other) const {
   return this->shape_.getFillColor() == other.shape_.getFillColor();
 }
 
-float length(const sf::Vector2f &v) { return std::hypot(v.x, v.y); }
+float bd::length(const sf::Vector2f &v) { return std::hypot(v.x, v.y); }
 
-void normalize(sf::Vector2f &v) {
+void bd::normalize(sf::Vector2f &v) {
   if (length(v) != 0) {
     v /= length(v);
   }
