@@ -28,5 +28,35 @@
   "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.dir/statistics.cpp.o -c /Users/dariocampisi/boids/statistics.cpp",
   "file": "/Users/dariocampisi/boids/statistics.cpp",
   "output": "CMakeFiles/boids.dir/statistics.cpp.o"
+},
+{
+  "directory": "/Users/dariocampisi/boids/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.t.dir/boids.test.cpp.o -c /Users/dariocampisi/boids/boids.test.cpp",
+  "file": "/Users/dariocampisi/boids/boids.test.cpp",
+  "output": "CMakeFiles/boids.t.dir/boids.test.cpp.o"
+},
+{
+  "directory": "/Users/dariocampisi/boids/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.t.dir/boid.cpp.o -c /Users/dariocampisi/boids/boid.cpp",
+  "file": "/Users/dariocampisi/boids/boid.cpp",
+  "output": "CMakeFiles/boids.t.dir/boid.cpp.o"
+},
+{
+  "directory": "/Users/dariocampisi/boids/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.t.dir/slider.cpp.o -c /Users/dariocampisi/boids/slider.cpp",
+  "file": "/Users/dariocampisi/boids/slider.cpp",
+  "output": "CMakeFiles/boids.t.dir/slider.cpp.o"
+},
+{
+  "directory": "/Users/dariocampisi/boids/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.t.dir/button.cpp.o -c /Users/dariocampisi/boids/button.cpp",
+  "file": "/Users/dariocampisi/boids/button.cpp",
+  "output": "CMakeFiles/boids.t.dir/button.cpp.o"
+},
+{
+  "directory": "/Users/dariocampisi/boids/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -isystem /usr/local/include  -Wall -Wextra -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/boids.t.dir/statistics.cpp.o -c /Users/dariocampisi/boids/statistics.cpp",
+  "file": "/Users/dariocampisi/boids/statistics.cpp",
+  "output": "CMakeFiles/boids.t.dir/statistics.cpp.o"
 }
 ]
