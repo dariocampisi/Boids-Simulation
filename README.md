@@ -79,7 +79,7 @@ L'implementazione di ciò si trova all'intero della funzione ```printStatistics(
 Lo scheletro del programma è costituito da tre classi: **Boid**, **Slider** e **Button**, tutte fortemente basate sulle classi fornite dalla libreria **SFML/Graphics** e contenute in ```boid.hpp```, ```slider.hpp``` e ```button.hpp``` rispettivamente.
 
 ### Boid
-È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ```sf::ConvexShape shape_```, definita in modo da ottenere la forma mostrata in [Figura 1](#descrizione-generale), e da un ```sf::Vector2f velocity``` rappresentante la velocità del boid.
+È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ```sf::ConvexShape shape_```, definita in modo da ottenere la forma mostrata in [Figura 1](#descrizione-generale), e da un ```sf::Vector2f velocity_``` rappresentante la velocità del boid.
 
 **Costruttore**
 ```cpp
