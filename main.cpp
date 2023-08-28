@@ -484,7 +484,7 @@ int main() {
         std_dev_speed = stdDev(speeds, mean_speed);
 
         std::cout << "Mean speed: (" << mean_speed << " +/- " << std_dev_speed
-                  << ") px/frameTime \n";
+                  << ") px/frameTime \n \n";
       }
     } else {
       window.clear(background_color);

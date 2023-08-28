@@ -60,10 +60,12 @@ In ogni simulazione è equiprobabile la generazione di uno, due o tre **stormi d
 <b>Figura 4:</b> Frame di una simulazione con 230 boid divisi in tre stormi diversi
 </div>
 
-### Gestione dell'output §
-Ogni 3.000 iterazioni del game loop (poco meno di 30 secondi) vengono stampati a schermo distanza e velocità media dei boid con relative deviazioni standard
+### Output delle statistiche
+Periodicamente, il programma stampa a schermo la **distanza media** dei boid (tenendo conto, se presenti, dei diversi stormi) e la **velocità media** di tutti i boid della simulazione, con relative **deviazioni standard**.
 
-È possibile attivare/disattivare l'output su console nella schermata iniziale, se attivata si consiglia di non generare troppi boid
+**Nota:** La *frequenza* della stampa a schermo dei parametri dipende dalle prestazioni mantenute dalla simulazione, alcuni dati di riferimento:
+- Prestazioni standard (~115 fps fissi): frequenza ≈ 25 secondi
+- ~70 fps fissi: frequenza ≈ 40 secondi
 
 ## Logica di implementazione
 Lo scheletro del programma è costituito da tre classi: **Boid**, **Slider** e **Button**, tutte fortemente basate sulle classi fornite dalla libreria **SFML/Graphics**.
