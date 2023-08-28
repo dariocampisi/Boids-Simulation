@@ -285,7 +285,8 @@ Qualora si disponga di versioni precedenti si consiglia di modificare rispettiva
 
 ## Interpretazione dei risultati
 ### Resa grafica e prestazioni
-Il programma funziona discretamente bene, il movimento dei boid è generalmente abbastanza simile a quello di uno **stormo reale**.  
+Il programma funziona discretamente bene, il movimento dei boid è generalmente abbastanza simile a quello di uno **stormo reale**.
+
 Gli slider assolvono correttamente alla loro funzione sebbene concedano, volutamente, poca libertà nel modificare i parametri a cui sono legati (questi ultimi possono subire un aumento/diminuzione del 50% al massimo). Questo perché dalla fase di [testing](#testing) del programma è emerso come una modifica eccessiva dei suddetti porti inevitabilmente a comportamenti incorretti da parte dei boid. Invero, quest'ultimo problema persiste anche nella versione finale del codice, sebbene in misura e frequenza molto ridotte. È infatti possibile che particolari combinazioni dei parametri delle regole di volo, unite ad un numero di boid molto elevato, generino comportamenti indesiderati, specialmente ai margini della finestra. Qualora questo accada, si consiglia di utilizzare l'apposito pulsante *reset*.
 
 Rispettando la linea guida di non eccedere con il numero dei boid (specialmente tramite il [mouse left-click](#mouse-left-click-per-generare-un-boid)), le prestazioni del programma risultano sempre buone e stabili.
