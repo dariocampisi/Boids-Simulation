@@ -69,12 +69,14 @@ Mean distance: (252.012 +/- 116.827) px
 Mean speed: (2.00593 +/- 0.184291) px/frameTime
 ```
 
+L'implementazione di ciò si trova all'intero della funzione ```printStatistics(unsigned int &frame_counter, const unsigned int frame_limit, const std::vector<Boid> &boids)```, contenuta nel file ```statistics.hpp``` insieme ad alcune funzioni ausiliarie.
+
 **Nota:** La *frequenza* della stampa a schermo dei parametri dipende dalle prestazioni mantenute dalla simulazione, alcuni dati di riferimento:
 - Prestazioni standard (~115 fps fissi): frequenza ≈ 25 secondi
 - ~70 fps fissi: frequenza ≈ 40 secondi
 
 ## Logica di implementazione
-Lo scheletro del programma è costituito da tre classi: **Boid**, **Slider** e **Button**, tutte fortemente basate sulle classi fornite dalla libreria **SFML/Graphics**.
+Lo scheletro del programma è costituito da tre classi: **Boid**, **Slider** e **Button**, tutte fortemente basate sulle classi fornite dalla libreria **SFML/Graphics** e contenute in ```boid.hpp```, ```slider.hpp``` e ```button.hpp``` rispettivamente.
 
 ### Boid
 È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ```sf::ConvexShape shape_```, definita in modo da ottenere la forma mostrata in [Figura 1](#descrizione-generale), e da un ```sf::Vector2f velocity``` rappresentante la velocità del boid.
@@ -235,6 +237,8 @@ Con l'intento di rendere la simulazione più realistica, è stato definito un **
 
 Tale funzionalità è stata implementata grazie a ```sf::Event::MouseButtonReleased``` e ```sf::Mouse::Left```.
 
+**Nota:** Per evitare di perturbare l'equilibrio della simulazione e per mantenere le prestazioni accettabili, si consiglia di utilizzare questa funzione *cum grano salis*.
+
 ### Gestione del fuori focus
 Quando la finestra *Boids Simulation* non è attiva la simulazione va **in pausa**. In particolare il moto dei boid si arresta e la finestra viene leggermente oscurata. 
 
@@ -242,13 +246,15 @@ Per ottenere questo risultato è stato definito un ```bool window_in_focus{1}```
 
 ## Testing
 ### Strategie di testing
-Grazie all'implementazione grafica, una parte considerevole del testing del programma è avvenuta tramite l'osservazione del comportamento di tutti gli elementi della finestra (boid, predatore, slider, pulsanti).  
-Si è comunque rivelato utile utilizzare la libreria di testing **doctest** per eseguire dei test più approfonditi su alcune delle funzioni più importanti del programma, in particolare:
+In virtù dell'implementazione grafica, è stato possibile svolgere una parte considerevole del testing del programma tramite l'osservazione del comportamento degli elementi della finestra: boid, predatore, slider e pulsanti. 
+Si è comunque rivelato utile utilizzare la libreria di testing **doctest** per eseguire dei test più approfonditi su alcune delle funzioni più importanti del codice, in particolare:
 
 - ```Boid::isCloseAndVisible()```
 - ```Boid::isFlockMate()```
 - ```Slider::reset()```
 - ```printStatistics()```
+
+Tali test si trovano all'interno di ```boids.test.cpp```.
 
 ### Comandi per eseguire il testing
 ```shell
@@ -279,5 +285,10 @@ Qualora si disponga di versioni precedenti si consiglia di modificare rispettiva
 
 ## Interpretazione dei risultati
 ### Resa grafica e prestazioni
+Il programma funziona discretamente bene, il movimento dei boid è generalmente abbastanza simile a quello di uno **stormo reale**.  
+Gli slider assolvono correttamente alla loro funzione sebbene concedano, volutamente, poca libertà nel modificare i parametri a cui sono legati (questi ultimi possono subire un aumento/diminuzione del 50% al massimo). Questo perché dalla fase di [testing](#testing) del programma è emerso come una modifica eccessiva dei suddetti porti inevitabilmente a comportamenti incorretti da parte dei boid. Invero, quest'ultimo problema persiste anche nella versione finale del codice, sebbene in misura e frequenza molto ridotte. È infatti possibile che particolari combinazioni dei parametri delle regole di volo, unite ad un numero di boid molto elevato, generino comportamenti indesiderati, specialmente ai margini della finestra. Qualora questo accada, si consiglia di utilizzare l'apposito pulsante *reset*.
+
+Rispettando la linea guida di non eccedere con il numero dei boid (specialmente tramite il [mouse left-click](#mouse-left-click-per-generare-un-boid)), le prestazioni del programma risultano sempre buone e stabili.
 
 ### Output delle statistiche
+Le statistiche stampate a schermo sembrano essere coerenti con le aspettative, in particolare la **distanza media** sembra rispondere correttamente alle variazioni dei parametri delle regole di volo, la **velocità media** è sempre inferiore alla velocità massima e ha una bassa **deviazione standard**.

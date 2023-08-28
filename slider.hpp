@@ -7,7 +7,8 @@ class Slider {
  public:
   Slider(const std::string &title, const sf::Font &font,
          const sf::Vector2f &line_size, const float dot_radius,
-         const sf::Vector2f &position, float &parameter, const float default_value);
+         const sf::Vector2f &position, float &parameter,
+         const float default_value);
 
   bool mouseIsOver(const sf::RenderWindow &window) const;
 

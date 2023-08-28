@@ -1,10 +1,10 @@
 #ifndef STATISTICS_HPP
 #define STATISTICS_HPP
 
+#include <iomanip>
 #include <iostream>
 #include <numeric>
 #include <vector>
-#include <iomanip>
 
 #include "boid.hpp"
 
