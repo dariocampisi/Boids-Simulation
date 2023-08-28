@@ -1,5 +1,5 @@
 ## Idee di implementazione
-Le idee realizzate sono ~~barrate~~
+
 - ~~Boids appaiono dove clicco col mouse~~
 - ~~Mostrare fps~~
 - ~~Predatore~~
@@ -10,12 +10,13 @@ Le idee realizzate sono ~~barrate~~
 - ~~Implementare slider~~
 - ~~Schermata iniziale~~
 
-## Note
+## To-do
+
 1. Attenzionare la generazione di numeri random
 2. Usare i namespace
-3. Capire bene come funziona "inline" (usata in boids.hpp)
+3. ~~Capire bene come funziona "inline" (usata in boids.hpp)~~
 4. Implementare i test
 5. Fare un po' di pulizia
-6. Gestione output (velocità medie e dev standard)
+6. ~~Gestione output (velocità medie e dev standard)~~
 7. Aggiungere clangformat
-8. **La relazione**
+8. **RELAZIONE**
