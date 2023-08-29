@@ -1,7 +1,7 @@
 #include "boid.hpp"
 
 bd::Boid::Boid(const sf::Color &color, const sf::Vector2f &position,
-           const sf::Vector2f &velocity)
+               const sf::Vector2f &velocity)
     : velocity_{velocity} {
   shape_.setPointCount(4);
   shape_.setPoint(0, sf::Vector2f(6.f, 0.f));
@@ -23,6 +23,7 @@ bd::Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
   shape_.setPoint(2, sf::Vector2f(-3.f, 0.f));
   shape_.setPoint(3, sf::Vector2f(-7.f, -6.f));
   shape_.setOrigin(0.f, 0.f);
+
   shape_.setFillColor(sf::Color(204, 0, 0));
 
   shape_.setPosition(position);
@@ -52,7 +53,7 @@ bool bd::Boid::isClose(const Boid &other, const float d) const {
   return distance < d;
 }
 bool bd::Boid::isCloseAndVisible(const Boid &other, const float d,
-                             const float angle_view) const {
+                                 const float angle_view) const {
   if (this->isClose(other, d)) {
     sf::Vector2f relative_position = other.getPosition() - this->getPosition();
     float relative_angle =
@@ -81,8 +82,9 @@ void bd::Boid::maxVelocity(const float max_velocity) {
   }
 }
 
-void bd::Boid::avoidBoundary(const float window_width, const float window_height,
-                         const float turn_factor, const float margin) {
+void bd::Boid::avoidBoundary(const float window_width,
+                             const float window_height, const float turn_factor,
+                             const float margin) {
   if (this->getPosition().x < margin) {
     this->velocity_.x += turn_factor;
   }

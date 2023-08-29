@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="Darwin-c++"
+	BuildStamp="20230829-1014-Experimental"
+	Name="Dario-Campisi-MacBook.local"
+	Generator="ctest-3.26.4"
+	CompilerName="/Library/Developer/CommandLineTools/usr/bin/c++"
+	CompilerVersion="14.0.3.14030022"
+	OSName="macOS"
+	Hostname="Dario-Campisi-MacBook.local"
+	OSRelease="13.4.1"
+	OSVersion="22F82"
+	OSPlatform="x86_64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="126"
+	ProcessorCacheSize="32768"
+	NumberOfLogicalCPU="8"
+	NumberOfPhysicalCPU="4"
+	TotalVirtualMemory="0"
+	TotalPhysicalMemory="8192"
+	LogicalProcessorsPerPhysical="8"
+	ProcessorClockFrequency="1100"
+	>
+	<Testing>
+		<StartDateTime>Aug 29 12:14 CEST</StartDateTime>
+		<StartTestTime>1693304045</StartTestTime>
+		<TestList/>
+		<EndDateTime>Aug 29 12:14 CEST</EndDateTime>
+		<EndTestTime>1693304045</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>

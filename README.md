@@ -21,7 +21,7 @@ Il progetto è un tentativo di implementazione del programma **Boids**, sviluppa
 ### Regole di volo
 Il movimento nel piano di ogni boid è il risultato delle seguenti regole. In modo da favorire la formazione di più stormi indipendenti, esse vengono applicate unicamente ai boid considerati **vicini**, quelli cioè la cui distanza non supera un certo valore.
 
-- **Separazione:** induce i boid a mantenere tra loro una certa distanza, impedendogli così di sovrapporsi
+- **Separazione:** induce i boid a mantenere tra loro una distanza minima, impedendogli così di sovrapporsi
 - **Allineamento:** fa sì che i boid seguano la stessa direzione dei vicini
 - **Coesione:** spinge i boid a muoversi verso il centro di massa dello stormo
 
@@ -41,7 +41,7 @@ All'avvio del programma viene mostrata una **schermata iniziale** che invita l'u
 
 Per dare inizio alla simulazione l'utente può utilizzare il pulsante *start* o alternativamente premere *Enter*.
 
-Durante la simulazione è possibile regolare il valore dei parametri delle regole di volo e del raggio di visione dei boid tramite degli **slider**, osservando in tempo reale come tali modifiche si riflettono sui movimenti macroscopici degli stormi. Per tornare rapidamente ai valori impostati di default, è sufficiente premere il pulsante *reset*.
+Durante la simulazione è possibile regolare il valore dei parametri delle regole di volo e del raggio di visione dei boid tramite degli **slider**, osservando in tempo reale come tali modifiche si riflettono sui movimenti macroscopici degli stormi. Per tornare rapidamente ai valori impostati di default, è sufficiente premere il pulsante *reset*:
 
 <div align="center">
 <img src="utility/one_flock.png" width="800">
@@ -50,7 +50,7 @@ Durante la simulazione è possibile regolare il valore dei parametri delle regol
 </div>
 
 
-Come è possibile notare dalla **Figura 3**, alle simulazioni è stata aggiunta la presenza costante di un **predatore**, differenziato dai boid per colore e dimensioni. Il suo ruolo è quello di inseguire gli stormi operando sui boid vicini una spinta di **repulsione**.
+Come è possibile notare dalla **Figura 3**, alle simulazioni è stata aggiunta la presenza costante di un **predatore**, differenziato dai boid per colore e dimensioni. Il suo ruolo è quello di inseguire gli stormi (su di esso è dunque applicata la regola della **coesione**), operando sui boid vicini una spinta di **repulsione**, analoga alla **separazione** ma di maggiore intensità.
 
 ### Componente stocastica
 In ogni simulazione è equiprobabile la generazione di uno, due o tre **stormi diversi**, differenziati per colore. I possibili colori degli stormi e dei dettagli grafici della *top bar* sono <span style="color:rgb(0, 102, 204)">blu</span>, <span style="color:rgb(0, 153, 0)">verde</span> e <span style="color:rgb(255, 128, 0)">arancione</span>.
@@ -110,6 +110,7 @@ bd::Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
   shape_.setPoint(2, sf::Vector2f(-3.f, 0.f));
   shape_.setPoint(3, sf::Vector2f(-7.f, -6.f));
   shape_.setOrigin(0.f, 0.f);
+
   shape_.setFillColor(sf::Color(204, 0, 0));
 
   shape_.setPosition(position);
@@ -120,11 +121,11 @@ bd::Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
 
 - ```bool isCloseAndVisible(const bd::Boid &other, const float d, const float angle_view) const```
 
-    Verifica che i boid siano all'interno del campo visivo del boid su cui è applicato, così da applicare correttamente le regole di volo;
+    Verifica che il boid *other* all'interno del campo visivo del boid su cui è applicato, così da applicare correttamente le regole di volo;
 
 - ```void maxVelocity(const float max_velocity)```
 
-    Esegue un controllo sulla velocità del boid, se questa supera il valore impostato per la velocità massima, viene riportata al valore limite;
+    Esegue un controllo sulla velocità del boid, se questa supera il valore impostato per la **velocità massima**, viene riportata al valore limite;
 
 - ```void avoidBoundary(const float window_width, const float window_height, const float turn_factor, const float margin)```
 
@@ -132,10 +133,10 @@ bd::Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
 
 - ```bool isFlockMate(const bd::Boid &other) const```
 
-    Verifica che i boid siano compagni di stormo del boid su cui è applicato, la verifica consiste banalmente nel controllo dei colori dei boid;
+    Verifica che *other* sia un compagno di stormo del boid su cui è applicato, la verifica consiste banalmente nel controllo dei colori dei due boid;
 
 ### sd::Slider
-È la classe utilizzata per la creazione e il funzionamento degli slider a cui si è accennato in [dinamica di una simulazione](#dinamica-di-una-simulazione). Internamente è costituita da: una ```sf::RectangleShape line_``` che rappresenta la barra di scorrimento dello slider, una ```sf::CircleShape dot_``` rappresentante invece il cursore, un ```sf::Text title_``` per mostrare il titolo, una ```float &parameter_``` per legare lo slider ad un certo parametro e un ```const float default_value_``` per il valore di default del parametro.
+È la classe utilizzata per la creazione e il funzionamento degli slider a cui si è accennato in [dinamica di una simulazione](#dinamica-di-una-simulazione). Internamente è costituita da: una ```sf::RectangleShape line_``` che rappresenta la barra di scorrimento dello slider, una ```sf::CircleShape dot_``` rappresentante invece il cursore dello slider, un ```sf::Text title_``` per mostrarne il titolo, una ```float &parameter_``` per legare lo slider ad un certo parametro e un ```const float default_value_``` per il valore di default del parametro.
 
 **Costruttore**
 
@@ -210,11 +211,11 @@ bt::Button::Button(const std::string &title, const sf::Font &font,
     Metodo analogo a ```sd::Slider::mouseIsOver()```;
 
 ### Rapida overview di main.cpp
-```main.cpp``` è il file principale del programma, costituito da circa 450 righe di codice, si cerca qui di riassumerne la struttura generale.
+```main.cpp``` è il file principale del programma, costituito da circa 450 righe di codice, si cerca qui di riassumerne la struttura generale. Nell'ordine:
 
 - Dichiarazione delle **variabili "globali"** del programma, incluse le dimensioni della finestra, i parametri delle regole di volo e gli slider ad essi collegati;
 - Gestione della generazione dei **numeri casuali**, utilizzati per le posizioni e le velocità iniziali dei boid;
-- Definizione di tutti gli elementi che compongono la **schermata iniziale**;
+- Definizione di tutti gli elementi che compongono la **[schermata iniziale](#dinamica-di-una-simulazione)**;
 - Gestione dei **[colori casuali](#componente-stocastica)** dei boid e costruzione del **predatore**;
 - Gestione della **finestra** e dichiarazione degli elementi della **top bar**;
 - **Game loop**
@@ -225,7 +226,7 @@ bt::Button::Button(const std::string &title, const sf::Font &font,
         - Funzionamento degli slider;
         - Gestione del movimento dei boid e del predatore;
     - **Rendering**;
-    - Gestione dell'**output delle statistiche**;
+    - Gestione dell'**[output delle statistiche](#output-delle-statistiche)**;
     - Gestione della **schermata iniziale**: viene mostrata fino a quando non viene premuto il pulsante *start*;
 
 ## Altre implementazioni aggiuntive
