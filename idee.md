@@ -23,5 +23,4 @@
 5. ~~Fare un po' di pulizia~~
 6. ~~Gestione output (velocità medie e dev standard)~~
 7. ~~Aggiungere clangformat~~
-8. **RELAZIONE**
-
+8. ~~**RELAZIONE**~~
