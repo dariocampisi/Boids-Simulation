@@ -19,7 +19,7 @@ Il progetto è un tentativo di implementazione del programma **Boids**, sviluppa
 </div>
 
 ### Regole di volo
-Il movimento nel piano di ogni boid è il risultato delle seguenti regole. In modo da favorire la formazione di più stormi indipendenti, esse vengono applicate unicamente ai boid considerati **vicini**, quelli cioè la cui distanza non supera un certo valore.
+Il movimento nel piano di ogni boid è il risultato delle seguenti **regole**. In modo da favorire la formazione di più stormi indipendenti, esse vengono applicate unicamente ai boid considerati **vicini**, quelli cioè la cui distanza non supera un certo valore.
 
 - **Separazione:** induce i boid a mantenere tra loro una distanza minima, impedendogli così di sovrapporsi
 - **Allineamento:** fa sì che i boid seguano la stessa direzione dei vicini
@@ -293,4 +293,4 @@ Gli slider assolvono correttamente alla loro funzione sebbene concedano, volutam
 Rispettando la linea guida di non eccedere con il numero dei boid (specialmente tramite il [mouse left-click](#mouse-left-click-per-generare-un-boid)), le prestazioni del programma risultano sempre buone e stabili.
 
 ### Output delle statistiche
-Le statistiche stampate a schermo sembrano essere coerenti con le aspettative, in particolare la **distanza media** sembra rispondere correttamente alle variazioni dei parametri delle regole di volo, la **velocità media** è sempre inferiore alla velocità massima e ha una bassa **deviazione standard**.
+Le statistiche stampate a schermo sembrano essere coerenti con le aspettative, in particolare la **distanza media** sembra rispondere correttamente alle variazioni dei parametri delle regole di volo, mentre la **velocità media** è sempre inferiore alla velocità massima e ha una bassa **deviazione standard**.
