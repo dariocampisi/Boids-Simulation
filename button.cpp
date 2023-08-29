@@ -1,8 +1,8 @@
 #include "button.hpp"
 
 bt::Button::Button(const std::string &title, const sf::Font &font,
-               const sf::Vector2f &rect_size, unsigned int text_size,
-               const sf::Vector2f &position)
+                   const sf::Vector2f &rect_size, unsigned int text_size,
+                   const sf::Vector2f &position)
     : rect_{rect_size} {
   rect_.setOrigin(rect_.getSize().x / 2, rect_.getSize().y / 2);
   rect_.setPosition(position.x, position.y);

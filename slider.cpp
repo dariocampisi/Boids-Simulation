@@ -1,9 +1,9 @@
 #include "slider.hpp"
 
 sd::Slider::Slider(const std::string &title, const sf::Font &font,
-               const sf::Vector2f &line_size, const float dot_radius,
-               const sf::Vector2f &position, float &parameter,
-               const float default_value)
+                   const sf::Vector2f &line_size, const float dot_radius,
+                   const sf::Vector2f &position, float &parameter,
+                   const float default_value)
     : line_{line_size},
       dot_{dot_radius},
       parameter_{parameter},
@@ -51,7 +51,8 @@ void sd::Slider::stayInRange() {
 }
 
 // il valore massimo assunto dal parametro è 1.5 volte il valore iniziale
-void sd::Slider::work(const sf::RenderWindow &window, const bool mouse_pressed) {
+void sd::Slider::work(const sf::RenderWindow &window,
+                      const bool mouse_pressed) {
   float initial_position = this->line_.getPosition().x;
   float step = this->line_.getSize().x / 11.f;
 

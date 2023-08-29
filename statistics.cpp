@@ -15,8 +15,8 @@ float st::stdDev(const std::vector<float> &v, const float f) {
 }
 
 void st::printStatistics(unsigned int &frame_counter,
-                     const unsigned int frame_limit,
-                     const std::vector<bd::Boid> &boids) {
+                         const unsigned int frame_limit,
+                         const std::vector<bd::Boid> &boids) {
   ++frame_counter;
 
   if (frame_counter == frame_limit) {
