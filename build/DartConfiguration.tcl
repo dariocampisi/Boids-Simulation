@@ -4,8 +4,8 @@
 
 
 # Configuration directories and files
-SourceDirectory: /Users/dariocampisi/boids
-BuildDirectory: /Users/dariocampisi/boids/build
+SourceDirectory: /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github
+BuildDirectory: /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/build
 
 # Where to place the cost data store
 CostDataFile: 
@@ -27,7 +27,7 @@ SubmitInactivityTimeout:
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "/usr/local/Cellar/cmake/3.26.4/bin/cmake" "/Users/dariocampisi/boids"
+ConfigureCommand: "/usr/local/Cellar/cmake/3.26.4/bin/cmake" "/Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github"
 MakeCommand: /usr/local/Cellar/cmake/3.26.4/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 

@@ -53,10 +53,10 @@ RM = /usr/local/Cellar/cmake/3.26.4/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/dariocampisi/boids
+CMAKE_SOURCE_DIR = /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/dariocampisi/boids/build
+CMAKE_BINARY_DIR = /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/build
 
 # Utility rule file for ContinuousSubmit.
 
@@ -82,6 +82,6 @@ CMakeFiles/ContinuousSubmit.dir/clean:
 .PHONY : CMakeFiles/ContinuousSubmit.dir/clean
 
 CMakeFiles/ContinuousSubmit.dir/depend:
-	cd /Users/dariocampisi/boids/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/dariocampisi/boids /Users/dariocampisi/boids /Users/dariocampisi/boids/build /Users/dariocampisi/boids/build /Users/dariocampisi/boids/build/CMakeFiles/ContinuousSubmit.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/build /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/build /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/build/CMakeFiles/ContinuousSubmit.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ContinuousSubmit.dir/depend
 

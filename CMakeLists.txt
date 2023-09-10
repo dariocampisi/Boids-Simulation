@@ -19,7 +19,7 @@ string(APPEND CMAKE_CXX_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-fra
 string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 
 # sfml
-find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
+find_package(SFML 2.6 COMPONENTS graphics REQUIRED)
 
 # eseguibili
 add_executable(boids main.cpp boid.cpp slider.cpp button.cpp statistics.cpp)
@@ -37,7 +37,7 @@ if (BUILD_TESTING)
   # sfml
   target_link_libraries(boids.t PRIVATE sfml-graphics)
 
-  # aggiungi l'eseguibile statistics.t alla lista dei test
+  # aggiungi l'eseguibile boids.t alla lista dei test
   add_test(NAME boids.t COMMAND boids.t)
 
 endif()

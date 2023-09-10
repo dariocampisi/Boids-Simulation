@@ -57,10 +57,10 @@ RM = /usr/local/Cellar/cmake/3.26.4/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/dariocampisi/boids
+CMAKE_SOURCE_DIR = /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/dariocampisi/boids/build
+CMAKE_BINARY_DIR = /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -97,9 +97,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dariocampisi/boids/build/CMakeFiles /Users/dariocampisi/boids/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/build/CMakeFiles /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dariocampisi/boids/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

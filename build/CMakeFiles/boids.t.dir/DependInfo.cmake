@@ -8,10 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/dariocampisi/boids/boid.cpp" "CMakeFiles/boids.t.dir/boid.cpp.o" "gcc" "CMakeFiles/boids.t.dir/boid.cpp.o.d"
-  "/Users/dariocampisi/boids/boids.test.cpp" "CMakeFiles/boids.t.dir/boids.test.cpp.o" "gcc" "CMakeFiles/boids.t.dir/boids.test.cpp.o.d"
-  "/Users/dariocampisi/boids/slider.cpp" "CMakeFiles/boids.t.dir/slider.cpp.o" "gcc" "CMakeFiles/boids.t.dir/slider.cpp.o.d"
-  "/Users/dariocampisi/boids/statistics.cpp" "CMakeFiles/boids.t.dir/statistics.cpp.o" "gcc" "CMakeFiles/boids.t.dir/statistics.cpp.o.d"
+  "/Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/boid.cpp" "CMakeFiles/boids.t.dir/boid.cpp.o" "gcc" "CMakeFiles/boids.t.dir/boid.cpp.o.d"
+  "/Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/boids.test.cpp" "CMakeFiles/boids.t.dir/boids.test.cpp.o" "gcc" "CMakeFiles/boids.t.dir/boids.test.cpp.o.d"
+  "/Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/slider.cpp" "CMakeFiles/boids.t.dir/slider.cpp.o" "gcc" "CMakeFiles/boids.t.dir/slider.cpp.o.d"
+  "/Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/statistics.cpp" "CMakeFiles/boids.t.dir/statistics.cpp.o" "gcc" "CMakeFiles/boids.t.dir/statistics.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

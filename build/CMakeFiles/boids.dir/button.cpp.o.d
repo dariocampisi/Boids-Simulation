@@ -1,7 +1,6 @@
 CMakeFiles/boids.dir/button.cpp.o: \
-  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/share/asan_ignorelist.txt \
-  /Users/dariocampisi/boids/button.cpp \
-  /Users/dariocampisi/boids/button.hpp \
+  /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/button.cpp \
+  /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/button.hpp \
   /usr/local/include/SFML/Graphics.hpp \
   /usr/local/include/SFML/Window.hpp /usr/local/include/SFML/System.hpp \
   /usr/local/include/SFML/Config.hpp \
@@ -808,4 +807,4 @@ CMakeFiles/boids.dir/button.cpp.o: \
   /usr/local/include/SFML/Graphics/Sprite.hpp \
   /usr/local/include/SFML/Graphics/Text.hpp \
   /usr/local/include/SFML/Graphics/VertexBuffer.hpp \
-  /Users/dariocampisi/boids/slider.hpp
+  /Users/dariocampisi/università_locale/programmazione/progetto_finale/boids_github/slider.hpp
