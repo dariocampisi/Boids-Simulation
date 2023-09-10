@@ -270,7 +270,7 @@ Tali test si trovano all'interno di ```boids.test.cpp```.
 
 ## Istruzioni per la compilazione
 ### Requisiti
-Per compilare ed eseguire il programma sono richiesti **CMake v3.16** ed **SFML v2.5**.  
+Per compilare ed eseguire il programma sono richiesti **CMake v3.16** ed **SFML v2.6**.  
 Qualora si disponga di versioni precedenti si consiglia di modificare rispettivamente le righe ```1``` e ```22``` del file ```CMakeLists.txt```.
 
 ### Sequenza di comandi
