@@ -13,7 +13,20 @@ int main() {
   unsigned int window_height{720u};
   sf::Color background_color(17, 17, 17);  // grigio scuro
   sf::Font font{};                         // roboto
-  assert(font.loadFromFile("utility/roboto.ttf"));
+
+  /* IN RELEASE MODE IL COMPILATORE IGNORA GLI ASSERT, MA FONT.LOADFROMFILE()
+   * DEVE ESSERE ESEGUITA, ALTRIMENTI IL FONT NON SI CARICA E TUTTE LE SCRITTE
+   * SONO SOSTITUITE DA UN . IN DEBUG E "STANDARD" MODE INVECE IL COMPILATORE
+   * CONTROLLA GLI ASSERT, QUINDI IN QUELLE MODALITà IL FILE VIENE CARICATO
+   * INSERIRE FONT.LOADFROMFILE() IN UN ASSERT è UN ERRORE, UN MODO MIGLIORE PER
+   * GESTIRE LA COSA è TRAMITE UN IF */
+
+  // assert(font.loadFromFile("utility/roboto.ttf"));
+
+  if (!font.loadFromFile("utility/roboto.ttf"))
+    return 1;  // modo corretto per gestire il font non caricato, non è
+               // necessario aggiungere un messaggio d'errore perché è già
+               // previsto da loadFromFile()
 
   // PARAMETRI E VARIABILI "GLOBALI"
   // parametri regole di volo boid
@@ -102,7 +115,7 @@ int main() {
   // SCHERMATA INIZIALE
   sf::Text initial_text{};
   initial_text.setFont(font);
-  initial_text.setString("Insert boids number ");
+  initial_text.setString("Insert boids number");
   initial_text.setCharacterSize(24);
   initial_text.setStyle(sf::Text::Bold);
   initial_text.setOrigin(initial_text.getGlobalBounds().getSize() / 2.f +
