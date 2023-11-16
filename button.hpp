@@ -3,8 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "slider.hpp"
-
 namespace bt {
 class Button {
  public:

@@ -69,7 +69,7 @@ Mean distance: (252.012 +/- 116.827) px
 Mean speed: (2.00593 +/- 0.184291) px/frameTime
 ```
 
-L'implementazione di ciò si trova all'intero della funzione ```st::printStatistics(unsigned int &frame_counter, const unsigned int frame_limit, const std::vector<bd::Boid> &boids)```, contenuta nel file ```statistics.hpp``` insieme ad alcune funzioni ausiliarie per il calcolo della media e della deviazione standard.
+L'implementazione di ciò si trova all'intero della funzione ```st::printStatistics()```, contenuta nel file ```statistics.hpp``` insieme ad alcune funzioni ausiliarie per il calcolo della media e della deviazione standard.
 
 **Nota:** La *frequenza* della stampa a schermo dei parametri dipende dalle prestazioni mantenute dalla simulazione, alcuni dati di riferimento:
 - Prestazioni standard (~115 fps fissi): frequenza ≈ 25 secondi
@@ -270,7 +270,7 @@ Tali test si trovano all'interno di ```boids.test.cpp```.
 
 ## Istruzioni per la compilazione
 ### Requisiti
-Per compilare ed eseguire il programma sono richiesti **CMake v3.16** ed **SFML v2.6**.  
+Per compilare ed eseguire il programma sono richiesti **CMake v3.16** ed **SFML v2.5**.  
 Qualora si disponga di versioni precedenti si consiglia di modificare rispettivamente le righe ```1``` e ```22``` del file ```CMakeLists.txt```.
 
 ### Sequenza di comandi
