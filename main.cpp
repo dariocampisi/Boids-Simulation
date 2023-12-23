@@ -14,19 +14,13 @@ int main() {
   sf::Color background_color(17, 17, 17);  // grigio scuro
   sf::Font font{};                         // roboto
 
-  /* IN RELEASE MODE IL COMPILATORE IGNORA GLI ASSERT, MA FONT.LOADFROMFILE()
-   * DEVE ESSERE ESEGUITA, ALTRIMENTI IL FONT NON SI CARICA E TUTTE LE SCRITTE
-   * SONO SOSTITUITE DA UN . IN DEBUG E "STANDARD" MODE INVECE IL COMPILATORE
-   * CONTROLLA GLI ASSERT, QUINDI IN QUELLE MODALITà IL FILE VIENE CARICATO
-   * INSERIRE FONT.LOADFROMFILE() IN UN ASSERT è UN ERRORE, UN MODO MIGLIORE PER
-   * GESTIRE LA COSA è TRAMITE UN IF */
-
-  // assert(font.loadFromFile("utility/roboto.ttf"));
-
-  if (!font.loadFromFile("utility/roboto.ttf"))
-    return 1;  // modo corretto per gestire il font non caricato, non è
-               // necessario aggiungere un messaggio d'errore perché è già
-               // previsto da loadFromFile()
+  try {
+    if (!font.loadFromFile("utility/roboto.ttf")) {
+      throw std::runtime_error("");
+    }
+  } catch (const std::exception& e) {
+    return EXIT_FAILURE;
+  }
 
   // PARAMETRI E VARIABILI "GLOBALI"
   // parametri regole di volo boid
@@ -298,13 +292,13 @@ int main() {
       if (reset.mouseIsOver(window) &&
           event.type == sf::Event::MouseButtonReleased &&
           event.mouseButton.button == sf::Mouse::Left) {
+        reset.getText().setFillColor(colors_vector[0]);
+        reset.getRect().setFillColor(sf::Color::Transparent);
+
         s_sepa.reset();
         s_alig.reset();
         s_cohe.reset();
         s_dist.reset();
-
-        reset.getText().setFillColor(colors_vector[0]);
-        reset.getRect().setFillColor(sf::Color::Transparent);
       }
     }
 
@@ -312,8 +306,7 @@ int main() {
     if (start_clicked) {
       // costruzione boid (avviene solo una volta)
       if (!boids_built && !user_input.empty()) {
-        for (unsigned int i = 0u;
-             i < static_cast<unsigned int>(std::stoi(user_input)); ++i) {
+        for (int i = 0u; i < std::stoi(user_input); ++i) {
           int c = colors(engine);
 
           bd::Boid boid{
@@ -345,8 +338,7 @@ int main() {
         s_dist.work(window, mouse_pressed);
 
         // BOID
-        for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
-             ++i) {
+        for (unsigned i = 0u; i < static_cast<unsigned>(boids.size()); ++i) {
           // movimento
           boids[i].getShape().move(boids[i].getVelocity());
           boids[i].getShape().setRotation(
@@ -364,8 +356,7 @@ int main() {
           sf::Vector2f cohesion_sum{};
           float n{0.f};  // numero di boid vicini
 
-          for (unsigned int j = 0u; j < static_cast<unsigned int>(boids.size());
-               ++j) {
+          for (unsigned j = 0u; j < static_cast<unsigned>(boids.size()); ++j) {
             if (i == j) continue;
             if (boids[i].isCloseAndVisible(boids[j], d, angle_view)) {
               if (boids[i].isClose(boids[j], d_s)) {
@@ -412,8 +403,7 @@ int main() {
 
         sf::Vector2f p_cohesion_sum{};
         float p_n{0.f};
-        for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
-             ++i) {
+        for (unsigned i = 0u; i < static_cast<unsigned>(boids.size()); ++i) {
           if (predator.isCloseAndVisible(boids[i], d, angle_view)) {
             ++p_n;
             p_cohesion_sum += boids[i].getPosition();
@@ -431,8 +421,7 @@ int main() {
       // RENDERING
       window.clear(background_color);
 
-      for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
-           ++i) {
+      for (unsigned i = 0u; i < static_cast<unsigned>(boids.size()); ++i) {
         window.draw(boids[i].getShape());
       }
       window.draw(predator.getShape());

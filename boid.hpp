@@ -6,13 +6,13 @@
 #include <numeric>
 
 namespace bd {
-class Boid : public sf::Transformable {
+class Boid {
  public:
   // usato per i boid
   Boid(const sf::Color &color, const sf::Vector2f &position,
        const sf::Vector2f &velocity);
 
-  // usato per il costruttore
+  // usato per il predatore
   Boid(const sf::Vector2f &position, const sf::Vector2f &velocity);
 
   void setShape(const sf::ConvexShape &s);
