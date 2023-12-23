@@ -11,12 +11,6 @@ class Slider {
          const sf::Vector2f &position, float &parameter,
          const float default_value);
 
-  bool mouseIsOver(const sf::RenderWindow &window) const;
-
-  bool dotTooLeft() const;
-  bool dotTooRight() const;
-  void stayInRange();
-
   void work(const sf::RenderWindow &window, const bool mouse_pressed);
 
   void draw(sf::RenderWindow &window);
@@ -29,6 +23,11 @@ class Slider {
   sf::Text title_;
   float &parameter_;
   const float default_value_;
+
+  bool mouseIsOver(const sf::RenderWindow &window) const;
+  bool dotTooLeft() const;
+  bool dotTooRight() const;
+  void stayInRange();
 };
 }  // namespace sd
 

@@ -29,19 +29,16 @@ bd::Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
   shape_.setPosition(position);
 }
 
-void bd::Boid::setShape(const sf::ConvexShape &s) { this->shape_ = s; }
 sf::ConvexShape &bd::Boid::getShape() { return this->shape_; }
+const sf::Vector2f &bd::Boid::getVelocity() const { return this->velocity_; }
+const sf::Vector2f &bd::Boid::getPosition() const {
+  return this->shape_.getPosition();
+}
 
 void bd::Boid::setVelocity(const float x, const float y) {
   this->velocity_ = sf::Vector2f(x, y);
 }
 void bd::Boid::setVelocity(const sf::Vector2f &v) { this->velocity_ = v; }
-const sf::Vector2f &bd::Boid::getVelocity() const { return this->velocity_; }
-
-const sf::Vector2f &bd::Boid::getPosition() const {
-  return this->shape_.getPosition();
-}
-float bd::Boid::getRotation() const { return this->shape_.getRotation(); }
 
 float bd::Boid::distance(const Boid &other) const {
   sf::Vector2f difference = this->getPosition() - other.getPosition();
@@ -61,7 +58,7 @@ bool bd::Boid::isCloseAndVisible(const Boid &other, const float d,
     if (relative_angle < 0) {
       relative_angle += 360.f;
     }
-    float angle_difference = std::abs(this->getRotation() - relative_angle);
+    float angle_difference = std::abs(this->shape_.getRotation() - relative_angle);
 
     if (angle_difference <= (angle_view / 2)) {
       return 1;

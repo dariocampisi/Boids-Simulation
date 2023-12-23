@@ -15,17 +15,12 @@ class Boid {
   // usato per il predatore
   Boid(const sf::Vector2f &position, const sf::Vector2f &velocity);
 
-  void setShape(const sf::ConvexShape &s);
   sf::ConvexShape &getShape();
+  const sf::Vector2f &getVelocity() const;
+  const sf::Vector2f &getPosition() const;
 
   void setVelocity(const float x, const float y);
   void setVelocity(const sf::Vector2f &v);
-  const sf::Vector2f &getVelocity() const;
-
-  const sf::Vector2f &getPosition() const;
-  float getRotation() const;
-
-  float distance(const Boid &other) const;
 
   bool isClose(const Boid &other, const float d) const;
   bool isCloseAndVisible(const Boid &other, const float d,
@@ -41,6 +36,8 @@ class Boid {
  private:
   sf::ConvexShape shape_;
   sf::Vector2f velocity_;
+
+  float distance(const Boid &other) const;
 };
 
 // funzioni utili per bd::Boid::maxVelocity()

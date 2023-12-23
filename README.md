@@ -10,7 +10,7 @@
 - [Interpretazione dei risultati](#interpretazione-dei-risultati)
 
 ## Descrizione generale
-Il progetto è un tentativo di implementazione del programma **Boids**, sviluppato da Craig Reynolds nel 1986, facente uso della libreria grafica **SFML**. L'obiettivo del programma è quello di simulare il comportamento di un generico **stormo** (e.g. di uccelli), ovvero un sistema complesso costituito da singole entità, i *boid*, che rispettano delle precise regole di movimento, qui chiamate **regole di volo**.
+Il progetto è un tentativo di implementazione del programma **Boids**, sviluppato da Craig Reynolds nel 1986, facente uso della libreria grafica **SFML**. L'obiettivo del programma è quello di simulare il comportamento di un generico **stormo**, ovvero un sistema complesso costituito da singole entità, i *boid*, che rispettano delle precise regole di movimento, qui chiamate **regole di volo**.
 
 <div align="center">
 <img src="utility/boid_shape1.png" width="400">
@@ -73,7 +73,7 @@ L'implementazione di ciò si trova all'intero della funzione ```st::printStatist
 
 **Nota:** La *frequenza* della stampa a schermo dei parametri dipende dalle prestazioni mantenute dalla simulazione, alcuni dati di riferimento:
 - Prestazioni standard (~115 fps fissi): frequenza ≈ 25 secondi
-- ~70 fps fissi: frequenza ≈ 40 secondi
+- Prestazioni medie (~70 fps fissi): frequenza ≈ 40 secondi
 
 ## Logica di implementazione
 Lo scheletro del programma è costituito da tre classi: ```bd::Boid```, ```sd::Slider``` e ```bt::Button```, tutte fortemente basate sulle classi fornite dalla libreria **SFML/Graphics** e contenute in ```boid.hpp```, ```slider.hpp``` e ```button.hpp``` rispettivamente.
@@ -121,7 +121,7 @@ bd::Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
 
 - ```bool isCloseAndVisible(const bd::Boid &other, const float d, const float angle_view) const```
 
-    Verifica che il boid *other* all'interno del campo visivo del boid su cui è applicato, così da applicare correttamente le regole di volo;
+    Verifica che il boid *other* si trovi all'interno del campo visivo del boid su cui è applicato;
 
 - ```void maxVelocity(const float max_velocity)```
 
@@ -166,7 +166,7 @@ sd::Slider::Slider(const std::string &title, const sf::Font &font,
 
 - ```bool mouseIsOver(const sf::RenderWindow &window) const```
 
-    Verifica che il mouse sia sopra allo slider, condizione fondamentale affinchè il cursore possa essere mosso;
+    Verifica che il mouse sia sopra allo slider, condizione necessaria affinchè il cursore possa essere mosso;
 
 - ```void stayInRange()```
 
@@ -273,7 +273,7 @@ Tali test si trovano all'interno di ```boids.test.cpp```.
 Per compilare ed eseguire il programma sono richiesti **CMake v3.16** ed **SFML v2.5**.  
 Qualora si disponga di versioni precedenti si consiglia di modificare rispettivamente le righe ```1``` e ```22``` del file ```CMakeLists.txt```.
 
-### Sequenza di comandi
+### Comandi per buildare ed eseguire il programma
 ```shell
 % pwd
 /Users/dariocampisi/boids
