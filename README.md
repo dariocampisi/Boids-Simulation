@@ -2,6 +2,8 @@
 **Autore:** Dario Eugenio Campisi  
 **Data:** Gennaio 2024  
 
+**Nota:** Il progetto è disponibile anche in [questa repository GitHub](https://github.com/dariocampisi/Boids-Simulation)
+
 - [Descrizione generale](#descrizione-generale)
 - [Logica di implementazione](#logica-di-implementazione)
 - [Strategie di testing](#strategie-di-testing)
@@ -257,7 +259,8 @@ Tali test si trovano all'interno di ```boids.test.cpp```. Comandi per eseguirli:
 ```
 
 ## Istruzioni per la compilazione
-Si consiglia di compilare ed eseguire il programma tramite **CMake**, utilizzando il file ```CMakeLists.txt```. **Importante:** il programma è stato sviluppato su MacOS utilizzando la versione **2.6** di SFML (versione installata in automatico da Homebrew). Ubuntu 22.04, piattaforma di riferimento del corso, fa invece uso della versione **2.5**, per compilare su questa piattaforma (o più in generale, per compilare disponendo di una qualunque versione di SFML precedente alla 2.6) è dunque necessario modificare la **riga 22** del file ```CMakeLists.txt```.  
+Si consiglia di compilare ed eseguire il programma tramite **CMake**, utilizzando il file ```CMakeLists.txt```.  
+**Importante:** il programma è stato sviluppato su MacOS utilizzando la versione **2.6** di SFML, versione installata in automatico da Homebrew.
 
 Comandi per compilare ed eseguire:
 
