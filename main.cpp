@@ -13,12 +13,7 @@ int main() {
   unsigned int window_height{720u};
   sf::Color background_color(17, 17, 17);  // grigio scuro
   sf::Font font{};                         // roboto
-
-  try {
-    if (!font.loadFromFile("utility/roboto.ttf")) {
-      throw std::runtime_error("");
-    }
-  } catch (const std::exception& e) {
+  if (!font.loadFromFile("utility/roboto.ttf")) {
     return EXIT_FAILURE;
   }
 
@@ -199,7 +194,9 @@ int main() {
     sf::Event event{};
     while (window.pollEvent(event)) {
       // chiusura finestra
-      if (event.type == sf::Event::Closed) window.close();
+      if (event.type == sf::Event::Closed) {
+        window.close();
+      }
 
       // gestione fuori focus
       if (event.type == sf::Event::GainedFocus) {
@@ -357,7 +354,9 @@ int main() {
           float n{0.f};  // numero di boid vicini
 
           for (unsigned j = 0u; j < static_cast<unsigned>(boids.size()); ++j) {
-            if (i == j) continue;
+            if (i == j) {
+              continue;
+            }
             if (boids[i].isCloseAndVisible(boids[j], d, angle_view)) {
               if (boids[i].isClose(boids[j], d_s)) {
                 separation_sum +=
@@ -371,7 +370,9 @@ int main() {
             }
           }
 
-          if (n == 0) continue;
+          if (n == 0) {
+            continue;
+          }
 
           sf::Vector2f separation = -s * separation_sum;
           sf::Vector2f alignment = a * (alignment_sum / n);
@@ -433,7 +434,9 @@ int main() {
       s_dist.draw(window);
       reset.draw(window);
 
-      if (!window_in_focus) window.draw(darkness);
+      if (!window_in_focus) {
+        window.draw(darkness);
+      }
 
       window.display();
 
@@ -446,11 +449,17 @@ int main() {
 
       window.draw(initial_text);
       window.draw(num_boids);
-      if (!user_input.empty()) start.draw(window);
+      if (!user_input.empty()) {
+        start.draw(window);
+      }
 
-      if (user_input.empty() && too_many_boids) window.draw(too_many);
+      if (user_input.empty() && too_many_boids) {
+        window.draw(too_many);
+      }
 
-      if (!window_in_focus) window.draw(darkness);
+      if (!window_in_focus) {
+        window.draw(darkness);
+      }
 
       window.display();
     }
