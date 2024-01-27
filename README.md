@@ -1,11 +1,10 @@
 # Simulazione del comportamento di stormi
 **Autore:** Dario Eugenio Campisi  
-**Data:** Settembre 2023
+**Data:** Gennaio 2024  
 
 - [Descrizione generale](#descrizione-generale)
 - [Logica di implementazione](#logica-di-implementazione)
-- [Altre implementazioni aggiuntive](#implementazioni-aggiuntive)
-- [Testing](#testing)
+- [Strategie di testing](#strategie-di-testing)
 - [Istruzioni per la compilazione](#istruzioni-per-la-compilazione)
 - [Interpretazione dei risultati](#interpretazione-dei-risultati)
 
@@ -25,13 +24,10 @@ Il movimento nel piano di ogni boid è il risultato delle seguenti **regole**. I
 - **Allineamento:** fa sì che i boid seguano la stessa direzione dei vicini
 - **Coesione:** spinge i boid a muoversi verso il centro di massa dello stormo
 
-Da queste tre semplici regole emergono dei **comportamenti macroscopici caotici**, del tutto simili a quelli degli stormi reali.
-
-### Comportamento ai bordi
-Quando un boid comincia ad avvicinarsi ad uno dei quattro bordi della finestra, questo vira in modo da evitarlo. Per ottenere questo effetto è stato definito un **margine** nei pressi dei bordi, se superato la velocità del boid viene gradualmente invertita secondo un opportuno **fattore di virata**.
+Da queste tre semplici regole emergono dei **comportamenti macroscopici caotici**, del tutto simili a quelli degli stormi reali. Per quanto concerne il **comportamento ai bordi** della finestra grafica, quando un boid comincia ad avvicinarsi ad uno dei quattro bordi della finestra, questo vira in modo da evitarlo. Per ottenere questo effetto è stato definito un **margine** nei pressi dei bordi, se superato la velocità del boid viene gradualmente invertita secondo un opportuno **fattore di virata**.
 
 ### Dinamica di una simulazione
-All'avvio del programma viene mostrata una **schermata iniziale** che invita l'utente a scegliere il numero di boid che saranno generati (limitato ad un massimo di 300 per garantire delle buone prestazioni):
+All'avvio del programma viene mostrata una **schermata iniziale** che invita l'utente a scegliere il numero di boid che saranno generati, questo è limitato ad un massimo di 300 per non appesantire troppo la finestra grafica ed evitare comportamenti indesiderati:
 
 <div align="center">
 <img src="utility/initial_screen.png" width="800">
@@ -50,7 +46,7 @@ Durante la simulazione è possibile regolare il valore dei parametri delle regol
 </div>
 
 
-Come è possibile notare dalla **Figura 3**, alle simulazioni è stata aggiunta la presenza costante di un **predatore**, differenziato dai boid per colore e dimensioni. Il suo ruolo è quello di inseguire gli stormi (su di esso è dunque applicata la regola della **coesione**), operando sui boid vicini una spinta di **repulsione**, analoga alla **separazione** ma di maggiore intensità.
+Come è possibile notare dalla **Figura 3**, alle simulazioni è stata aggiunta la presenza costante di un **predatore**, differenziato dai boid per colore e dimensioni. Il suo ruolo è quello di inseguire gli stormi (su di esso è dunque applicata la regola della **coesione**), operando sui boid vicini una spinta di **repulsione**, analoga, in termini di implementazione, alla **separazione** ma di maggiore intensità.
 
 ### Componente stocastica
 In ogni simulazione è equiprobabile la generazione di uno, due o tre **stormi diversi**, differenziati per colore. I possibili colori degli stormi e dei dettagli grafici della *top bar* sono <span style="color:rgb(0, 102, 204)">blu</span>, <span style="color:rgb(0, 153, 0)">verde</span> e <span style="color:rgb(255, 128, 0)">arancione</span>.
@@ -72,14 +68,14 @@ Mean speed: (2.00593 +/- 0.184291) px/frameTime
 L'implementazione di ciò si trova all'intero della funzione ```st::printStatistics()```, contenuta nel file ```statistics.hpp``` insieme ad alcune funzioni ausiliarie per il calcolo della media e della deviazione standard.
 
 **Nota:** La *frequenza* della stampa a schermo dei parametri dipende dalle prestazioni mantenute dalla simulazione, alcuni dati di riferimento:
-- Prestazioni standard (~115 fps fissi): frequenza ≈ 25 secondi
-- Prestazioni medie (~70 fps fissi): frequenza ≈ 40 secondi
+- Prestazioni standard (~115 fps fissi): ~25 secondi
+- Prestazioni medio-basse (~70 fps fissi): ~40 secondi
 
 ## Logica di implementazione
 Lo scheletro del programma è costituito da tre classi: ```bd::Boid```, ```sd::Slider``` e ```bt::Button```, tutte fortemente basate sulle classi fornite dalla libreria **SFML/Graphics** e contenute in ```boid.hpp```, ```slider.hpp``` e ```button.hpp``` rispettivamente.
 
 ### bd::Boid
-È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ```sf::ConvexShape shape_```, definita in modo da ottenere la forma mostrata in [Figura 1](#descrizione-generale), e da un ```sf::Vector2f velocity_``` rappresentante la velocità del boid.
+È la classe fondamentale del programma, permette la rappresentazione e il movimento dei boid nella finestra. Internamente è costituita da una ```sf::ConvexShape```, definita in modo da ottenere la forma mostrata in [Figura 1](#descrizione-generale), e da un ```sf::Vector2f``` rappresentante la velocità del boid.
 
 **Costruttore**
 ```cpp
@@ -119,24 +115,24 @@ bd::Boid::Boid(const sf::Vector2f &position, const sf::Vector2f &velocity)
 
 **Metodi principali**
 
-- ```bool isCloseAndVisible(const bd::Boid &other, const float d, const float angle_view) const```
+- ```bool isCloseAndVisible()```
 
-    Verifica che il boid *other* si trovi all'interno del campo visivo del boid su cui è applicato;
+    Verifica che un boid si trovi all'interno del campo visivo del boid su cui è applicato;
 
-- ```void maxVelocity(const float max_velocity)```
+- ```void maxVelocity()```
 
     Esegue un controllo sulla velocità del boid, se questa supera il valore impostato per la **velocità massima**, viene riportata al valore limite;
 
-- ```void avoidBoundary(const float window_width, const float window_height, const float turn_factor, const float margin)```
+- ```void avoidBoundary()```
 
     Impone il [comportamento ai bordi](#comportamento-ai-bordi) di cui sopra;
 
-- ```bool isFlockMate(const bd::Boid &other) const```
+- ```bool isFlockMate()```
 
-    Verifica che *other* sia un compagno di stormo del boid su cui è applicato, la verifica consiste banalmente nel controllo dei colori dei due boid;
+    Verifica che un boid sia un compagno di stormo del boid su cui è applicato, la verifica consiste banalmente nel controllo dei colori dei due;
 
 ### sd::Slider
-È la classe utilizzata per la creazione e il funzionamento degli slider a cui si è accennato in [dinamica di una simulazione](#dinamica-di-una-simulazione). Internamente è costituita da: una ```sf::RectangleShape line_``` che rappresenta la barra di scorrimento dello slider, una ```sf::CircleShape dot_``` rappresentante invece il cursore dello slider, un ```sf::Text title_``` per mostrarne il titolo, una ```float &parameter_``` per legare lo slider ad un certo parametro e un ```const float default_value_``` per il valore di default del parametro.
+È la classe utilizzata per la creazione e il funzionamento degli slider a cui si è accennato in [dinamica di una simulazione](#dinamica-di-una-simulazione). Internamente è costituita da: una ```sf::RectangleShape``` che rappresenta la barra di scorrimento dello slider, una ```sf::CircleShape``` rappresentante invece il cursore dello slider, un ```sf::Text``` per mostrarne il titolo, una ```float&``` per legare lo slider ad un certo parametro e un ```const float``` per il valore di default del parametro.
 
 **Costruttore**
 
@@ -164,7 +160,7 @@ sd::Slider::Slider(const std::string &title, const sf::Font &font,
 
 **Metodi principali**
 
-- ```bool mouseIsOver(const sf::RenderWindow &window) const```
+- ```bool mouseIsOver()```
 
     Verifica che il mouse sia sopra allo slider, condizione necessaria affinchè il cursore possa essere mosso;
 
@@ -172,18 +168,18 @@ sd::Slider::Slider(const std::string &title, const sf::Font &font,
 
     Impedisce al cursore di muoversi oltre gli estremi della barra di scorrimento;
 
-- ```void work(const sf::RenderWindow &window, const bool mouse_pressed)```
+- ```void work()```
 
     Racchiude tutto il funzionamento dello slider, compresa la regolazione del parametro a cui lo slider è legato;
 
 - ```void reset()```
 
-    Riporta il cursore al centro della barra ed il parametro al suo valore di default, viene eseguito in seguito alla pressione del pulsante *reset* mostrato e.g. in [Figura 4](#componente-stocastica);
+    Riporta il cursore al centro della barra ed il parametro al suo valore di default, viene eseguito in seguito alla pressione del pulsante *reset* mostrato in e.g. [Figura 4](#componente-stocastica);
 
-**Nota:** Il numero degli slider è stato limitato a quattro per esigenze di natura estetica, i parametri potenzialmente modificabili presenti nel programma sono molteplici e la classe ```sd::Slider``` è sufficientemente versatile. La scelta fatta è assolutamente arbitraria.
+**Nota:** Il numero degli slider è stato limitato a quattro per esigenze di natura estetica, i parametri potenzialmente modificabili presenti nel programma sono molteplici e la classe ```sd::Slider``` è sufficientemente versatile. La particolare scelta fatta è assolutamente arbitraria.
 
 ### bt::Button
-È una classe piuttosto semplice utilizzata per l'implementazione dei pulsanti *start* e *reset* visti in [dinamica di una simulazione](#dinamica-di-una-simulazione), il cui funzionamento richiede però un forte utilizzo di ```sf::Event```. Internamente è costituita da una ```sf::RectangleShape rect_``` che dà la forma al pulsante e da un ```sf::Text text_``` che ne rappresenta l'etichetta.
+È una classe piuttosto semplice utilizzata per l'implementazione dei pulsanti *start* e *reset* visti in [dinamica di una simulazione](#dinamica-di-una-simulazione), il cui funzionamento richiede però un forte utilizzo di ```sf::Event```, classe di SFML che gestisce gli eventi della finestra grafica. Internamente è costituita da una ```sf::RectangleShape``` che dà la forma al pulsante e da un ```sf::Text``` che ne rappresenta l'etichetta.
 
 **Costruttore**
 ```cpp
@@ -206,12 +202,12 @@ bt::Button::Button(const std::string &title, const sf::Font &font,
 
 **Metodi principali**
 
-- ```bool mouseIsOver(const sf::RenderWindow &window) const```
+- ```bool mouseIsOver()```
     
     Metodo analogo a ```sd::Slider::mouseIsOver()```;
 
 ### Rapida overview di main.cpp
-```main.cpp``` è il file principale del programma, costituito da circa 450 righe di codice, si cerca qui di riassumerne la struttura generale. Nell'ordine:
+```main.cpp``` è il file principale del programma, si cerca qui di riassumerne la struttura generale. Nell'ordine:
 
 - Dichiarazione delle **variabili "globali"** del programma, incluse le dimensioni della finestra, i parametri delle regole di volo e gli slider ad essi collegati;
 - Gestione della generazione dei **numeri casuali**, utilizzati per le posizioni e le velocità iniziali dei boid;
@@ -227,27 +223,20 @@ bt::Button::Button(const std::string &title, const sf::Font &font,
         - Gestione del movimento dei boid e del predatore;
     - **Rendering**;
     - Gestione dell'**[output delle statistiche](#output-delle-statistiche)**;
-    - Gestione della **schermata iniziale**: viene mostrata fino a quando non viene premuto il pulsante *start*;
+    - Gestione della **schermata iniziale**;
 
-## Altre implementazioni aggiuntive
-### Angolo di vista
-Con l'intento di rendere la simulazione più realistica, è stato definito un **angolo di vista** che impedisce ai boid di essere consapevoli di ciò che accade "alle loro spalle". L'implementazione si trova all'interno di [```bd::Boid::isCloseAndVisible()```](#boid). Il valore impostato di default è di 250°.
+### Altre implementazioni aggiuntive
 
-### Mouse left-click per generare un boid
-È possibile aggiungere dei nuovi boid a quelli generati all'inizio della simulazione **cliccando** in un qualsiasi punto della finestra, eccettuando la top bar. La posizione iniziale dei nuovi boid sarà quella del cursore del mouse, mentre la velocità iniziale ed il colore (compatibilmente al numero di stormi della simulazione) saranno casuali.
+- **Angolo di vista:** con l'intento di rendere la simulazione più realistica, è stato definito un **angolo di vista** che impedisce ai boid di essere consapevoli di ciò che accade "alle loro spalle". L'implementazione si trova all'interno di [```bd::Boid::isCloseAndVisible()```](#boid). Il valore impostato di default è di 250°.  
 
-Tale funzionalità è stata implementata grazie a ```sf::Event::MouseButtonReleased``` e ```sf::Mouse::Left```.
+- **Mouse left-click per generare un boid:** è possibile aggiungere dei nuovi boid a quelli generati all'inizio della simulazione **cliccando** in un qualsiasi punto della finestra, eccettuando la top bar. La posizione iniziale dei nuovi boid sarà quella del cursore del mouse, mentre la velocità iniziale ed il colore (compatibilmente al numero di stormi della simulazione) saranno casuali.  
+Tale funzionalità è stata implementata grazie a ```sf::Event::MouseButtonReleased``` e ```sf::Mouse::Left```. Per evitare di perturbare l'equilibrio della simulazione e per mantenere accettabili le prestazioni, si consiglia di utilizzarla *cum grano salis*.  
 
-**Nota:** Per evitare di perturbare l'equilibrio della simulazione e per mantenere le prestazioni accettabili, si consiglia di utilizzare questa funzione *cum grano salis*.
-
-### Gestione del fuori focus
-Quando la finestra *Boids Simulation* non è attiva la simulazione va **in pausa**. In particolare il moto dei boid si arresta e la finestra viene leggermente oscurata. 
-
+- **Gestione del fuori focus:** quando la finestra *Boids Simulation* non è attiva la simulazione va **in pausa**. In particolare il moto dei boid si arresta e la finestra viene leggermente oscurata.  
 Per ottenere questo risultato è stato definito un ```bool window_in_focus{1}```, il cui valore dipende dalla coppia di eventi ```sf::Event::GainedFocus``` e ```sf::Event::LostFocus```. L'intero [game loop core](#rapida-overview-di-maincpp) viene eseguito solo se ```window_in_focus == 1```. Inoltre, se ```window_in_focus == 0```, viene disegnata al di sopra di tutti gli altri elementi della finestra una ```sf::RectangleShape darkness``` delle dimensioni della finestra, di colore nero e opacità ridotta.
 
-## Testing
-### Strategie di testing
-In virtù dell'implementazione grafica, è stato possibile svolgere una parte considerevole del testing del programma tramite l'osservazione del comportamento degli elementi della finestra: boid, predatore, slider e pulsanti. 
+## Strategie di testing
+In virtù dell'implementazione grafica, è stato possibile svolgere una parte considerevole del testing del programma tramite l'osservazione del comportamento dei vari elementi della finestra: boid, predatore, slider e pulsanti. 
 Si è comunque rivelato utile utilizzare la libreria di testing **doctest** per eseguire dei test più approfonditi su alcune delle funzioni più importanti del codice, in particolare:
 
 - ```bd::Boid::isCloseAndVisible()```
@@ -255,12 +244,11 @@ Si è comunque rivelato utile utilizzare la libreria di testing **doctest** per 
 - ```sd::Slider::reset()```
 - ```st::printStatistics()```
 
-Tali test si trovano all'interno di ```boids.test.cpp```.
+Tali test si trovano all'interno di ```boids.test.cpp```. Comandi per eseguirli:
 
-### Comandi per eseguire il testing
 ```shell
 % pwd
-/Users/dariocampisi/boids
+/Users/dariocampisi/boids-campisi
 % cmake -S . -B build
 ...
 % cmake --build build
@@ -269,14 +257,13 @@ Tali test si trovano all'interno di ```boids.test.cpp```.
 ```
 
 ## Istruzioni per la compilazione
-### Requisiti
-Per compilare ed eseguire il programma sono richiesti **CMake v3.16** ed **SFML v2.5**.  
-Qualora si disponga di versioni precedenti si consiglia di modificare rispettivamente le righe ```1``` e ```22``` del file ```CMakeLists.txt```.
+Si consiglia di compilare ed eseguire il programma tramite **CMake**, utilizzando il file ```CMakeLists.txt```. **Importante:** il programma è stato sviluppato su MacOS utilizzando la versione **2.6** di SFML (versione installata in automatico da Homebrew). Ubuntu 22.04, piattaforma di riferimento del corso, fa invece uso della versione **2.5**, per compilare su questa piattaforma (o più in generale, per compilare disponendo di una qualunque versione di SFML precedente alla 2.6) è dunque necessario modificare la **riga 22** del file ```CMakeLists.txt```.  
 
-### Comandi per buildare ed eseguire il programma
+Comandi per compilare ed eseguire:
+
 ```shell
 % pwd
-/Users/dariocampisi/boids
+/Users/dariocampisi/boids-campisi
 % cmake -S . -B build
 ...
 % cmake --build build
@@ -285,12 +272,10 @@ Qualora si disponga di versioni precedenti si consiglia di modificare rispettiva
 ```
 
 ## Interpretazione dei risultati
-### Resa grafica e prestazioni
 Il programma funziona discretamente bene, il movimento dei boid è generalmente abbastanza simile a quello di uno **stormo reale**.
 
-Gli slider assolvono correttamente alla loro funzione sebbene concedano, volutamente, poca libertà nel modificare i parametri a cui sono legati (questi ultimi possono subire un aumento/diminuzione del 50% al massimo). Questo perché dalla fase di [testing](#testing) del programma è emerso come una modifica eccessiva dei suddetti porti inevitabilmente a comportamenti incorretti da parte dei boid. Invero, quest'ultimo problema persiste anche nella versione finale del codice, sebbene in misura e frequenza molto ridotte. È infatti possibile che particolari combinazioni dei parametri delle regole di volo, unite ad un numero di boid molto elevato, generino comportamenti indesiderati, specialmente ai margini della finestra. Qualora questo accada, si consiglia di utilizzare l'apposito pulsante *reset*.
+Gli slider assolvono correttamente alla loro funzione sebbene concedano, volutamente, poca libertà nel modificare i parametri a cui sono legati (questi ultimi possono subire un aumento/diminuzione del 50% al massimo). Questo perché dalla fase di [testing](#strategie-di-testing) del programma è emerso come una modifica eccessiva dei suddetti porti inevitabilmente a comportamenti errati da parte dei boid. Invero, quest'ultimo problema persiste anche nella versione finale del codice, sebbene in misura e frequenza molto ridotte. È infatti possibile che particolari combinazioni dei parametri delle regole di volo, unite ad un numero di boid molto elevato, generino comportamenti indesiderati, specialmente ai margini della finestra. Qualora questo accada, si consiglia di utilizzare l'apposito pulsante *reset*.
 
 Rispettando la linea guida di non eccedere con il numero dei boid (specialmente tramite il [mouse left-click](#mouse-left-click-per-generare-un-boid)), le prestazioni del programma risultano sempre buone e stabili.
 
-### Output delle statistiche
-Le statistiche stampate a schermo sembrano essere coerenti con le aspettative, in particolare la **distanza media** sembra rispondere correttamente alle variazioni dei parametri delle regole di volo, mentre la **velocità media** è sempre inferiore alla velocità massima e ha una bassa **deviazione standard**.
+Per quanto concerne le statistiche stampate a schermo, esse sembrano essere coerenti con le aspettative, in particolare la **distanza media** sembra rispondere correttamente alle variazioni dei parametri delle regole di volo, mentre la **velocità media** è sempre inferiore alla velocità massima e ha una bassa **deviazione standard**.
