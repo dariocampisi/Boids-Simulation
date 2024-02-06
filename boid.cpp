@@ -53,11 +53,20 @@ bool bd::Boid::isCloseAndVisible(const Boid &other, const float d,
                                  const float angle_view) const {
   if (this->isClose(other, d)) {
     sf::Vector2f relative_position = other.getPosition() - this->getPosition();
-    float relative_angle =
-        std::atan2(relative_position.y, relative_position.x) * (180.f / M_PI);
-    if (relative_angle < 0) {
-      relative_angle += 360.f;
+    float relative_angle = std::atan2(std::abs(relative_position.y),
+                                      std::abs(relative_position.x)) *
+                           (180.f / M_PI);
+
+    if (relative_position.x * relative_position.y > 0) {
+      if (relative_position.x < 0) {
+        relative_angle += 180.f;
+      }
+    } else if (relative_position.x < 0) {
+      relative_angle += 90.f;
+    } else {
+      relative_angle += 270.f;
     }
+
     float angle_difference =
         std::abs(this->shape_.getRotation() - relative_angle);
 
