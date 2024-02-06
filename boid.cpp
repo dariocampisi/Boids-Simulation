@@ -62,9 +62,9 @@ bool bd::Boid::isCloseAndVisible(const Boid &other, const float d,
         relative_angle += 180.f;
       }
     } else if (relative_position.x < 0) {
-      relative_angle += 90.f;
+      relative_angle = 180.f - relative_angle;
     } else {
-      relative_angle += 270.f;
+      relative_angle = 360.f - relative_angle;
     }
 
     float angle_difference =
