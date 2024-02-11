@@ -441,8 +441,12 @@ int main() {
       window.display();
 
       // OUTPUT DELLE STATISTICHE
-      st::printStatistics(frame_counter, 3'000u, boids);
-
+      ++frame_counter;
+      if (frame_counter == 3'000u) {
+        frame_counter = 0u;
+        st::printStatistics(boids);
+      }
+      
     } else {
       // SCHERMATA INIZIALE
       window.clear(background_color);

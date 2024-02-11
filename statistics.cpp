@@ -14,59 +14,49 @@ float st::stdDev(const std::vector<float> &v, const float f) {
   return std::sqrt(mean(quad_deviations));
 }
 
-void st::printStatistics(unsigned int &frame_counter,
-                         const unsigned int frame_limit,
-                         const std::vector<bd::Boid> &boids) {
-  ++frame_counter;
+void st::printStatistics(const std::vector<bd::Boid> &boids) {
+  // distanza media
+  std::vector<float> relative_distances{};
+  float mean_relative_distance{};
+  std::vector<float> mean_relative_distances{};
+  float mean_distance{};
+  float std_dev_distance{};
 
-  if (frame_counter == frame_limit) {
-    frame_counter = 0u;
+  // stampa i risultati con una precisione di 2 cifre decimali (necessario per
+  // implementare correttamente i test di st::printStatistics())
+  std::cout << std::fixed << std::setprecision(2);
 
-    // distanza media
-    std::vector<float> relative_distances{};
-    float mean_relative_distance{};
-    std::vector<float> mean_relative_distances{};
-    float mean_distance{};
-    float std_dev_distance{};
-
-    // stampa i risultati con una precisione di 2 cifre decimali (necessario per
-    // implementare correttamente i test di st::printStatistics())
-    std::cout << std::fixed << std::setprecision(2);
-
-    for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
-         ++i) {
-      relative_distances.clear();
-      for (unsigned int j = 0u; j < static_cast<unsigned int>(boids.size());
-           ++j) {
-        if (i == j) continue;
-        if (!boids[i].isFlockMate(boids[j])) continue;
-        relative_distances.push_back(
-            bd::length(boids[i].getPosition() - boids[j].getPosition()));
-      }
-      mean_relative_distance = mean(relative_distances);
-      mean_relative_distances.push_back(mean_relative_distance);
+  for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size()); ++i) {
+    relative_distances.clear();
+    for (unsigned int j = 0u; j < static_cast<unsigned int>(boids.size());
+         ++j) {
+      if (i == j) continue;
+      if (!boids[i].isFlockMate(boids[j])) continue;
+      relative_distances.push_back(
+          bd::length(boids[i].getPosition() - boids[j].getPosition()));
     }
-    mean_distance = mean(mean_relative_distances);
-
-    std_dev_distance = stdDev(mean_relative_distances, mean_distance);
-
-    std::cout << "Mean distance: (" << mean_distance << " +/- "
-              << std_dev_distance << ") px\n";
-
-    // velocità media
-    std::vector<float> speeds{};
-    float mean_speed{};
-    float std_dev_speed{};
-
-    for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size());
-         ++i) {
-      speeds.push_back(bd::length(boids[i].getVelocity()));
-    }
-    mean_speed = mean(speeds);
-
-    std_dev_speed = stdDev(speeds, mean_speed);
-
-    std::cout << "Mean speed: (" << mean_speed << " +/- " << std_dev_speed
-              << ") px/frameTime\n\n";
+    mean_relative_distance = mean(relative_distances);
+    mean_relative_distances.push_back(mean_relative_distance);
   }
+  mean_distance = mean(mean_relative_distances);
+
+  std_dev_distance = stdDev(mean_relative_distances, mean_distance);
+
+  std::cout << "Mean distance: (" << mean_distance << " +/- "
+            << std_dev_distance << ") px\n";
+
+  // velocità media
+  std::vector<float> speeds{};
+  float mean_speed{};
+  float std_dev_speed{};
+
+  for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size()); ++i) {
+    speeds.push_back(bd::length(boids[i].getVelocity()));
+  }
+  mean_speed = mean(speeds);
+
+  std_dev_speed = stdDev(speeds, mean_speed);
+
+  std::cout << "Mean speed: (" << mean_speed << " +/- " << std_dev_speed
+            << ") px/frameTime\n\n";
 }

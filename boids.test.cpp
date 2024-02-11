@@ -67,14 +67,11 @@ TEST_CASE("Testing some critical functions") {
 
     std::vector<bd::Boid> boids{one, two, three, four, five};
 
-    unsigned int frame_counter{39u};
-    unsigned int frame_limit{40u};
-
     std::ostringstream oss;
     std::streambuf* originalOutput = std::cout.rdbuf();
     std::cout.rdbuf(oss.rdbuf());
 
-    st::printStatistics(frame_counter, frame_limit, boids);
+    st::printStatistics(boids);
 
     std::cout.rdbuf(originalOutput);
 

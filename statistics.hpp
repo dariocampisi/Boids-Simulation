@@ -13,9 +13,7 @@ float mean(const std::vector<float> &v);
 
 float stdDev(const std::vector<float> &v, const float f);
 
-void printStatistics(unsigned int &frame_counter,
-                     const unsigned int frame_limit,
-                     const std::vector<bd::Boid> &boids);
+void printStatistics(const std::vector<bd::Boid> &boids);
 }  // namespace st
 
 #endif
