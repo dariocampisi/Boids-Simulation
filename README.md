@@ -2,8 +2,6 @@
 **Autore:** Dario Eugenio Campisi  
 **Data:** Gennaio 2024  
 
-**Nota:** Il progetto è disponibile anche in [questa repository GitHub](https://github.com/dariocampisi/Boids-Simulation)
-
 - [Descrizione generale](#descrizione-generale)
 - [Logica di implementazione](#logica-di-implementazione)
 - [Strategie di testing](#strategie-di-testing)
@@ -250,7 +248,7 @@ Tali test si trovano all'interno di ```boids.test.cpp```. Comandi per eseguirli:
 
 ```shell
 % pwd
-/Users/dariocampisi/boids-campisi
+/Users/dariocampisi/boids
 % cmake -S . -B build
 ...
 % cmake --build build
@@ -266,7 +264,7 @@ Comandi per compilare ed eseguire:
 
 ```shell
 % pwd
-/Users/dariocampisi/boids-campisi
+/Users/dariocampisi/boids
 % cmake -S . -B build
 ...
 % cmake --build build
