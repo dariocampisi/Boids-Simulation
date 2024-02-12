@@ -404,10 +404,10 @@ int main() {
 
         sf::Vector2f p_cohesion_sum{};
         float p_n{0.f};
-        for (unsigned i = 0u; i < static_cast<unsigned>(boids.size()); ++i) {
-          if (predator.isCloseAndVisible(boids[i], d, angle_view)) {
+        for (bd::Boid const& boid : boids) {
+          if (predator.isCloseAndVisible(boid, d, angle_view)) {
             ++p_n;
-            p_cohesion_sum += boids[i].getPosition();
+            p_cohesion_sum += boid.getPosition();
           }
         }
         if (p_n != 0) {
@@ -446,7 +446,7 @@ int main() {
         frame_counter = 0u;
         st::printStatistics(boids);
       }
-      
+
     } else {
       // SCHERMATA INIZIALE
       window.clear(background_color);

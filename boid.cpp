@@ -70,9 +70,7 @@ bool bd::Boid::isCloseAndVisible(const Boid &other, const float d,
     float angle_difference =
         std::abs(this->shape_.getRotation() - relative_angle);
 
-    if (angle_difference <= (angle_view / 2)) {
-      return 1;
-    } else if (angle_difference >= ((angle_view / 2) + (360.f - angle_view))) {
+    if (angle_difference <= (angle_view / 2) ||  (angle_difference >= ((angle_view / 2) + (360.f - angle_view))) ) {
       return 1;
     } else {
       return 0;

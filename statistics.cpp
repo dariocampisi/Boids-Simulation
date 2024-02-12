@@ -26,11 +26,10 @@ void st::printStatistics(const std::vector<bd::Boid> &boids) {
   // implementare correttamente i test di st::printStatistics())
   std::cout << std::fixed << std::setprecision(2);
 
-  for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size()); ++i) {
+  for (unsigned int i = 0u; i < static_cast<unsigned int>(boids.size() - 1); ++i) {
     relative_distances.clear();
-    for (unsigned int j = 0u; j < static_cast<unsigned int>(boids.size());
+    for (unsigned int j = i + 1; j < static_cast<unsigned int>(boids.size());
          ++j) {
-      if (i == j) continue;
       if (!boids[i].isFlockMate(boids[j])) continue;
       relative_distances.push_back(
           bd::length(boids[i].getPosition() - boids[j].getPosition()));
